@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "859539341793",
+    "project_id": "application-2f326",
+    "storage_bucket": "application-2f326.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859539341793:android:9971d392486d538439d2a0",
+        "android_client_info": {
+          "package_name": "com.example.foodkit"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCwgouZmZlTH3FLVGXJdZ_2YJPE-jDv5Cc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
