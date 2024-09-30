@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">FoodKit</string>
+    <string name="thankYouForChoosingUs">Thank you for choosing us!</string>
+    <string name="createAnAccount">Create an account to Start looking for the food you like</string>
+
+
+    <string name="userName">User Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="phoneNumber">Phone Number</string>
+    <string name="signUp">Sign Up</string>
+    <string name="signIn">Sign In</string>
+    <string name="login">Login</string>
+    <string name="alreadyHaveAnAccount">Already have an account?</string>
+    <string name="iAgreeTerms"> I Agree with Terms of Service and Privacy policy </string>
+
+
+    <string name="welcomeBack">Welcome Back !</string>
+    <string name="putYourDataHere">Put your data here</string>
+    <string name="forgotPassword_">Forgot Password?</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="dontHaveAnAccount">Don\'t have an account?</string>
+
+
+
+
 </resources>

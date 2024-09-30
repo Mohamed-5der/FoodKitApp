@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">مجموعة الطعام</string>
+    <string name="thankYouForChoosingUs">شكرًا لاختيارك لنا!</string>
+    <string name="createAnAccount">أنشئ حسابًا لبدء البحث عن الطعام الذي تريده</string>
+
+
+    <string name="userName">اسم المستخدم</string>
+    <string name="email">البريد الإلكتروني</string>
+    <string name="password">كلمة المرور</string>
+    <string name="confirmPassword">تأكيد كلمة المرور</string>
+    <string name="phoneNumber">رقم الهاتف</string>
+    <string name="signUp">اشتراك</string>
+    <string name="signIn">تسجيل الدخول</string>
+    <string name="login">تسجيل الدخول</string>
+    <string name="alreadyHaveAnAccount">هل لديك حساب بالفعل؟</string>
+    <string name="iAgreeTerms">أوافق على شروط الخدمة وسياسة الخصوصية</string>
+
+
+    <string name="welcomeBack">مرحبًا بعودتك!</string>
+    <string name="putYourDataHere">ضع بياناتك هنا</string>
+    <string name="forgotPassword_">هل نسيت كلمة المرور؟</string>
+    <string name="forgotPassword">نسيت كلمة المرور</string>
+    <string name="dontHaveAnAccount">أليس لديك حساب؟</string>
+</resources>
