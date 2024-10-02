@@ -1,0 +1,487 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.foodkit"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="31"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.INTERNET" />
+11-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:25:5-67
+11-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:25:22-64
+12    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+12-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:26:5-79
+12-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:26:22-76
+13    <uses-permission android:name="android.permission.WAKE_LOCK" />
+13-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:24:5-68
+13-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:24:22-65
+14    <uses-permission android:name="com.google.android.gms.permission.AD_ID" />
+14-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:25:5-79
+14-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:25:22-76
+15    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_ATTRIBUTION" />
+15-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:26:5-88
+15-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:26:22-85
+16    <uses-permission android:name="android.permission.ACCESS_ADSERVICES_AD_ID" />
+16-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:27:5-82
+16-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:27:22-79
+17    <uses-permission android:name="com.google.android.finsky.permission.BIND_GET_INSTALL_REFERRER_SERVICE" />
+17-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:26:5-110
+17-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:26:22-107
+18    <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
+18-->[com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c4e0b2f5ffcc5ef76c8e0cad919e4e7a\transformed\recaptcha-18.4.0\AndroidManifest.xml:9:5-98
+18-->[com.google.android.recaptcha:recaptcha:18.4.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c4e0b2f5ffcc5ef76c8e0cad919e4e7a\transformed\recaptcha-18.4.0\AndroidManifest.xml:9:22-95
+19
+20    <permission
+20-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:22:5-24:47
+21        android:name="com.example.foodkit.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+21-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:23:9-81
+22        android:protectionLevel="signature" />
+22-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:24:9-44
+23
+24    <uses-permission android:name="com.example.foodkit.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+24-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:26:5-97
+24-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:26:22-94
+25
+26    <application
+26-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:5:5-27:19
+27        android:name="com.example.foodkit.MyApp"
+27-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:6:9-30
+28        android:allowBackup="true"
+28-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:7:9-35
+29        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+29-->[androidx.core:core:1.13.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\0c44a9631574bd014bb80332ef107903\transformed\core-1.13.1\AndroidManifest.xml:28:18-86
+30        android:dataExtractionRules="@xml/data_extraction_rules"
+30-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:8:9-65
+31        android:debuggable="true"
+32        android:extractNativeLibs="false"
+33        android:fullBackupContent="@xml/backup_rules"
+33-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:9:9-54
+34        android:icon="@mipmap/ic_launcher"
+34-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:10:9-43
+35        android:label="@string/app_name"
+35-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:11:9-41
+36        android:roundIcon="@mipmap/ic_launcher_round"
+36-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:12:9-54
+37        android:supportsRtl="true"
+37-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:13:9-35
+38        android:testOnly="true"
+39        android:theme="@style/Theme.FoodKit" >
+39-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:14:9-45
+40        <activity
+40-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:16:9-26:20
+41            android:name="com.example.foodkit.MainActivity"
+41-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:17:13-41
+42            android:exported="true"
+42-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:18:13-36
+43            android:label="@string/app_name"
+43-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:19:13-45
+44            android:theme="@style/Theme.FoodKit" >
+44-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:20:13-49
+45            <intent-filter>
+45-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:21:13-25:29
+46                <action android:name="android.intent.action.MAIN" />
+46-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:22:17-69
+46-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:22:25-66
+47
+48                <category android:name="android.intent.category.LAUNCHER" />
+48-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:24:17-77
+48-->C:\Users\XPRISTO\AndroidStudioProjects\FoodKit\app\src\main\AndroidManifest.xml:24:27-74
+49            </intent-filter>
+50        </activity>
+51
+52        <service
+52-->[androidx.room:room-runtime:2.6.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\c3ce0a0aac3b2a0596e7fb223ba245cb\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+53            android:name="androidx.room.MultiInstanceInvalidationService"
+53-->[androidx.room:room-runtime:2.6.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\c3ce0a0aac3b2a0596e7fb223ba245cb\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+54            android:directBootAware="true"
+54-->[androidx.room:room-runtime:2.6.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\c3ce0a0aac3b2a0596e7fb223ba245cb\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+55            android:exported="false" />
+55-->[androidx.room:room-runtime:2.6.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\c3ce0a0aac3b2a0596e7fb223ba245cb\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+56
+57        <activity
+57-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:29:9-46:20
+58            android:name="com.google.firebase.auth.internal.GenericIdpActivity"
+58-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:30:13-80
+59            android:excludeFromRecents="true"
+59-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:31:13-46
+60            android:exported="true"
+60-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:32:13-36
+61            android:launchMode="singleTask"
+61-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:33:13-44
+62            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+62-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:34:13-72
+63            <intent-filter>
+63-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:35:13-45:29
+64                <action android:name="android.intent.action.VIEW" />
+64-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:36:17-69
+64-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:36:25-66
+65
+66                <category android:name="android.intent.category.DEFAULT" />
+66-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:38:17-76
+66-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:38:27-73
+67                <category android:name="android.intent.category.BROWSABLE" />
+67-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:39:17-78
+67-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:39:27-75
+68
+69                <data
+69-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:41:17-44:51
+70                    android:host="firebase.auth"
+70-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:42:21-49
+71                    android:path="/"
+71-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:43:21-37
+72                    android:scheme="genericidp" />
+72-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:44:21-48
+73            </intent-filter>
+74        </activity>
+75        <activity
+75-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:47:9-64:20
+76            android:name="com.google.firebase.auth.internal.RecaptchaActivity"
+76-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:48:13-79
+77            android:excludeFromRecents="true"
+77-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:49:13-46
+78            android:exported="true"
+78-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:50:13-36
+79            android:launchMode="singleTask"
+79-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:51:13-44
+80            android:theme="@android:style/Theme.Translucent.NoTitleBar" >
+80-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:52:13-72
+81            <intent-filter>
+81-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:53:13-63:29
+82                <action android:name="android.intent.action.VIEW" />
+82-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:36:17-69
+82-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:36:25-66
+83
+84                <category android:name="android.intent.category.DEFAULT" />
+84-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:38:17-76
+84-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:38:27-73
+85                <category android:name="android.intent.category.BROWSABLE" />
+85-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:39:17-78
+85-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:39:27-75
+86
+87                <data
+87-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:41:17-44:51
+88                    android:host="firebase.auth"
+88-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:42:21-49
+89                    android:path="/"
+89-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:43:21-37
+90                    android:scheme="recaptcha" />
+90-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:44:21-48
+91            </intent-filter>
+92        </activity>
+93
+94        <service
+94-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:66:9-72:19
+95            android:name="com.google.firebase.components.ComponentDiscoveryService"
+95-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:67:13-84
+96            android:directBootAware="true"
+96-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:32:13-43
+97            android:exported="false" >
+97-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:68:13-37
+98            <meta-data
+98-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:69:13-71:85
+99                android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar"
+99-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:70:17-109
+100                android:value="com.google.firebase.components.ComponentRegistrar" />
+100-->[com.google.firebase:firebase-auth:23.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\e26db9993db239897d6e26d39015319c\transformed\firebase-auth-23.0.0\AndroidManifest.xml:71:17-82
+101            <meta-data
+101-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:29:13-31:85
+102                android:name="com.google.firebase.components:com.google.firebase.database.FirebaseDatabaseKtxRegistrar"
+102-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:30:17-120
+103                android:value="com.google.firebase.components.ComponentRegistrar" />
+103-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:31:17-82
+104            <meta-data
+104-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:32:13-34:85
+105                android:name="com.google.firebase.components:com.google.firebase.database.DatabaseRegistrar"
+105-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:33:17-109
+106                android:value="com.google.firebase.components.ComponentRegistrar" />
+106-->[com.google.firebase:firebase-database:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\21bcea752fdc649e11b9cb8e128a3cc2\transformed\firebase-database-21.0.0\AndroidManifest.xml:34:17-82
+107            <meta-data
+107-->[com.google.firebase:firebase-firestore-ktx:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2f4b8d492c92c2f834ada8ba4fbe2086\transformed\firebase-firestore-ktx-25.1.0\AndroidManifest.xml:12:13-14:85
+108                android:name="com.google.firebase.components:com.google.firebase.firestore.ktx.FirebaseFirestoreLegacyRegistrar"
+108-->[com.google.firebase:firebase-firestore-ktx:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2f4b8d492c92c2f834ada8ba4fbe2086\transformed\firebase-firestore-ktx-25.1.0\AndroidManifest.xml:13:17-129
+109                android:value="com.google.firebase.components.ComponentRegistrar" />
+109-->[com.google.firebase:firebase-firestore-ktx:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2f4b8d492c92c2f834ada8ba4fbe2086\transformed\firebase-firestore-ktx-25.1.0\AndroidManifest.xml:14:17-82
+110            <meta-data
+110-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:17:13-19:85
+111                android:name="com.google.firebase.components:com.google.firebase.firestore.FirebaseFirestoreKtxRegistrar"
+111-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:18:17-122
+112                android:value="com.google.firebase.components.ComponentRegistrar" />
+112-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:19:17-82
+113            <meta-data
+113-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:20:13-22:85
+114                android:name="com.google.firebase.components:com.google.firebase.firestore.FirestoreRegistrar"
+114-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:21:17-111
+115                android:value="com.google.firebase.components.ComponentRegistrar" />
+115-->[com.google.firebase:firebase-firestore:25.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\011712ffc8c7e87bd9c0b199dc99c108\transformed\firebase-firestore-25.1.0\AndroidManifest.xml:22:17-82
+116            <meta-data
+116-->[com.google.firebase:firebase-storage-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\be69cb8e1b1b42d3f1f818aed65e1417\transformed\firebase-storage-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+117                android:name="com.google.firebase.components:com.google.firebase.storage.ktx.FirebaseStorageLegacyRegistrar"
+117-->[com.google.firebase:firebase-storage-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\be69cb8e1b1b42d3f1f818aed65e1417\transformed\firebase-storage-ktx-21.0.0\AndroidManifest.xml:13:17-125
+118                android:value="com.google.firebase.components.ComponentRegistrar" />
+118-->[com.google.firebase:firebase-storage-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\be69cb8e1b1b42d3f1f818aed65e1417\transformed\firebase-storage-ktx-21.0.0\AndroidManifest.xml:14:17-82
+119            <meta-data
+119-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:30:13-32:85
+120                android:name="com.google.firebase.components:com.google.firebase.storage.FirebaseStorageKtxRegistrar"
+120-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:31:17-118
+121                android:value="com.google.firebase.components.ComponentRegistrar" />
+121-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:32:17-82
+122            <meta-data
+122-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:33:13-35:85
+123                android:name="com.google.firebase.components:com.google.firebase.storage.StorageRegistrar"
+123-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:34:17-107
+124                android:value="com.google.firebase.components.ComponentRegistrar" />
+124-->[com.google.firebase:firebase-storage:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\8fda9b1e4765018cccb6a8a166ab8ab0\transformed\firebase-storage-21.0.0\AndroidManifest.xml:35:17-82
+125            <meta-data
+125-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:25:13-27:85
+126                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckKtxRegistrar"
+126-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:26:17-120
+127                android:value="com.google.firebase.components.ComponentRegistrar" />
+127-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:27:17-82
+128            <meta-data
+128-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:28:13-30:85
+129                android:name="com.google.firebase.components:com.google.firebase.appcheck.FirebaseAppCheckRegistrar"
+129-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:29:17-117
+130                android:value="com.google.firebase.components.ComponentRegistrar" />
+130-->[com.google.firebase:firebase-appcheck:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\c8fde95f3a5d217fdd3ddc980dae8388\transformed\firebase-appcheck-18.0.0\AndroidManifest.xml:30:17-82
+131            <meta-data
+131-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:37:13-39:85
+132                android:name="com.google.firebase.components:com.google.firebase.analytics.connector.internal.AnalyticsConnectorRegistrar"
+132-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:38:17-139
+133                android:value="com.google.firebase.components.ComponentRegistrar" />
+133-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:39:17-82
+134            <meta-data
+134-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:15:13-17:85
+135                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsKtxRegistrar"
+135-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:16:17-130
+136                android:value="com.google.firebase.components.ComponentRegistrar" />
+136-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:17:17-82
+137            <meta-data
+137-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:18:13-20:85
+138                android:name="com.google.firebase.components:com.google.firebase.installations.FirebaseInstallationsRegistrar"
+138-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:19:17-127
+139                android:value="com.google.firebase.components.ComponentRegistrar" />
+139-->[com.google.firebase:firebase-installations:18.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\5946f0d817b0d977ba0f3059509a95aa\transformed\firebase-installations-18.0.0\AndroidManifest.xml:20:17-82
+140            <meta-data
+140-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\76429c0be51753e9ded432b0e3b9f55b\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:12:13-14:85
+141                android:name="com.google.firebase.components:com.google.firebase.ktx.FirebaseCommonLegacyRegistrar"
+141-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\76429c0be51753e9ded432b0e3b9f55b\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:13:17-116
+142                android:value="com.google.firebase.components.ComponentRegistrar" />
+142-->[com.google.firebase:firebase-common-ktx:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\76429c0be51753e9ded432b0e3b9f55b\transformed\firebase-common-ktx-21.0.0\AndroidManifest.xml:14:17-82
+143            <meta-data
+143-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:35:13-37:85
+144                android:name="com.google.firebase.components:com.google.firebase.FirebaseCommonKtxRegistrar"
+144-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:36:17-109
+145                android:value="com.google.firebase.components.ComponentRegistrar" />
+145-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:37:17-82
+146        </service>
+147        <service
+147-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:24:9-32:19
+148            android:name="androidx.credentials.playservices.CredentialProviderMetadataHolder"
+148-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:25:13-94
+149            android:enabled="true"
+149-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:26:13-35
+150            android:exported="false" >
+150-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:27:13-37
+151            <meta-data
+151-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:29:13-31:104
+152                android:name="androidx.credentials.CREDENTIAL_PROVIDER_KEY"
+152-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:30:17-76
+153                android:value="androidx.credentials.playservices.CredentialProviderPlayServicesImpl" />
+153-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:31:17-101
+154        </service>
+155
+156        <activity
+156-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:34:9-41:20
+157            android:name="androidx.credentials.playservices.HiddenActivity"
+157-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:35:13-76
+158            android:configChanges="orientation|screenSize|screenLayout|keyboardHidden"
+158-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:36:13-87
+159            android:enabled="true"
+159-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:37:13-35
+160            android:exported="false"
+160-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:38:13-37
+161            android:fitsSystemWindows="true"
+161-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:39:13-45
+162            android:theme="@style/Theme.Hidden" >
+162-->[androidx.credentials:credentials-play-services-auth:1.2.0-rc01] C:\Users\XPRISTO\.gradle\caches\transforms-4\b5c0612817d2df021a17a5a71aa580de\transformed\credentials-play-services-auth-1.2.0-rc01\AndroidManifest.xml:40:13-48
+163        </activity>
+164        <activity
+164-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:23:9-27:75
+165            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+165-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:24:13-93
+166            android:excludeFromRecents="true"
+166-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:25:13-46
+167            android:exported="false"
+167-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:26:13-37
+168            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+168-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:27:13-72
+169        <!--
+170            Service handling Google Sign-In user revocation. For apps that do not integrate with
+171            Google Sign-In, this service will never be started.
+172        -->
+173        <service
+173-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:33:9-37:51
+174            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+174-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:34:13-89
+175            android:exported="true"
+175-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:35:13-36
+176            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+176-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:36:13-107
+177            android:visibleToInstantApps="true" />
+177-->[com.google.android.gms:play-services-auth:20.7.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\dbea828cf721755a4072ff4a1959c06e\transformed\play-services-auth-20.7.0\AndroidManifest.xml:37:13-48
+178
+179        <activity
+179-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\4ef81badb6bf781502ede858b65a46e3\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:9-22:45
+180            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+180-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\4ef81badb6bf781502ede858b65a46e3\transformed\play-services-base-18.1.0\AndroidManifest.xml:20:19-85
+181            android:exported="false"
+181-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\4ef81badb6bf781502ede858b65a46e3\transformed\play-services-base-18.1.0\AndroidManifest.xml:22:19-43
+182            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+182-->[com.google.android.gms:play-services-base:18.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\4ef81badb6bf781502ede858b65a46e3\transformed\play-services-base-18.1.0\AndroidManifest.xml:21:19-78
+183
+184        <property
+184-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:30:9-32:61
+185            android:name="android.adservices.AD_SERVICES_CONFIG"
+185-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:31:13-65
+186            android:resource="@xml/ga_ad_services_config" />
+186-->[com.google.android.gms:play-services-measurement-api:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\bf0b5390cf9684e2d325a1b80b684953\transformed\play-services-measurement-api-22.1.0\AndroidManifest.xml:32:13-58
+187
+188        <provider
+188-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:23:9-28:39
+189            android:name="com.google.firebase.provider.FirebaseInitProvider"
+189-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:24:13-77
+190            android:authorities="com.example.foodkit.firebaseinitprovider"
+190-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:25:13-72
+191            android:directBootAware="true"
+191-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:26:13-43
+192            android:exported="false"
+192-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:27:13-37
+193            android:initOrder="100" />
+193-->[com.google.firebase:firebase-common:21.0.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\2a8569625c8babc95f3b108d58d0906d\transformed\firebase-common-21.0.0\AndroidManifest.xml:28:13-36
+194
+195        <receiver
+195-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:29:9-33:20
+196            android:name="com.google.android.gms.measurement.AppMeasurementReceiver"
+196-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:30:13-85
+197            android:enabled="true"
+197-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:31:13-35
+198            android:exported="false" >
+198-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:32:13-37
+199        </receiver>
+200
+201        <service
+201-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:35:9-38:40
+202            android:name="com.google.android.gms.measurement.AppMeasurementService"
+202-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:36:13-84
+203            android:enabled="true"
+203-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:37:13-35
+204            android:exported="false" />
+204-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:38:13-37
+205        <service
+205-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:39:9-43:72
+206            android:name="com.google.android.gms.measurement.AppMeasurementJobService"
+206-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:40:13-87
+207            android:enabled="true"
+207-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:41:13-35
+208            android:exported="false"
+208-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:42:13-37
+209            android:permission="android.permission.BIND_JOB_SERVICE" />
+209-->[com.google.android.gms:play-services-measurement:22.1.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\fd4af15aad34d75a60a36a550d8dc084\transformed\play-services-measurement-22.1.0\AndroidManifest.xml:43:13-69
+210
+211        <activity
+211-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\113a05574753d18c92f2ea5629e76d51\transformed\ui-tooling-release\AndroidManifest.xml:23:9-25:39
+212            android:name="androidx.compose.ui.tooling.PreviewActivity"
+212-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\113a05574753d18c92f2ea5629e76d51\transformed\ui-tooling-release\AndroidManifest.xml:24:13-71
+213            android:exported="true" />
+213-->[androidx.compose.ui:ui-tooling-android:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\113a05574753d18c92f2ea5629e76d51\transformed\ui-tooling-release\AndroidManifest.xml:25:13-36
+214        <activity
+214-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\bc6c963fd04cd0b94da9cebc9d3d91e0\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:23:9-25:39
+215            android:name="androidx.activity.ComponentActivity"
+215-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\bc6c963fd04cd0b94da9cebc9d3d91e0\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:24:13-63
+216            android:exported="true" />
+216-->[androidx.compose.ui:ui-test-manifest:1.7.2] C:\Users\XPRISTO\.gradle\caches\transforms-4\bc6c963fd04cd0b94da9cebc9d3d91e0\transformed\ui-test-manifest-1.7.2\AndroidManifest.xml:25:13-36
+217
+218        <provider
+218-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:24:9-32:20
+219            android:name="androidx.startup.InitializationProvider"
+219-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:25:13-67
+220            android:authorities="com.example.foodkit.androidx-startup"
+220-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:26:13-68
+221            android:exported="false" >
+221-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:27:13-37
+222            <meta-data
+222-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:29:13-31:52
+223                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+223-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:30:17-75
+224                android:value="androidx.startup" />
+224-->[androidx.emoji2:emoji2:1.3.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\a010877bc70f991fca47bd00df530efb\transformed\emoji2-1.3.0\AndroidManifest.xml:31:17-49
+225            <meta-data
+225-->[androidx.lifecycle:lifecycle-process:2.8.6] C:\Users\XPRISTO\.gradle\caches\transforms-4\6a6e74d34cf896800c09a90d7c037f35\transformed\lifecycle-process-2.8.6\AndroidManifest.xml:29:13-31:52
+226                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+226-->[androidx.lifecycle:lifecycle-process:2.8.6] C:\Users\XPRISTO\.gradle\caches\transforms-4\6a6e74d34cf896800c09a90d7c037f35\transformed\lifecycle-process-2.8.6\AndroidManifest.xml:30:17-78
+227                android:value="androidx.startup" />
+227-->[androidx.lifecycle:lifecycle-process:2.8.6] C:\Users\XPRISTO\.gradle\caches\transforms-4\6a6e74d34cf896800c09a90d7c037f35\transformed\lifecycle-process-2.8.6\AndroidManifest.xml:31:17-49
+228            <meta-data
+228-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:29:13-31:52
+229                android:name="androidx.profileinstaller.ProfileInstallerInitializer"
+229-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:30:17-85
+230                android:value="androidx.startup" />
+230-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:31:17-49
+231        </provider>
+232
+233        <uses-library
+233-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\XPRISTO\.gradle\caches\transforms-4\6d4daf1ee0086bd12e26ace4e3d1b488\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:23:9-25:40
+234            android:name="android.ext.adservices"
+234-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\XPRISTO\.gradle\caches\transforms-4\6d4daf1ee0086bd12e26ace4e3d1b488\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:24:13-50
+235            android:required="false" />
+235-->[androidx.privacysandbox.ads:ads-adservices:1.0.0-beta05] C:\Users\XPRISTO\.gradle\caches\transforms-4\6d4daf1ee0086bd12e26ace4e3d1b488\transformed\ads-adservices-1.0.0-beta05\AndroidManifest.xml:25:13-37
+236
+237        <meta-data
+237-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\162ca503c8fdfd7e35a857869af49800\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:9-122
+238            android:name="com.google.android.gms.version"
+238-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\162ca503c8fdfd7e35a857869af49800\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:20-65
+239            android:value="@integer/google_play_services_version" />
+239-->[com.google.android.gms:play-services-basement:18.4.0] C:\Users\XPRISTO\.gradle\caches\transforms-4\162ca503c8fdfd7e35a857869af49800\transformed\play-services-basement-18.4.0\AndroidManifest.xml:6:66-119
+240
+241        <receiver
+241-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:34:9-52:20
+242            android:name="androidx.profileinstaller.ProfileInstallReceiver"
+242-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:35:13-76
+243            android:directBootAware="false"
+243-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:36:13-44
+244            android:enabled="true"
+244-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:37:13-35
+245            android:exported="true"
+245-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:38:13-36
+246            android:permission="android.permission.DUMP" >
+246-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:39:13-57
+247            <intent-filter>
+247-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:40:13-42:29
+248                <action android:name="androidx.profileinstaller.action.INSTALL_PROFILE" />
+248-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:17-91
+248-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:41:25-88
+249            </intent-filter>
+250            <intent-filter>
+250-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:43:13-45:29
+251                <action android:name="androidx.profileinstaller.action.SKIP_FILE" />
+251-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:17-85
+251-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:44:25-82
+252            </intent-filter>
+253            <intent-filter>
+253-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:46:13-48:29
+254                <action android:name="androidx.profileinstaller.action.SAVE_PROFILE" />
+254-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:17-88
+254-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:47:25-85
+255            </intent-filter>
+256            <intent-filter>
+256-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:49:13-51:29
+257                <action android:name="androidx.profileinstaller.action.BENCHMARK_OPERATION" />
+257-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:17-95
+257-->[androidx.profileinstaller:profileinstaller:1.3.1] C:\Users\XPRISTO\.gradle\caches\transforms-4\dc94a0117332c74b1a52725bc2470336\transformed\profileinstaller-1.3.1\AndroidManifest.xml:50:25-92
+258            </intent-filter>
+259        </receiver>
+260    </application>
+261
+262</manifest>
