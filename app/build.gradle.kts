@@ -55,10 +55,6 @@ android {
 
 dependencies {
 
-    //navigator voyager
-    val voyagerVersion = "1.1.0-beta02"
-    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
-
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-analytics")
 

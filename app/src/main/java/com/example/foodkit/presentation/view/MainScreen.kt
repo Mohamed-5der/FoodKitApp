@@ -1,14 +1,22 @@
 package com.example.foodkit.presentation.view
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -19,20 +27,22 @@ fun MainScreen(navController : NavController) {
 }
 
 @Composable
-fun FoodListScreen(navController: NavController ) {
-    val viewModel: FoodListScreenViewModel = koinViewModel()
+fun FoodListScreen(
+    navController: NavController,
+    viewModel: FoodListScreenViewModel = koinViewModel()) {
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
+    val foods by viewModel.foods.collectAsState(initial = emptyList())
+
+    LaunchedEffect(Unit) {
+        viewModel.loadAllFoods() // Load foods when the screen is displayed
+    }
+
+    LazyColumn (
+        modifier = Modifier.fillMaxSize().padding(16.dp)
     ) {
-        viewModel.foods.forEach { food ->
-            Text(text = "Name: ${food.name}, Description: ${food.description}")
-        }
-
-        Button(onClick = { navController.navigate(Routes.LOGIN) }) {
-            Text("Logout")
+        items(foods) { food ->
+            FoodCard(food = food, navController = navController)
         }
     }
 }
+
