@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.foodkit.app-mergeDebugResources-73:/values-en-rXC/values-en-rXC.xml",
+            "outputFile": "com.example.foodkit.app-mergeDebugResources-69:/values-en-rXC/values-en-rXC.xml",
             "map": [
                 {
                     "source": "C:\\Users\\XPRISTO\\.gradle\\caches\\transforms-4\\4dc486f9c45f453f97d8194e3a4c2505\\transformed\\ui-release\\res\\values-en-rXC\\values-en-rXC.xml",

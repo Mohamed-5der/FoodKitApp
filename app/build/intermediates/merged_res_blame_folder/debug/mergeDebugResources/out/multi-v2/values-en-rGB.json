@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.foodkit.app-mergeDebugResources-73:/values-en-rGB/values-en-rGB.xml",
+            "outputFile": "com.example.foodkit.app-mergeDebugResources-69:/values-en-rGB/values-en-rGB.xml",
             "map": [
                 {
                     "source": "C:\\Users\\XPRISTO\\.gradle\\caches\\transforms-4\\4ef81badb6bf781502ede858b65a46e3\\transformed\\play-services-base-18.1.0\\res\\values-en-rGB\\values.xml",

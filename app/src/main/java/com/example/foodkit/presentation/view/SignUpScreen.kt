@@ -22,6 +22,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -55,6 +56,7 @@ import org.koin.androidx.compose.koinViewModel
 fun SignUpScreen(
     navController: NavController
 ) {
+    // Initialize ViewModel
     val viewModel: SignUpViewModel = koinViewModel()
 
     var email by remember { mutableStateOf("") }
@@ -68,217 +70,231 @@ fun SignUpScreen(
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
 
-
-    Column(
+    Surface(
         modifier = Modifier
-            .verticalScroll(rememberScrollState())
+            .background(Color.White)
             .fillMaxSize()
-            .padding(16.dp)
-            .background(Color.White),
-        verticalArrangement = Arrangement.Center
     ) {
-        Spacer(modifier = Modifier.height(40.dp))
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(16.dp)
+                .background(Color.White),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
 
-        Text(
-            text = stringResource(id = R.string.thankYouForChoosingUs),
-            fontSize = 18.sp,
-            fontWeight = FontWeight.Bold,
-            textAlign = TextAlign.Center,
-            color = Color.Black,
-            modifier = Modifier.align(Alignment.CenterHorizontally)
-        )
-
-        Spacer(modifier = Modifier.height(12.dp))
-        Text(
-            text = stringResource(id = R.string.createAnAccount),
-            fontSize = 16.sp,
-            textAlign = TextAlign.Center,
-            color = Color.Gray
-        )
-
-        Spacer(modifier = Modifier.height(30.dp))
-
-        // Full Name Input
-        OutlinedTextField(
-            value = userName,
-            onValueChange = { userName = it },
-            label = { Text(stringResource(id = R.string.userName), color = Color.Black) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.name_icon),
-                    contentDescription = "Name Icon",
-                    tint = Color.Black
-                )
-            }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Email Input
-        OutlinedTextField(
-            value = email,
-            onValueChange = { email = it },
-            label = { Text(stringResource(id = R.string.email), color = Color.Black) },
-            singleLine = true,
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.email_icon),
-                    contentDescription = "Email Icon",
-                    tint = Color.Black
-                )
-            }
-        )
-
-
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Password Input
-        OutlinedTextField(
-            value = password,
-            onValueChange = { password = it },
-            label = { Text(stringResource(id = R.string.password), color = Color.Black) },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock_icon),
-                    contentDescription = "Password Icon",
-                    tint = Color.Black
-                )
-            },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
-            trailingIcon = {
-                val image =
-                    if (passwordVisible) {
-                        painterResource(id = R.drawable.show_password)
-                    } else {
-                        painterResource(id = R.drawable.hide_password)
-                    }
-
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(
-                        painter = image,
-                        contentDescription = "Toggle password visibility",
-                        tint = Color.Black
-                    )
-                }
-            }
-        )
-
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Confirm Password Input
-        OutlinedTextField(
-            value = confirmPassword,
-            onValueChange = { confirmPassword = it },
-            label = { Text(stringResource(id = R.string.confirmPassword), color = Color.Black) },
-            modifier = Modifier.fillMaxWidth(),
-            shape = RoundedCornerShape(20.dp),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
-            leadingIcon = {
-                Icon(
-                    painter = painterResource(id = R.drawable.lock_icon),
-                    contentDescription = "Confirm Icon",
-                    tint = Color.Black
-                )
-            },
-            visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
-
-            trailingIcon = {
-                val image =
-                    if (passwordVisible) {
-                        painterResource(id = R.drawable.show_password)
-                    } else {
-                        painterResource(id = R.drawable.hide_password)
-                    }
-
-                IconButton(onClick = { passwordVisible = !passwordVisible }) {
-                    Icon(
-                        painter = image,
-                        contentDescription = "Toggle password visibility",
-                        tint = Color.Black
-                    )
-                }
-            }
-        )
-
-        Spacer(modifier = Modifier.height(32.dp))
-
-
-        when (authState) {
-            is SignUpState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            is SignUpState.Error -> Text(
-                text = (authState as LoginState.Error).message,
-                color = MaterialTheme.colorScheme.error
+            Text(
+                text = stringResource(id = R.string.thankYouForChoosingUs),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
             )
 
-            else -> {
-                Button(
-                    onClick = {
-                        viewModel.signUp(email, password,
-                            onSignUpSuccess = {
-                                Toast.makeText(
-                                    context,
-                                    "Sign Up Successful",
-                                    Toast.LENGTH_SHORT
-                                ).show()
-                            }
-                        )
-                        navController.navigate("login")
-                    },
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = stringResource(id = R.string.createAnAccount),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Gray
+            )
 
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(50.dp),
-                    shape = RoundedCornerShape(12.dp),
-                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+            Spacer(modifier = Modifier.height(30.dp))
+
+            // Full Name Input
+            OutlinedTextField(
+                value = userName,
+                onValueChange = { userName = it },
+                label = { Text(stringResource(id = R.string.userName), color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.name_icon),
+                        contentDescription = "Name Icon",
+                        tint = Color.Black
+                    )
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Email Input
+            OutlinedTextField(
+                value = email,
+                onValueChange = { email = it },
+                label = { Text(stringResource(id = R.string.email), color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.email_icon),
+                        contentDescription = "Email Icon",
+                        tint = Color.Black
+                    )
+                }
+            )
+
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Password Input
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                label = { Text(stringResource(id = R.string.password), color = Color.Black) },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.lock_icon),
+                        contentDescription = "Password Icon",
+                        tint = Color.Black
+                    )
+                },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+
+                trailingIcon = {
+                    val image =
+                        if (passwordVisible) {
+                            painterResource(id = R.drawable.show_password)
+                        } else {
+                            painterResource(id = R.drawable.hide_password)
+                        }
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            painter = image,
+                            contentDescription = "Toggle password visibility",
+                            tint = Color.Black
+                        )
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Confirm Password Input
+            OutlinedTextField(
+                value = confirmPassword,
+                onValueChange = { confirmPassword = it },
+                label = {
+                    Text(
+                        stringResource(id = R.string.confirmPassword),
+                        color = Color.Black
+                    )
+                },
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.lock_icon),
+                        contentDescription = "Confirm Icon",
+                        tint = Color.Black
+                    )
+                },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+
+                trailingIcon = {
+                    val image =
+                        if (passwordVisible) {
+                            painterResource(id = R.drawable.show_password)
+                        } else {
+                            painterResource(id = R.drawable.hide_password)
+                        }
+
+                    IconButton(onClick = { passwordVisible = !passwordVisible }) {
+                        Icon(
+                            painter = image,
+                            contentDescription = "Toggle password visibility",
+                            tint = Color.Black
+                        )
+                    }
+                }
+            )
+
+            Spacer(modifier = Modifier.height(32.dp))
+
+
+            when (authState) {
+                is SignUpState.Loading -> CircularProgressIndicator(
+                    modifier = Modifier.align(
+                        Alignment.CenterHorizontally
+                    )
+                )
+
+                is SignUpState.Error -> Text(
+                    text = (authState as LoginState.Error).message,
+                    color = MaterialTheme.colorScheme.error
+                )
+
+                else -> {
+                    Button(
+                        onClick = {
+                            viewModel.signUp(email, password,
+                                onSignUpSuccess = {
+                                    Toast.makeText(
+                                        context,
+                                        "Sign Up Successful",
+                                        Toast.LENGTH_SHORT
+                                    ).show()
+                                }
+                            )
+                            navController.navigate("login")
+                        },
+
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.signUp),
+                            color = Color.White,
+                            fontSize = 18.sp
+                        )
+                    }
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Sign In Text
+            TextButton(onClick = { navController.navigate("login") }) {
+                Row(
+                    horizontalArrangement = Arrangement.Center,
+                    verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = stringResource(id = R.string.signUp),
-                        color = Color.White,
-                        fontSize = 18.sp
+                        text = stringResource(id = R.string.alreadyHaveAnAccount),
+                        fontSize = 16.sp,
+                        color = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = stringResource(id = R.string.signIn),
+                        fontSize = 16.sp,
+                        color = colorResource(id = R.color.appColor)
                     )
                 }
             }
-        }
 
-        Spacer(modifier = Modifier.height(16.dp))
-
-        // Sign In Text
-        TextButton(onClick = { navController.navigate("login") }) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Text(
-                    text = stringResource(id = R.string.alreadyHaveAnAccount),
-                    fontSize = 16.sp,
-                    color = Color.Black
-                )
-                Spacer(modifier = Modifier.width(8.dp))
-                Text(
-                    text = stringResource(id = R.string.signIn),
-                    fontSize = 16.sp,
-                    color = colorResource(id = R.color.appColor)
-                )
+            errorMessage?.let {
+                Text(text = it, color = Color.Red)
             }
-        }
 
-        errorMessage?.let {
-            Text(text = it, color = Color.Red)
         }
-
     }
-
 }
 

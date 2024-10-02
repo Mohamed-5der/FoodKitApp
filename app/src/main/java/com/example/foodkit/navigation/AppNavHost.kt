@@ -28,6 +28,7 @@ fun AppNavigation(navController: NavHostController) {
     } else {
         Routes.LOGIN
     }
+
     NavHost(navController = navController, startDestination = startDestination ) {
 
         composable(Routes.LOGIN) { LoginScreen(navController) }

@@ -1,5 +1,6 @@
 R_DEF: Internal format may change without notice
 local
+color appColor
 color black
 color purple_200
 color purple_500
@@ -7,17 +8,39 @@ color purple_700
 color teal_200
 color teal_700
 color white
+drawable email_icon
+drawable hide_password
 drawable ic_launcher_background
 drawable ic_launcher_foreground
+drawable lock_icon
+drawable name_icon
+drawable show_password
 mipmap ic_launcher
 mipmap ic_launcher_round
+string alreadyHaveAnAccount
 string app_name
+string confirmPassword
+string createAnAccount
+string dontHaveAnAccount
+string email
+string forgotPassword
+string forgotPassword_
 string gcm_defaultSenderId
 string google_api_key
 string google_app_id
 string google_crash_reporting_api_key
 string google_storage_bucket
+string iAgreeTerms
+string login
+string password
+string phoneNumber
 string project_id
+string putYourDataHere
+string signIn
+string signUp
+string thankYouForChoosingUs
+string userName
+string welcomeBack
 style Theme.FoodKit
 xml backup_rules
 xml data_extraction_rules

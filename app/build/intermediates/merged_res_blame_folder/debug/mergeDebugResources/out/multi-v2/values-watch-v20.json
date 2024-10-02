@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.foodkit.app-mergeDebugResources-73:/values-watch-v20/values-watch-v20.xml",
+            "outputFile": "com.example.foodkit.app-mergeDebugResources-69:/values-watch-v20/values-watch-v20.xml",
             "map": [
                 {
                     "source": "C:\\Users\\XPRISTO\\.gradle\\caches\\transforms-4\\dbea828cf721755a4072ff4a1959c06e\\transformed\\play-services-auth-20.7.0\\res\\values-watch-v20\\values.xml",

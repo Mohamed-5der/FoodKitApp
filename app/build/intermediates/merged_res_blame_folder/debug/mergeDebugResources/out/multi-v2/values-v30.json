@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.foodkit.app-mergeDebugResources-73:/values-v30/values-v30.xml",
+            "outputFile": "com.example.foodkit.app-mergeDebugResources-69:/values-v30/values-v30.xml",
             "map": [
                 {
                     "source": "C:\\Users\\XPRISTO\\.gradle\\caches\\transforms-4\\7abb835afde8d92bdcd5729105248b28\\transformed\\material3-release\\res\\values-v30\\values-v30.xml",

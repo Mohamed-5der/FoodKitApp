@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="appColor">#FFFE8C00</color>
     <color name="black">#FF000000</color>
     <color name="purple_200">#FFBB86FC</color>
     <color name="purple_500">#FF6200EE</color>
@@ -7,12 +8,29 @@
     <color name="teal_200">#FF03DAC5</color>
     <color name="teal_700">#FF018786</color>
     <color name="white">#FFFFFFFF</color>
+    <string name="alreadyHaveAnAccount">Already have an account?</string>
     <string name="app_name">FoodKit</string>
+    <string name="confirmPassword">Confirm Password</string>
+    <string name="createAnAccount">Create an account to Start looking for the food you like</string>
+    <string name="dontHaveAnAccount">Don\'t have an account?</string>
+    <string name="email">Email</string>
+    <string name="forgotPassword">Forgot Password</string>
+    <string name="forgotPassword_">Forgot Password?</string>
     <string name="gcm_defaultSenderId" translatable="false">859539341793</string>
     <string name="google_api_key" translatable="false">AIzaSyCwgouZmZlTH3FLVGXJdZ_2YJPE-jDv5Cc</string>
     <string name="google_app_id" translatable="false">1:859539341793:android:9971d392486d538439d2a0</string>
     <string name="google_crash_reporting_api_key" translatable="false">AIzaSyCwgouZmZlTH3FLVGXJdZ_2YJPE-jDv5Cc</string>
     <string name="google_storage_bucket" translatable="false">application-2f326.appspot.com</string>
+    <string name="iAgreeTerms"> I Agree with Terms of Service and Privacy policy </string>
+    <string name="login">Login</string>
+    <string name="password">Password</string>
+    <string name="phoneNumber">Phone Number</string>
     <string name="project_id" translatable="false">application-2f326</string>
+    <string name="putYourDataHere">Put your data here</string>
+    <string name="signIn">Sign In</string>
+    <string name="signUp">Sign Up</string>
+    <string name="thankYouForChoosingUs">Thank you for choosing us!</string>
+    <string name="userName">User Name</string>
+    <string name="welcomeBack">Welcome Back !</string>
     <style name="Theme.FoodKit" parent="android:Theme.Material.Light.NoActionBar"/>
 </resources>

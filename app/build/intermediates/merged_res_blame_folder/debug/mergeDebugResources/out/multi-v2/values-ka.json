@@ -1,7 +1,7 @@
 {
     "logs": [
         {
-            "outputFile": "com.example.foodkit.app-mergeDebugResources-73:/values-ka/values-ka.xml",
+            "outputFile": "com.example.foodkit.app-mergeDebugResources-69:/values-ka/values-ka.xml",
             "map": [
                 {
                     "source": "C:\\Users\\XPRISTO\\.gradle\\caches\\transforms-4\\0c44a9631574bd014bb80332ef107903\\transformed\\core-1.13.1\\res\\values-ka\\values-ka.xml",
