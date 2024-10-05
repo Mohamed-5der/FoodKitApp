@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
     alias(libs.plugins.compose.compiler)
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -49,6 +51,7 @@ android {
 }
 
 dependencies {
+    val room_version = "2.6.1"
 
     implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
     implementation("com.google.firebase:firebase-analytics")
@@ -63,6 +66,16 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.7.0")
     //fireStorage
     implementation("com.google.firebase:firebase-storage-ktx:20.1.0")
+
+    //room Database
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
 
 
 
