@@ -3,6 +3,8 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     id("com.google.gms.google-services")
     alias(libs.plugins.compose.compiler)
+    id("kotlin-kapt")
+
 }
 
 android {
@@ -38,12 +40,7 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-    buildFeatures {
-        compose = true
-    }
-    composeOptions {
-        kotlinCompilerExtensionVersion = "1.5.1"
-    }
+
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -54,6 +51,7 @@ android {
 }
 
 dependencies {
+    val room_version = "2.6.1"
 
     //navigator voyager
     val voyagerVersion = "1.1.0-beta02"
@@ -78,6 +76,23 @@ dependencies {
 
     //Koin
     implementation(libs.bundles.koin)
+
+    //coil
+    implementation("io.coil-kt:coil-compose:2.7.0")
+    //fireStorage
+    implementation("com.google.firebase:firebase-storage-ktx:20.1.0")
+
+    //room Database
+
+    implementation("androidx.room:room-runtime:$room_version")
+    annotationProcessor("androidx.room:room-compiler:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    implementation("androidx.room:room-ktx:2.6.1")
+
+    // optional - Kotlin Extensions and Coroutines support for Room
+    implementation("androidx.room:room-ktx:$room_version")
+
+
 
     //Compose navigation
     implementation(libs.navigation.compose)
