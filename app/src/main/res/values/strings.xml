@@ -22,6 +22,20 @@
     <string name="forgotPassword">Forgot Password</string>
     <string name="dontHaveAnAccount">Don\'t have an account?</string>
 
+    <string name="home">Home</string>
+    <string name="cart">Cart</string>
+    <string name="findByCategory">Find By Category</string>
+    <string name="search">Search</string>
+    <string name="wish_list">Wish List</string>
+    <string name="profile">Profile</string>
+    <string name="product">Product</string>
+    <string name="viewAll">View All</string>
+    <string name="addToCart">Add To Cart</string>
+    <string name="continueShopping">Continue Shopping</string>
+    <string name="checkout">Checkout</string>
+    <string name="clothes">Clothes</string>
+    <string name="sports">Sports</string>
+
 
 
 

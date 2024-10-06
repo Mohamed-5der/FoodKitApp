@@ -59,6 +59,17 @@ dependencies {
     val voyagerVersion = "1.1.0-beta02"
     implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
 
+    //pager
+    implementation ("com.google.accompanist:accompanist-pager:0.30.1")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+
+    // Coil -- Online Image Loader
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+    //Location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
     implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-analytics")
 

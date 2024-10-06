@@ -67,6 +67,7 @@ fun LoginScreen(
     val authState by viewModel.loginStateFlow.collectAsState()
 
 
+
     Column(
         modifier = Modifier
             .verticalScroll(rememberScrollState())
@@ -161,13 +162,19 @@ fun LoginScreen(
             text = stringResource(id = R.string.forgotPassword_),
             modifier = Modifier
                 .align(Alignment.End)
-                .clickable { /* navigator.push(ForgotPasswordScreen()) */ },
+                .clickable {  },
             color = Color.Black
         )
 
 
 
+
         Spacer(modifier = Modifier.height(32.dp))
+
+        errorMessage?.let {
+            Text(text = it, color = Color.Red)
+
+        }
 
         when (authState) {
             is LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
@@ -221,9 +228,6 @@ fun LoginScreen(
             }
         }
 
-        errorMessage?.let {
-            Text(text = it, color = Color.Red)
 
-        }
     }
 }

@@ -5,5 +5,6 @@ object Routes {
     const val SIGNUP = "signup"
     const val MAIN = "main"
     const val MASTER = "master"
+    const val PRODUCT_DETAILS = "product_details"
 
 }

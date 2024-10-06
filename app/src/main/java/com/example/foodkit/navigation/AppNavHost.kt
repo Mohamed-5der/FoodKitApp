@@ -8,6 +8,7 @@ import com.example.foodkit.Constants
 import com.example.foodkit.presentation.view.LoginScreen
 import com.example.foodkit.presentation.view.MainScreen
 import com.example.foodkit.presentation.view.MasterScreen
+import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.view.SignUpScreen
 import com.google.firebase.auth.FirebaseAuth
 
@@ -32,5 +33,8 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.MAIN) { MainScreen(navController) }
 
         composable(Routes.MASTER) { MasterScreen(navController) }
+
+        composable(Routes.PRODUCT_DETAILS) { ProductDetailsScreen() }
+
     }
 }
