@@ -38,7 +38,12 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
-
+    buildFeatures {
+        compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.5.1"
+    }
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -50,7 +55,22 @@ android {
 
 dependencies {
 
-    implementation(platform("com.google.firebase:firebase-bom:33.4.0"))
+    //navigator voyager
+    val voyagerVersion = "1.1.0-beta02"
+    implementation("cafe.adriel.voyager:voyager-navigator:$voyagerVersion")
+
+    //pager
+    implementation ("com.google.accompanist:accompanist-pager:0.30.1")
+    implementation ("com.google.accompanist:accompanist-pager-indicators:0.30.1")
+
+    // Coil -- Online Image Loader
+    implementation("io.coil-kt:coil-compose:2.7.0")
+
+    //Location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+
+
+    implementation(platform("com.google.firebase:firebase-bom:33.3.0"))
     implementation("com.google.firebase:firebase-analytics")
 
     implementation("com.google.firebase:firebase-auth")
@@ -58,13 +78,6 @@ dependencies {
 
     //Koin
     implementation(libs.bundles.koin)
-
-    //coil
-    implementation("io.coil-kt:coil-compose:2.7.0")
-    //fireStorage
-    implementation("com.google.firebase:firebase-storage-ktx:20.1.0")
-
-
 
     //Compose navigation
     implementation(libs.navigation.compose)

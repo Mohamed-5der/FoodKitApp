@@ -22,4 +22,18 @@
     <string name="forgotPassword_">هل نسيت كلمة المرور؟</string>
     <string name="forgotPassword">نسيت كلمة المرور</string>
     <string name="dontHaveAnAccount">أليس لديك حساب؟</string>
+
+    <string name="home">الرئيسية</string>
+    <string name="cart">السلة</string>
+    <string name="findByCategory">البحث حسب الفئة</string>
+    <string name="search">بحث</string>
+    <string name="wish_list">القائمة المفضله</string>
+    <string name="profile">الملف الشخصي</string>
+    <string name="product">المنتج</string>
+    <string name="viewAll">عرض الكل</string>
+    <string name="addToCart">أضف إلى السلة</string>
+    <string name="continueShopping">مواصلة التسوق</string>
+    <string name="checkout">الدفع</string>
+    <string name="clothes">الملابس</string>
+    <string name="sports">الرياضة</string>
 </resources>

@@ -23,7 +23,7 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoodKitTheme {
-                Surface(color = MaterialTheme.colorScheme.background) {
+                Surface( /*color = MaterialTheme.colorScheme.background */) {
                     val navController = rememberNavController()
                     AppNavigation(navController)
                 }
