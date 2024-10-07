@@ -34,13 +34,14 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
                         val foodWithId = foodWithImage.copy(id = documentReference.id)
                         db.collection("foods").document(documentReference.id).set(foodWithId)
                             .addOnSuccessListener {
-                                // بعد إضافة الطعام إلى Collection العامة, أضفه إلى التصنيف المحدد
-                                db.collection("categories").document(categoryId).collection("foods").document(foodWithId.id).set(foodWithId)
+                                // بعد إضافة الطعام إلى Collection العامة, أضف فقط مرجع (ID الطعام) إلى التصنيف المحدد
+                                val foodReference = mapOf("foodId" to foodWithId.id)
+                                db.collection("categories").document(categoryId).collection("foods").document(foodWithId.id).set(foodReference)
                                     .addOnSuccessListener {
-                                        Log.d("Firestore", "Food added to category with ID: ${categoryId}")
+                                        Log.d("Firestore", "Food reference added to category with ID: ${categoryId}")
                                         onSuccess()
                                     }.addOnFailureListener { e ->
-                                        Log.w("Firestore", "Error adding food to category", e)
+                                        Log.w("Firestore", "Error adding food reference to category", e)
                                         onFailure(e)
                                     }
                             }.addOnFailureListener { e ->
@@ -58,6 +59,7 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             onFailure(e)
         }
     }
+
 
 
     fun getFoodById(foodId: String, onFoodLoaded: (Food) -> Unit, onFailure: (Exception) -> Unit) {
@@ -102,9 +104,6 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             Log.e("Firestore", "Error submitting rating", exception)
         }
     }
-
-
-
 
     fun getUserRating(foodId: String, userId: String, onSuccess: (Float?) -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("food_ratings").document("$foodId-$userId").get()

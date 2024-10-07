@@ -1,15 +1,12 @@
 package com.example.foodkit.presentation.view
 
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
@@ -22,6 +19,7 @@ fun CategoryListScreen(
     navController: NavController,
     viewModel: CategoryViewModel = koinViewModel()
 ) {
+    val categories = viewModel.categories.collectAsState(initial = emptyList())
     // تحميل التصنيفات عند بدء تشغيل الشاشة
     LaunchedEffect(Unit) {
         viewModel.loadCategories()
@@ -32,8 +30,8 @@ fun CategoryListScreen(
             .fillMaxSize()
             .padding(16.dp)
     ) {
-        items(viewModel.categories) { category ->
-            CategoryCard(category , onClick = {} )
+        items(categories.value) { category ->
+            CategoryCard(category , onClick = {navController.navigate("categoryDetail/${category.name}")} )
         }
     }
 }

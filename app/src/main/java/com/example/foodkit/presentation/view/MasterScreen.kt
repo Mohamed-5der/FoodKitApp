@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.*
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +36,7 @@ fun MasterScreen(navController: NavController) {
     val categoryViewModel : CategoryViewModel = koinViewModel()
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
+    val categories by categoryViewModel.categories.collectAsState()
 
     LaunchedEffect(Unit) {
         categoryViewModel.loadCategories()
@@ -87,7 +89,7 @@ fun MasterScreen(navController: NavController) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            categoryViewModel.categories.forEach { category ->
+            categories.forEach { category ->
                 DropdownMenuItem(
                     text = { Text(text = category.name) },
                     onClick = {
@@ -110,10 +112,17 @@ fun MasterScreen(navController: NavController) {
         Button(onClick = { navController.navigate(Routes.ADD_CATEGORY) }) {
             Text("Add Category")
         }
+
         Spacer(modifier = Modifier.height(16.dp))
+
         Button(onClick = { navController.navigate(Routes.CATEGORY_LIST) }) {
             Text("Category List Screen")
         }
+
+        Button(onClick = { navController.navigate(Routes.ORDERS_LIST) }) {
+            Text("View Orders")
+        }
+
     }
 }
 

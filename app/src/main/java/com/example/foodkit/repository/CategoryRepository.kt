@@ -1,6 +1,8 @@
 package com.example.foodkit.repository
 
 import android.net.Uri
+import android.util.Log
+import com.google.android.gms.tasks.Tasks
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.core.component.KoinComponent
@@ -36,7 +38,27 @@ class CategoryRepository(private val db: FirebaseFirestore, private val storage:
             .addOnSuccessListener { documents ->
                 val categories = documents.map { it.toObject(Category::class.java) }
                 onSuccess(categories)
-            }
-            .addOnFailureListener(onFailure)
+            }.addOnFailureListener(onFailure)
     }
+
+    fun getFoodsByCategory(categoryId: String, onSuccess: (List<Food>) -> Unit, onFailure: (Exception) -> Unit) {
+        db.collection("categories").document(categoryId).collection("foods").get()
+            .addOnSuccessListener { querySnapshot ->
+                val foodIds = querySnapshot.documents.mapNotNull { it.getString("foodId") }
+                val foodReferences = foodIds.map { id -> db.collection("foods").document(id) }
+
+                // جلب الأطعمة بناءً على معرفات (IDs)
+                db.runBatch { batch ->
+                    val tasks = foodReferences.map { ref ->
+                        ref.get().continueWith { task -> task.result?.toObject(Food::class.java) }
+                    }
+                    Tasks.whenAllComplete(tasks).addOnSuccessListener { completedTasks ->
+                        val foods = completedTasks.mapNotNull { it.result as? Food }
+                        onSuccess(foods)
+                    }.addOnFailureListener(onFailure)
+                }
+            }.addOnFailureListener(onFailure)
+    }
+
+
 }

@@ -5,6 +5,18 @@ object Routes {
     const val SIGNUP = "signup"
     const val MAIN = "main"
     const val MASTER = "master"
+    const val FOOD_DETAILS = "food_details/{itemId}"
+    const val ADD_CATEGORY = "add_category"
+    const val CATEGORY_LIST = "category_list"
+    const val CATEGORY_DETAIL = "categoryDetail/{categoryId}"
+    const val ORDERS_LIST = "orderList"
+    const val CART_FOR_TEST = "cartForTest"
+
+
+
+
+
+
     const val PRODUCT_DETAILS = "product_details"
 
 }

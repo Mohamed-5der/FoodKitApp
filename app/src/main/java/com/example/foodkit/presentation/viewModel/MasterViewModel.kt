@@ -9,17 +9,27 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
+import com.example.foodkit.repository.CartRepository
 import com.example.foodkit.repository.Food
 import com.example.foodkit.repository.FoodRepository
+import com.example.foodkit.repository.Order
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 // ViewModel for Admin Screen
-class MasterViewModel(private val repository: FoodRepository) : ViewModel() {
+class MasterViewModel(
+    private val foodRepository: FoodRepository,
+    private val cartRepository: CartRepository
+) : ViewModel() {
     var foodName by mutableStateOf(TextFieldValue(""))
     var foodDescription by mutableStateOf(TextFieldValue(""))
     var selectedImageUri by mutableStateOf<Uri?>(null)
     var foodPrice by mutableStateOf(TextFieldValue(""))
     var selectedCategory by mutableStateOf("")
+
+    private val _orders = MutableStateFlow<List<Order>>(emptyList())
+    val orders: StateFlow<List<Order>> get() = _orders
 
     fun addFoodToCategory(context: Context) {
         if (foodName.text.isBlank() || foodDescription.text.isBlank() || selectedImageUri == null || foodPrice.text.isBlank() || selectedCategory.isBlank()) {
@@ -35,7 +45,7 @@ class MasterViewModel(private val repository: FoodRepository) : ViewModel() {
         val food = Food(name = foodName.text, description = foodDescription.text, price = price)
 
         selectedImageUri?.let { imageUri ->
-            repository.addFoodToCategory(food, imageUri, price, selectedCategory, {
+            foodRepository.addFoodToCategory(food, imageUri, price, selectedCategory, {
                 // clear the form fields
                 foodName = TextFieldValue("")
                 foodDescription = TextFieldValue("")
@@ -47,5 +57,16 @@ class MasterViewModel(private val repository: FoodRepository) : ViewModel() {
                 Toast.makeText(context, "Failed to add food: ${exception.message}", Toast.LENGTH_SHORT).show()
             })
         }
+    }
+
+     fun loadOrders() {
+        cartRepository.getOrders(
+            onSuccess = { ordersList ->
+                _orders.value = ordersList
+            },
+            onFailure = { exception ->
+                Log.e("AdminViewModel", "Failed to load orders: ${exception.message}")
+            }
+        )
     }
 }

@@ -19,7 +19,7 @@ class FoodListScreenViewModel(private val repository: FoodRepository) : ViewMode
     fun loadAllFoods() {
         repository.getAllFoods(
             onSuccess = { foods ->
-                _foods.value = foods // تحديث الحالة هنا
+                _foods.value = foods // update StateFlow with loaded foods
             },
             onFailure = { exception ->
                 Log.e("Firestore", "Error loading foods", exception)

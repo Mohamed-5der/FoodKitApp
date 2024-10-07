@@ -11,11 +11,21 @@ import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.CategoryRepository
+import com.example.foodkit.repository.Food
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
 
 class CategoryViewModel(private val repository: CategoryRepository) : ViewModel() {
+
     var categoryName by mutableStateOf(TextFieldValue(""))
     var selectedImageUri by mutableStateOf<Uri?>(null)
-    var categories by mutableStateOf<List<Category>>(emptyList())
+
+    private val _categories = MutableStateFlow<List<Category>>(emptyList())
+    val categories : StateFlow<List<Category>> = _categories.asStateFlow()
+
+    private val _foodsInCategory = MutableStateFlow<List<Food>>(emptyList())
+    val foodsInCategory : StateFlow<List<Food>> = _foodsInCategory.asStateFlow()
 
 
 
@@ -45,10 +55,24 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
     fun loadCategories() {
         repository.getCategories(
             onSuccess = { loadedCategories ->
-                categories = loadedCategories
+                _categories.value = loadedCategories
             },
             onFailure = { exception ->
                 Log.e("Firestore", "Error loading categories", exception)
+            }
+        )
+    }
+
+    fun loadFoodsByCategory(categoryId: String) {
+        Log.d("ViewModel", "Loading foods for category with ID: $categoryId")
+        repository.getFoodsByCategory(
+            categoryId,
+            onSuccess = { loadedFoods ->
+                Log.d("ViewModel", "Foods loaded successfully: ${loadedFoods.size}")
+                _foodsInCategory.value = loadedFoods
+            },
+            onFailure = { exception ->
+                Log.e("ViewModel", "Error loading foods for category", exception)
             }
         )
     }
