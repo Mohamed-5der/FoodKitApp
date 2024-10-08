@@ -162,7 +162,7 @@ fun LoginScreen(
             text = stringResource(id = R.string.forgotPassword_),
             modifier = Modifier
                 .align(Alignment.End)
-                .clickable {  },
+                .clickable { },
             color = Color.Black
         )
 
@@ -178,7 +178,26 @@ fun LoginScreen(
 
         when (authState) {
             is LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
-            is LoginState.Error -> Text(text = (authState as LoginState.Error).message, color = MaterialTheme.colorScheme.error)
+            is LoginState.Error -> {
+                Column {
+                    Text(text = (authState as LoginState.Error).message, color = MaterialTheme.colorScheme.error)
+                    Button(
+                        onClick = { viewModel.login(email, password) },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(50.dp),
+                        shape = RoundedCornerShape(12.dp),
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+                    ) {
+                        Text(
+                            text = stringResource(id = R.string.signIn),
+                            color = Color.White,
+                            fontSize = 18.sp
+                        )
+                    }
+                }
+            }
+
             is LoginState.AdminSuccess -> {
                 LaunchedEffect(Unit) {
                     navController.navigate(Routes.MASTER)

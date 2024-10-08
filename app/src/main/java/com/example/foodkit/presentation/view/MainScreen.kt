@@ -2,10 +2,14 @@ package com.example.foodkit.presentation.view
 
 import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Arrangement.Top
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -21,8 +25,10 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -40,9 +46,9 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
-import com.example.foodkit.R
 import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
+import com.example.foodkit.R
 import com.example.foodkit.presentation.view.navigation.CartScreenContent
 import com.example.foodkit.presentation.view.navigation.FavoriteScreenContent
 import com.example.foodkit.presentation.view.navigation.HomeScreenContent
@@ -67,8 +73,10 @@ fun Home() {
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val selectedIndex = remember { mutableIntStateOf(0) }
 
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
+        topBar = { HomeTopAppBar() },
         bottomBar = {
 
             BottomNavigation(
@@ -180,6 +188,7 @@ fun Home() {
 
             }
         }
+
     ) { paddingValues ->
         // Screen content
         Column(
@@ -290,3 +299,4 @@ fun FoodListScreen(
         }
     }
 }
+

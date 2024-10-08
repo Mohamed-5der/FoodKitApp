@@ -13,5 +13,6 @@ data class FavoriteFood(
     val price: Double,
     val category: String,
     val rating: Double,
-    val isFavorite: Boolean
+    val isFavorite: Boolean,
+    val numberRating: Int
 )

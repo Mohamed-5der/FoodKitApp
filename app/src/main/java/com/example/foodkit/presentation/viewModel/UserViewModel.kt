@@ -4,10 +4,14 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodkit.local.UserDao
 import com.example.foodkit.model.User
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
 
 class UserViewModel(private val userDao: UserDao) : ViewModel() {
+    private val _user = MutableStateFlow<User?>(null)
+    val user: StateFlow<User?> get() = _user
 
     fun addUser(name: String, email: String, phoneNumber: String, imageUrl: String) {
         viewModelScope.launch {
@@ -29,7 +33,10 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         }
     }
 
-    suspend fun getUserByEmail(email: String): User? {
-        return userDao.getUserByEmail(email)
+     fun getUserByEmail(email: String){
+         viewModelScope.launch {
+             _user.value = userDao.getUserByEmail(email)
+         }
+
     }
 }

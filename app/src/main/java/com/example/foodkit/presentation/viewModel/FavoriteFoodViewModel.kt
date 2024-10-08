@@ -21,7 +21,7 @@ class FavoriteFoodViewModel(private val favoriteFoodDao: FavoriteFoodDao) : View
 
     fun addFavoriteFood(name: String, description: String, userId: Int, imageUrl: String, price: Double, category: String, rating: Double) {
         viewModelScope.launch {
-            val newFood = FavoriteFood(name = name, description = description, userId = userId, imageUrl = imageUrl, price = price, category = category, rating = rating, isFavorite = true)
+            val newFood = FavoriteFood(name = name, description = description, userId = userId, imageUrl = imageUrl, price = price, category = category, rating = rating, isFavorite = true, numberRating = 0)
             favoriteFoodDao.insert(newFood)
             _favoriteFoods.value = favoriteFoodDao.getFavoriteFoodsForUser(userId)
         }
