@@ -25,6 +25,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -270,5 +271,23 @@ fun HomeTopAppBar() {
 }
 
 
+@Composable
+fun FoodListScreen(navController: NavController) {
+    val viewModel: FoodListScreenViewModel = koinViewModel()
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        viewModel.foods.collectAsState().value.forEach { food ->
+            Text(text = "Name: ${food.name}, Description: ${food.description}")
+        }
+
+        Button(onClick = { navController.navigate(Routes.LOGIN) }) {
+            Text("Logout")
+        }
+    }
 
 
+}

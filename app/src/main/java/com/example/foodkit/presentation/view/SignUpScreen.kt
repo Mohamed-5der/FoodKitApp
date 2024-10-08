@@ -47,9 +47,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foodkit.R
+import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LoginState
 import com.example.foodkit.presentation.viewModel.SignUpState
 import com.example.foodkit.presentation.viewModel.SignUpViewModel
+import com.example.foodkit.presentation.viewModel.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -58,6 +60,7 @@ fun SignUpScreen(
 ) {
     // Initialize ViewModel
     val viewModel: SignUpViewModel = koinViewModel()
+    val viewModelDb : UserViewModel = koinViewModel()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -248,9 +251,10 @@ fun SignUpScreen(
                                         "Sign Up Successful",
                                         Toast.LENGTH_SHORT
                                     ).show()
+                                    viewModelDb.addUser(name = userName, email = email, phoneNumber = "", imageUrl = "")
+                                    navController.navigate(Routes.MAIN)
                                 }
                             )
-                            navController.navigate("login")
                         },
 
                         modifier = Modifier
