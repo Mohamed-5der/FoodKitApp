@@ -1,6 +1,7 @@
 package com.example.foodkit.presentation.view.navigation
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -15,16 +16,19 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CardElevation
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -44,16 +48,13 @@ import coil.compose.AsyncImage
 import com.example.foodkit.R
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CartScreenContent() {
     val context = LocalContext.current
     val errorMessage by remember { mutableStateOf<String?>(null) }
 
 
-    Surface(
-        modifier = Modifier.fillMaxSize(),
-        color = colorResource(id = R.color.secondaryColor)
-    ){
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -61,15 +62,37 @@ fun CartScreenContent() {
                 .background(colorResource(id = R.color.secondaryColor))
 
         ) {
-            Text(
-                "My Cart",
-                fontSize = 24.sp,
-                color = Color.Black,
-                fontWeight = FontWeight.Medium,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .align(Alignment.CenterHorizontally)
+            TopAppBar(
+                modifier = Modifier.background(Color.White),
+                title = { Text(text = stringResource(id = R.string.myCart)) },
+                navigationIcon = {
+                    IconButton(onClick = {} ) {
+                        Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                    }
+                }
             )
+        /*    Row {
+                IconButton(onClick = { /* Handle back button click */ }) {
+                    Icon(
+                        Icons.Default.ArrowBack,
+                        contentDescription = "Back",
+                        tint = Color.Black
+                    )
+                    }
+                Spacer(modifier = Modifier.width(4.dp))
+                Text(
+                    "My Cart",
+                    fontSize = 24.sp,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier
+                        .padding(8.dp)
+                )
+
+            }
+
+         */
+
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn (
@@ -89,7 +112,6 @@ fun CartScreenContent() {
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(vertical = 8.dp)
                                 .background(Color.White, shape = RoundedCornerShape(8.dp)),
                             verticalAlignment = Alignment.CenterVertically
                         ) {
@@ -118,13 +140,16 @@ fun CartScreenContent() {
                                 onClick = { },
                                 modifier = Modifier
                                     .padding(4.dp)
-                                    .background(color = Color.Gray, shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = Color.Gray,
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
                                     .size(24.dp)
                             ) {
                                 Icon(
-                                    Icons.Default.Clear,
-                                    contentDescription = "Plus",
-                                    tint = Color.White
+                                    painter =  painterResource(id = R.drawable.minus_icon),
+                                    tint = Color.White,
+                                    contentDescription = "Decrease quantity"
 
                                 )
 
@@ -135,7 +160,10 @@ fun CartScreenContent() {
                             IconButton(onClick = { },
                                 modifier = Modifier
                                     .padding(4.dp)
-                                    .background(color = colorResource(id = R.color.appColor), shape = RoundedCornerShape(8.dp))
+                                    .background(
+                                        color = colorResource(id = R.color.appColor),
+                                        shape = RoundedCornerShape(8.dp)
+                                    )
                                     .size(24.dp)
 
                             ) {
@@ -165,6 +193,6 @@ fun CartScreenContent() {
                 )
             }
         }
-    }
+
 
 }

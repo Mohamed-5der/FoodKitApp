@@ -30,13 +30,16 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -62,10 +65,12 @@ import androidx.navigation.compose.rememberNavController
 import coil.compose.AsyncImage
 import com.example.foodkit.R
 import com.example.foodkit.navigation.Routes
+import com.example.foodkit.presentation.view.HomeTopAppBar
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.repository.Food
 
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeScreenContent() {
     val context = LocalContext.current
@@ -82,6 +87,12 @@ fun HomeScreenContent() {
                 .background(colorResource(id = R.color.secondaryColor))
 
         ) {
+            TopAppBar(
+                modifier = Modifier
+                    .background(Color.White)
+                    .fillMaxSize(),
+                title = { HomeTopAppBar() }
+                )
 
             SearchBar()
 
@@ -317,6 +328,7 @@ fun CategoriesSection() {
 @Composable
 fun ProductSection() {
     val navController = rememberNavController()
+    
 
     data class Product(
         val name: String,
@@ -328,9 +340,9 @@ fun ProductSection() {
         )
 
     val allProducts = listOf(
-        Product("Food", R.drawable.food_photo, 10.0, false, false),
-        Product("Drinks", R.drawable.onboarding_photo2, 15.0, false, false),
-        Product("Desserts", R.drawable.onboarding_photo3, 20.0, false, false),
+        Product("Food Good", R.drawable.food_photo, 49.99, false, false),
+        Product("Drinks", R.drawable.onboarding_photo2, 55.90, false, false),
+        Product("Desserts", R.drawable.onboarding_photo3, 99.90, false, false),
         Product("Berger", R.drawable.onboarding_photo3, 20.0, false, false),
         Product("Rab", R.drawable.onboarding_photo3, 20.0, false, false),
         Product("Meet", R.drawable.onboarding_photo3, 20.0, false, false),
@@ -373,7 +385,6 @@ fun ProductSection() {
                                 .background(Color.White, shape = RoundedCornerShape(8.dp))
                                 .padding(8.dp)
                         ) {
-                            Box {
                                 Image(
                                     painter = painterResource(id = product.image),
                                     contentDescription = null,
@@ -386,45 +397,45 @@ fun ProductSection() {
 
 
                                 )
-                                Spacer(Modifier.height(15.dp))
+                            Row(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(4.dp),
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ) {
+                                // Price
+                                Text(
+                                    text = "$${product.price}",
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.Black,
+                                    fontSize = 16.sp,
+//                                    modifier = Modifier.padding(top = 4.dp)
+                                )
 
+
+                                // Favorite icon
                                 IconButton(
                                     onClick = { product.isFavorite = !product.isFavorite },
-                                    modifier = Modifier
-                                        .align(Alignment.TopEnd)
-                                        .padding(4.dp)
-                                        .background(Color.White, shape = CircleShape)
-                                        .size(24.dp)
+                                    modifier = Modifier.size(24.dp)
                                 ) {
                                     Icon(
                                         painter = if (product.isFavorite) painterResource(id = R.drawable.favorite_se) else
-                                            painterResource(
-                                                id = R.drawable.favorite_un
-                                            ),
+                                            painterResource(id = R.drawable.favorite_un),
                                         tint = Color.Red,
                                         contentDescription = "Favorite"
                                     )
-
                                 }
                             }
 
                             // Product name
                             Text(
+                                modifier = Modifier.padding(top = 4.dp, start = 4.dp),
                                 text = product.name,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
-                                fontSize = 14.sp,
-                                modifier = Modifier.padding(4.dp)
+                                fontSize = 14.sp
                             )
-                            // Price
-                            Text(
-                                text = product.price.toString(),
-                                fontWeight = FontWeight.Bold,
-                                color = Color.Black,
-                                fontSize = 16.sp,
-                                modifier = Modifier.padding(top = 4.dp)
-                            )
-
 
                             // Seller and rating
                             Row(

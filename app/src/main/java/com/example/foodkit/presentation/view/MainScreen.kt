@@ -2,13 +2,14 @@ package com.example.foodkit.presentation.view
 
 import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Arrangement.Top
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.BottomNavigation
 import androidx.compose.material.BottomNavigationItem
@@ -21,6 +22,8 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -38,6 +41,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foodkit.R
+import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.view.navigation.CartScreenContent
 import com.example.foodkit.presentation.view.navigation.FavoriteScreenContent
@@ -63,17 +67,16 @@ fun Home() {
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val selectedIndex = remember { mutableIntStateOf(0) }
 
-
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { HomeTopAppBar() },
         bottomBar = {
 
             BottomNavigation(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clip(RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp)),
-                backgroundColor = colorResource(id = R.color.secondaryColor)
+                    .padding(bottom = 12.dp)
+                    .clip(RoundedCornerShape( 20.dp)),
+                backgroundColor = Color.White
             ) {
 
                 BottomNavigationItem(
@@ -81,7 +84,8 @@ fun Home() {
                         Icon(
                             modifier = Modifier
                                 .weight(1f)
-                                .size(35.dp),
+                                .size(35.dp)
+                                .padding(vertical = 4.dp),
                             painter = painterResource(id = R.drawable.home_un),
                             contentDescription = "Home Icon",
                             tint = if (selectedIndex.intValue == 0) colorResource(id = R.color.appColor) else Color.Black
@@ -105,7 +109,8 @@ fun Home() {
                         Icon(
                             modifier = Modifier
                                 .weight(1f)
-                                .size(35.dp),
+                                .size(35.dp)
+                                .padding(vertical = 4.dp),
                             painter = painterResource(id = R.drawable.cart_un),
                             contentDescription = "Cart Icon",
                             tint = if (selectedIndex.intValue == 1) colorResource(id = R.color.appColor) else Color.Black
@@ -129,7 +134,8 @@ fun Home() {
                         Icon(
                             modifier = Modifier
                                 .weight(1f)
-                                .size(35.dp),
+                                .size(35.dp)
+                                .padding(vertical = 4.dp),
                             painter = painterResource(id = R.drawable.favorite_un),
                             contentDescription = "Favorite Icon",
                             tint = if (selectedIndex.intValue == 2) colorResource(id = R.color.appColor) else Color.Black
@@ -152,7 +158,8 @@ fun Home() {
                         Icon(
                             modifier = Modifier
                                 .weight(1f)
-                                .size(35.dp),
+                                .size(35.dp)
+                                .padding(vertical = 4.dp),
                             painter = painterResource(id = R.drawable.profile_un),
                             contentDescription = "Profile Icon",
                             tint = if (selectedIndex.intValue == 3) colorResource(id = R.color.appColor) else Color.Black
@@ -173,7 +180,6 @@ fun Home() {
 
             }
         }
-
     ) { paddingValues ->
         // Screen content
         Column(
@@ -206,6 +212,7 @@ fun Home() {
 @Composable
 fun HomeTopAppBar() {
     TopAppBar(
+        modifier = Modifier.fillMaxSize(),
 
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.secondaryColor)
@@ -264,24 +271,22 @@ fun HomeTopAppBar() {
     )
 }
 
-
 @Composable
-fun FoodListScreen(navController: NavController) {
-    val viewModel: FoodListScreenViewModel = koinViewModel()
+fun FoodListScreen(
+    navController: NavController,
+    viewModel: FoodListScreenViewModel = koinViewModel()) {
 
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        viewModel.foods.forEach { food ->
-            Text(text = "Name: ${food.name}, Description: ${food.description}")
-        }
+    val foods by viewModel.foods.collectAsState(initial = emptyList())
 
-        Button(onClick = { navController.navigate(Routes.LOGIN) }) {
-            Text("Logout")
-        }
+    LaunchedEffect(Unit) {
+        viewModel.loadAllFoods() // Load foods when the screen is displayed
     }
 
-
+    LazyColumn (
+        modifier = Modifier.fillMaxSize().padding(16.dp)
+    ) {
+        items(foods) { food ->
+            FoodCard(food = food, navController = navController)
+        }
+    }
 }

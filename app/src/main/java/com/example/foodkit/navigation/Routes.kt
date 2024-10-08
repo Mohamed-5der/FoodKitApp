@@ -6,5 +6,8 @@ object Routes {
     const val MAIN = "main"
     const val MASTER = "master"
     const val PRODUCT_DETAILS = "product_details"
+    const val FOOD_DETAILS = "food_details/{itemId}"
+    const val ADD_CATEGORY = "add_category"
+    const val CATEGORY_LIST = "category_list"
 
 }
