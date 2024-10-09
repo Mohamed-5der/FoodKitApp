@@ -4,7 +4,9 @@
     <string name="createAnAccount">Create an account to Start looking for the food you like</string>
 
 
+
     <string name="userName">User Name</string>
+    <string name="complete">Complete Profile</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
     <string name="confirmPassword">Confirm Password</string>

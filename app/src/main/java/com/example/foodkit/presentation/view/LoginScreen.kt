@@ -1,6 +1,7 @@
 package com.example.foodkit.presentation.view
 
 
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.runtime.Composable
@@ -47,9 +48,11 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foodkit.R
+import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LoginState
 import com.example.foodkit.presentation.viewModel.LoginViewModel
+import com.example.foodkit.presentation.viewModel.UserViewModel
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
@@ -57,13 +60,16 @@ fun LoginScreen(
     navController: NavController,
 ) {
     val viewModel: LoginViewModel = koinViewModel()
+    val userViewModel: UserViewModel = koinViewModel()
+
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
-
+    val appPreferences = AppPreferences(context)
+    appPreferences.init()
     val authState by viewModel.loginStateFlow.collectAsState()
 
 
@@ -206,11 +212,21 @@ fun LoginScreen(
             is LoginState.UserSuccess -> {
                 LaunchedEffect(Unit) {
                     navController.navigate(Routes.MAIN)
+
+                    userViewModel.getUserByEmail(email)
+                    val user =userViewModel.user.value
+//                    if (user == null) {
+//                        navController.navigate(Routes.MAIN)
+//                    }else {
+//                        Toast.makeText(context, user.name, Toast.LENGTH_SHORT).show()
+//                        navController.navigate(Routes.MAIN)
+//                    }
                 }
             }
             else -> {
                 Button(
-                    onClick = { viewModel.login(email, password) },
+                    onClick = { viewModel.login(email, password)
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(50.dp),

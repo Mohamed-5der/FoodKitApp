@@ -1,8 +1,15 @@
 package com.example.foodkit.presentation.view
 
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -10,11 +17,15 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
@@ -33,7 +44,9 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
@@ -46,7 +59,9 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.rememberImagePainter
 import com.example.foodkit.R
+import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LoginState
 import com.example.foodkit.presentation.viewModel.SignUpState
@@ -65,11 +80,14 @@ fun SignUpScreen(
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
     var userName by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
     var confirmPassword by remember { mutableStateOf("") }
     var passwordVisible by remember { mutableStateOf(false) }
 
     val authState by viewModel.signUpStateFlow.collectAsState()
     val context = LocalContext.current
+    val appPreferences = AppPreferences(context)
+    appPreferences.init()
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
 
@@ -140,6 +158,24 @@ fun SignUpScreen(
                     Icon(
                         painter = painterResource(id = R.drawable.email_icon),
                         contentDescription = "Email Icon",
+                        tint = Color.Black
+                    )
+                }
+            )
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                label = { Text(stringResource(id = R.string.phoneNumber), color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.name_icon),
+                        contentDescription = "Name Icon",
                         tint = Color.Black
                     )
                 }
@@ -246,12 +282,15 @@ fun SignUpScreen(
                         onClick = {
                             viewModel.signUp(email, password,
                                 onSignUpSuccess = {
+                                    Log.d("signUP","Sign Up Successful")
                                     Toast.makeText(
                                         context,
                                         "Sign Up Successful",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    viewModelDb.addUser(name = userName, email = email, phoneNumber = "", imageUrl = "")
+                                    viewModelDb.addUser(name = userName, email = email, phoneNumber = phoneNumber, imageUrl = "")
+                                    appPreferences.putString("email", email)
+                                    appPreferences.putString("userId", it)
                                     navController.navigate(Routes.MAIN)
                                 }
                             )
@@ -297,6 +336,158 @@ fun SignUpScreen(
             errorMessage?.let {
                 Text(text = it, color = Color.Red)
             }
+
+        }
+    }
+}
+@Composable
+fun CompleteSignUpScreen(
+    navController: NavController
+) {
+    val viewModelDb : UserViewModel = koinViewModel()
+    var userName by remember { mutableStateOf("") }
+    var phoneNumber by remember { mutableStateOf("") }
+    val context = LocalContext.current
+    val appPreferences = AppPreferences(context)
+    appPreferences.init()
+    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+
+    val galleryLauncher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri: Uri? ->
+        selectedImageUri = uri
+    }
+
+    Surface(
+        modifier = Modifier
+            .background(Color.White)
+            .fillMaxSize()
+    ) {
+        Column(
+            modifier = Modifier
+                .verticalScroll(rememberScrollState())
+                .fillMaxSize()
+                .padding(16.dp)
+                .background(Color.White),
+            verticalArrangement = Arrangement.Center
+        ) {
+            Spacer(modifier = Modifier.height(40.dp))
+
+            Text(
+                text = stringResource(id = R.string.thankYouForChoosingUs),
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Bold,
+                textAlign = TextAlign.Center,
+                color = Color.Black,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            )
+
+            Spacer(modifier = Modifier.height(12.dp))
+            Text(
+                text = stringResource(id = R.string.complete),
+                fontSize = 16.sp,
+                textAlign = TextAlign.Center,
+                color = Color.Gray
+            )
+            Spacer(modifier = Modifier.height(30.dp))
+
+            Box(contentAlignment = Alignment.BottomEnd) {
+                Image(
+                    painter = rememberImagePainter(
+                        data = if (selectedImageUri==null)  R.drawable.profile_image
+                        else  selectedImageUri,
+                        builder = {
+                            crossfade(true)
+                        }
+                    ),
+                    contentDescription = "Profile Image",
+                    modifier = Modifier
+                        .size(130.dp)
+                        .clip(CircleShape),
+                    contentScale = ContentScale.Crop
+                )
+
+                androidx.compose.material.IconButton(
+                    onClick = {galleryLauncher.launch("image/*") },
+                    modifier = Modifier.size(32.dp)
+                        .background(color = colorResource(id = R.color.appColor), CircleShape)
+                        .border(1.dp, Color.White, CircleShape)
+                ) {
+                    androidx.compose.material.Icon(
+                        imageVector = Icons.Default.Edit,
+                        contentDescription = "Edit",
+                        tint = Color.White
+                    )
+                }
+
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Full Name Input
+            OutlinedTextField(
+                value = userName,
+                onValueChange = { userName = it },
+                label = { Text(stringResource(id = R.string.userName), color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.name_icon),
+                        contentDescription = "Name Icon",
+                        tint = Color.Black
+                    )
+                }
+            )
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            OutlinedTextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                label = { Text(stringResource(id = R.string.phoneNumber), color = Color.Black) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(20.dp),
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                leadingIcon = {
+                    Icon(
+                        painter = painterResource(id = R.drawable.name_icon),
+                        contentDescription = "Name Icon",
+                        tint = Color.Black
+                    )
+                }
+            )
+
+
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {
+                    viewModelDb.addUser(name = userName,
+                        email = appPreferences.getString("email"),
+                        phoneNumber = phoneNumber, imageUrl = "")
+                    navController.navigate(Routes.MAIN)
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(50.dp),
+                shape = RoundedCornerShape(12.dp),
+                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+            ) {
+                Text(
+                    text = stringResource(id = R.string.signUp),
+                    color = Color.White,
+                    fontSize = 18.sp
+                )
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
 
         }
     }

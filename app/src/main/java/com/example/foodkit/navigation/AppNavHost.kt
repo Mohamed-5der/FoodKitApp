@@ -5,6 +5,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.foodkit.Constants
+import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
 import com.example.foodkit.presentation.view.MainScreen
 import com.example.foodkit.presentation.view.MasterScreen
@@ -29,6 +30,8 @@ fun AppNavigation(navController: NavHostController) {
         composable( Routes.LOGIN) { LoginScreen(navController) }
 
         composable( Routes.SIGNUP) { SignUpScreen(navController) }
+
+        composable( Routes.COMPLETE_PROFILE) { CompleteSignUpScreen(navController) }
 
         composable(Routes.MAIN) { MainScreen(navController) }
 

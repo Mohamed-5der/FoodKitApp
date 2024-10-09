@@ -6,6 +6,8 @@
 
 
     <string name="userName">اسم المستخدم</string>
+    <string name="complete">أكمل التسجيل </string>
+
     <string name="email">البريد الإلكتروني</string>
     <string name="password">كلمة المرور</string>
     <string name="confirmPassword">تأكيد كلمة المرور</string>

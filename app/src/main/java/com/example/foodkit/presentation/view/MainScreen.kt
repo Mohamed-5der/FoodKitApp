@@ -1,5 +1,6 @@
 package com.example.foodkit.presentation.view
 
+import android.annotation.SuppressLint
 import android.inputmethodservice.Keyboard
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Top
@@ -60,12 +61,15 @@ import org.koin.androidx.compose.koinViewModel
 fun MainScreen(navController: NavController) {
 //    FoodListScreen(navController)
     Home()
+//    ProfileScreenContent()
+//    FavoriteScreenContent()
 //    CartScreenContent()
 //    HomeScreenContent()
 //    ProductDetailsScreen()
 
 }
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun Home() {
 
@@ -76,7 +80,6 @@ fun Home() {
 
     Scaffold(
         modifier = Modifier.fillMaxSize(),
-        topBar = { HomeTopAppBar() },
         bottomBar = {
 
             BottomNavigation(
@@ -189,11 +192,9 @@ fun Home() {
             }
         }
 
-    ) { paddingValues ->
-        // Screen content
+    ) {
         Column(
-            modifier = Modifier
-                .padding(paddingValues)
+            modifier = Modifier.fillMaxSize()
 //                    .verticalScroll(rememberScrollState())
             ,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -221,15 +222,13 @@ fun Home() {
 @Composable
 fun HomeTopAppBar() {
     TopAppBar(
-        modifier = Modifier.fillMaxSize(),
-
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.secondaryColor)
         ),
 
         title = {
 
-            Column {
+            Column (modifier = Modifier.fillMaxSize()){
                 Text(
                     text = "Hi Ahmed Emad",
                     color = Color.Black,

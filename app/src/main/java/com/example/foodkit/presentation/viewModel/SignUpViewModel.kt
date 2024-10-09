@@ -2,6 +2,7 @@ package com.example.foodkit.presentation.viewModel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.foodkit.local.AppPreferences
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -16,14 +17,14 @@ class SignUpViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
     fun signUp(
         email: String,
         password: String,
-        onSignUpSuccess: () -> Unit
+        onSignUpSuccess: (id: String) -> Unit,
     ) {
         viewModelScope.launch {
             _signUpState.value = SignUpState.Loading
             try {
                 val result = firebaseAuth.createUserWithEmailAndPassword(email, password).await()
                 _signUpState.value = SignUpState.Success(result.user)
-                onSignUpSuccess()
+                onSignUpSuccess(result.user?.uid.toString())
             } catch (e: Exception) {
                 _signUpState.value = SignUpState.Error(e.message ?: "Error creating account")
             }

@@ -63,7 +63,6 @@ fun ProfileScreenContent() {
         ) {
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Profile Image
             Box(contentAlignment = Alignment.BottomEnd) {
                 Image(
                     painter = rememberImagePainter(

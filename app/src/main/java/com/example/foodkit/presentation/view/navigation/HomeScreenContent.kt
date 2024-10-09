@@ -90,7 +90,7 @@ fun HomeScreenContent() {
             TopAppBar(
                 modifier = Modifier
                     .background(Color.White)
-                    .fillMaxSize(),
+                    .fillMaxWidth(),
                 title = { HomeTopAppBar() }
                 )
 
