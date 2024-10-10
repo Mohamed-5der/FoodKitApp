@@ -12,7 +12,7 @@ data class FavoriteFood(
     val imageUrl: String,
     val price: Double,
     val category: String,
-    val rating: Double,
+    val rating: Float,
     val isFavorite: Boolean,
     val numberRating: Int
 )

@@ -99,7 +99,8 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                         // بدلًا من ذلك، تحديث التقييم القديم
                         ratingState.value = rating // تحديث القيمة الجديدة
                         viewModel.submitRating(food.id, rating, userId) // إرسال التقييم الجديد
-                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             )
@@ -109,13 +110,12 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 }
 
 
-
 @Composable
 fun AnimatedRatingBar(
     currentRating: Float,
     onRatingChanged: (Float) -> Unit,
     maxRating: Int = 5,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     Row(
         modifier = modifier,
