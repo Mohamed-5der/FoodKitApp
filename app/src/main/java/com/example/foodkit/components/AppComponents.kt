@@ -375,47 +375,6 @@ fun CartFoodCard(){
                 )
             }
 
-val poppins = FontFamily(
-    Font(R.font.poppins_regular, FontWeight.Normal),
-    Font(R.font.poppins_bold, FontWeight.Bold),
-    Font(R.font.poppins_medium, FontWeight.Medium),
-    Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
-    Font(R.font.poppins_bold, FontWeight.ExtraBold),
-)
-fun saveImageToFile(context: Context, bitmap: Bitmap): File? {
-    val file = File(context.cacheDir, "image.jpg")
-    return try {
-        val stream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        stream.flush()
-        stream.close()
-
-        file
-    } catch (e: IOException) {
-        e.printStackTrace()
-
-        null
-    }
-}
-
-fun imageRefactored(context: Context, uri: Uri): File? {
-    return try {
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val myBitmap = BitmapFactory.decodeStream(inputStream)
-
-        val stream = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        inputStream!!.close()
-
-        saveImageToFile(context, myBitmap)
-
-    } catch (e: IOException) {
-        e.printStackTrace()
-
-        null
-    }
-}
-
             Spacer(modifier = Modifier.width(16.dp))
             Column(
                 modifier = Modifier.weight(1f)
@@ -483,5 +442,48 @@ fun imageRefactored(context: Context, uri: Uri): File? {
                 )
             }
         }
+    }
+
+
+}
+
+val poppins = FontFamily(
+    Font(R.font.poppins_regular, FontWeight.Normal),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
+    Font(R.font.poppins_bold, FontWeight.ExtraBold),
+)
+fun saveImageToFile(context: Context, bitmap: Bitmap): File? {
+    val file = File(context.cacheDir, "image.jpg")
+    return try {
+        val stream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.flush()
+        stream.close()
+
+        file
+    } catch (e: IOException) {
+        e.printStackTrace()
+
+        null
+    }
+}
+
+fun imageRefactored(context: Context, uri: Uri): File? {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val myBitmap = BitmapFactory.decodeStream(inputStream)
+
+        val stream = ByteArrayOutputStream()
+        myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        inputStream!!.close()
+
+        saveImageToFile(context, myBitmap)
+
+    } catch (e: IOException) {
+        e.printStackTrace()
+
+        null
     }
 }
