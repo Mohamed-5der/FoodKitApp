@@ -29,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -49,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.R
@@ -59,23 +61,22 @@ import com.example.foodkit.presentation.view.navigation.ProfileScreenContent
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import org.koin.androidx.compose.koinViewModel
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @Composable
 fun MainScreen(navController: NavController) {
-//    FoodListScreen(navController)
-    Home()
-//    CartScreenContent()
-//    HomeScreenContent()
-//    ProductDetailsScreen()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = colorResource(id = R.color.white)
+    ) {
+            Home(navController)
+    }
+
 
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Home() {
+fun Home(navController: NavController) {
 
-    val context = LocalContext.current
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val selectedIndex = remember { mutableIntStateOf(0) }
 
@@ -87,11 +88,16 @@ fun Home() {
             BottomNavigation(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp)
                     .clip(RoundedCornerShape(20.dp)),
                 elevation = 8.dp,
                 backgroundColor = Color.White
             ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
 
                 BottomNavigationItem(
                     icon = {
@@ -190,6 +196,7 @@ fun Home() {
                         )
                     },
                 )
+                    }
 
 
             }
@@ -204,7 +211,7 @@ fun Home() {
         ) {
 
             when (selectedIndex.intValue) {
-                0 -> HomeScreenContent()
+                0 -> HomeScreenContent(navController)
                 1 -> CartScreenContent()
                 2 -> FavoriteScreenContent()
                 3 -> ProfileScreenContent()

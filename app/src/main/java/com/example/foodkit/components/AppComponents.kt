@@ -21,11 +21,13 @@ import androidx.compose.foundation.layout.wrapContentHeight
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -47,6 +49,8 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foodkit.R
+import com.example.foodkit.navigation.Routes
+import com.example.foodkit.presentation.view.ProductDetailsScreen
 
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
@@ -65,7 +69,7 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
 
 
 @Composable
-fun FoodCard(food: Food, onClick: () -> Unit, navController: NavController,/* favoriteViewModel: FavoriteFoodViewModel, userId: Int */) {
+fun FoodCard(food: Food, onClick: () -> Unit,/* favoriteViewModel: FavoriteFoodViewModel, userId: Int */) {
 
     // Check if the food is already a favorite when the composable is first loaded
 //    LaunchedEffect(food) {
@@ -81,9 +85,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, navController: NavController,/* fa
             .width(200.dp)
             .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 8.dp)
             .wrapContentHeight()
-            .clickable {
-
-            },
+            .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp),
@@ -192,22 +194,22 @@ fun FoodCard(food: Food, onClick: () -> Unit, navController: NavController,/* fa
 //                            isSelected = !isSelected!!
 
                         },
-                    tint = Color.Red
+                    tint = colorResource(id = R.color.appColor)
 //                    if (isSelected) colorResource(id = R.color.appColor) else Color.Gray
                 )
             }
 
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(4.dp))
 
             Text(
                 text = food.name ?: "",
                 fontSize = 14.sp,
-                minLines = 2,
+                minLines = 1,
+                maxLines = 2,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
 //                fontFamily = poppins,
                 modifier = Modifier.fillMaxWidth(),
-                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(2.dp))
@@ -215,12 +217,12 @@ fun FoodCard(food: Food, onClick: () -> Unit, navController: NavController,/* fa
             Text(
                 text = food.description ?: "",
                 fontSize = 14.sp,
-                minLines = 2,
+                minLines = 1,
+                maxLines = 2,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
 //                fontFamily = poppins,
                 modifier = Modifier.fillMaxWidth(),
-                maxLines = 2,
                 overflow = TextOverflow.Ellipsis
             )
             Spacer(modifier = Modifier.height(2.dp))
@@ -316,4 +318,108 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
         )
     }
 
+}
+
+@Composable
+fun CartFoodCard(){
+    Card(
+        modifier = Modifier
+            .clip(RoundedCornerShape(12.dp))
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+
+        ) {
+//                cartItem ->
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .background(Color.White, shape = RoundedCornerShape(8.dp)),
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Card(
+                modifier = Modifier.padding(8.dp),
+                colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+            ) {
+                AsyncImage(
+                    model = R.drawable.onboarding_photo1,
+                    contentDescription = null,
+                    modifier = Modifier
+                        .size(100.dp)
+                        .clip(RoundedCornerShape(8.dp))
+                        .padding(8.dp),
+                    contentScale = ContentScale.Fit,
+                    placeholder = painterResource(id = R.drawable.food_photo),
+                    error = painterResource(id = R.drawable.food_photo)
+                )
+            }
+
+            Spacer(modifier = Modifier.width(16.dp))
+            Column(
+                modifier = Modifier.weight(1f)
+            ) {
+                Text(
+                    "item.name",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
+                    "item.price",
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    color = Color.Black
+                )
+            }
+            Spacer(modifier = Modifier.width(12.dp))
+
+
+            IconButton(
+                onClick = { },
+                modifier = Modifier
+                    .padding(4.dp)
+                    .background(
+                        color = Color.Gray,
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .size(24.dp)
+            ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.minus_icon),
+                    tint = Color.White,
+                    contentDescription = "Decrease quantity"
+
+                )
+
+            }
+
+            Text(
+                text = "1",
+                color = Color.Black,
+                fontSize = 16.sp,
+                fontWeight = FontWeight.Medium,
+                modifier = Modifier.padding(horizontal = 8.dp)
+            )
+
+            IconButton(
+                onClick = { },
+                modifier = Modifier
+                    .padding(4.dp)
+                    .background(
+                        color = colorResource(id = R.color.appColor),
+                        shape = RoundedCornerShape(8.dp)
+                    )
+                    .size(24.dp)
+
+            ) {
+                Icon(
+                    Icons.Default.Add,
+                    contentDescription = "Increase quantity",
+                    tint = Color.White
+                )
+            }
+        }
+    }
 }

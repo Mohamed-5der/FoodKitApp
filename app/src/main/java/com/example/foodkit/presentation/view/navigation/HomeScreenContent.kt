@@ -69,22 +69,32 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import android.Manifest
+import androidx.compose.foundation.layout.width
 import com.example.foodkit.R
 import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
+import com.example.foodkit.navigation.Routes
+import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
+import com.example.foodkit.repository.Category
+import com.example.foodkit.repository.Food
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
 import org.koin.androidx.compose.koinViewModel
 
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreenContent() {
-    val context = LocalContext.current
-    val errorMessage by remember { mutableStateOf<String?>(null) }
+fun HomeScreenContent(
+    navController: NavController,
+    foodViewModel: FoodListScreenViewModel = koinViewModel(),
+    categoryViewModel: CategoryViewModel = koinViewModel(),
+) {
+    // State to manage search mode and filtered products
+    var isSearchMode by remember { mutableStateOf(false) }
+    var filteredFoods by remember { mutableStateOf<List<Food>>(emptyList()) }
+    var filteredCategories by remember { mutableStateOf<List<Category>>(emptyList()) }
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -99,22 +109,44 @@ fun HomeScreenContent() {
         ) {
             HomeTopAppBar()
 
-            SearchBar()
+            SearchBar(onSearch = { query ->
+                isSearchMode = query.isNotEmpty()
+                filteredFoods = if (query.isNotEmpty()) {
+                    foodViewModel.foods.value.filter { it.name.contains(query, ignoreCase = true) }
+                } else {
+                    emptyList()
+                }
+                filteredCategories = if (query.isNotEmpty()) {
+                    categoryViewModel.categories.filter { it.name.contains(query, ignoreCase = true) }
+                } else {
+                    emptyList()
+                }
+            })
 
-            BannerSection()
-            Spacer(modifier = Modifier.height(16.dp))
-            CategoriesSection()
-            Spacer(modifier = Modifier.height(16.dp))
-            ProductSection()
 
+            // Only show the banner and DotsIndicator if not in search mode
+            if (!isSearchMode) {
+                BannerSection()
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            if (isSearchMode) {
+                // Show filtered categories
+                CategoriesSection(categories = filteredCategories)
+                Spacer(modifier = Modifier.height(16.dp))
+                // Show filtered products
+                ProductSection(navController, foods = filteredFoods)
+            } else {
+                // Show all categories and products
+                CategoriesSection()
+                Spacer(modifier = Modifier.height(16.dp))
+                ProductSection(navController)
+            }
         }
-
     }
-
-
 }
 
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar() {
@@ -137,22 +169,30 @@ fun HomeTopAppBar() {
                     text = "Hi Ahmed Emad",
                     color = Color.Black,
                     fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
+                    modifier = Modifier.fillMaxWidth()
                 )
 
-                Row() {
-                    IconButton(onClick = { /* Handle notification click */ }) {
-                        Icon(
-                            modifier = Modifier.clickable {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(top = 4.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Icon(
+                        modifier = Modifier
+                            .size(20.dp)
+                            .clickable {
 //                                fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
 //                                LocationApp(fusedLocationClient)
 
                             },
-                            painter = painterResource(id = R.drawable.location_icon),
-                            contentDescription = "Location Icon",
-                            tint = Color.Black
-                        )
-                    }
+                        painter = painterResource(id = R.drawable.location_icon),
+                        contentDescription = "Location Icon",
+                        tint = Color.Black
+                    )
+                    Spacer(modifier = Modifier.width(4.dp))
                     Text(
                         text = "Location, Mansoura, Egypt",
                         color = Color.Gray,
@@ -193,7 +233,7 @@ fun HomeTopAppBar() {
 
 
 @Composable
-fun SearchBar() {
+fun SearchBar(onSearch: (String) -> Unit) {
     var search by remember { mutableStateOf("") }
 
 
@@ -210,7 +250,10 @@ fun SearchBar() {
                 .border(1.dp, Color.White)
                 .background(Color.White),
             value = search,
-            onValueChange = { search = it },
+            onValueChange = {
+                search = it
+                onSearch(search)
+            },
             placeholder = { Text("Search", color = Color.Black) },
             leadingIcon = {
                 Icon(
@@ -321,13 +364,16 @@ fun DotsIndicator(
 
 @Composable
 fun CategoriesSection(
+    categories: List<Category> = emptyList(),
     viewModel: CategoryViewModel = koinViewModel(),
 ) {
     val navController = rememberNavController()
 
-    // تحميل التصنيفات عند بدء تشغيل الشاشة
-    LaunchedEffect(Unit) {
-        viewModel.loadCategories()
+    // Load categories only if categories list is empty
+    if (categories.isEmpty()) {
+        LaunchedEffect(Unit) {
+            viewModel.loadCategories()
+        }
     }
 
     Column(
@@ -360,25 +406,28 @@ fun CategoriesSection(
                 .fillMaxWidth(),
         ) {
             items(viewModel.categories) { category ->
-                CategoryCard(category, onClick = {})
+                CategoryCard(category, onClick = {
+
+                })
             }
         }
     }
 }
 
 
-
-
-
 @Composable
 fun ProductSection(
+    navController: NavController,
+    foods: List<Food> = emptyList(),
     viewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
-    val navController = rememberNavController()
-    val foods by viewModel.foods.collectAsState(initial = emptyList())
+    val foodList =
+        if (foods.isNotEmpty()) foods else viewModel.foods.collectAsState(initial = emptyList()).value
 
     LaunchedEffect(Unit) {
-        viewModel.loadAllFoods() // Load foods when the screen is displayed
+        if (foods.isEmpty()) {
+            viewModel.loadAllFoods() // Load foods only if no filtered foods
+        }
     }
 
 
@@ -400,10 +449,14 @@ fun ProductSection(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(foods) { food ->
+                items(foodList) { food ->
                     FoodCard(food, onClick = {
-//                        navController.navigate("food_details/${food.id}")
-                    }, navController)
+//                        navController.navigate(Routes.FOOD_DETAILS)
+
+//                ProductDetailsScreen(foodId = food.id, userId = "userId" )
+                        navController.navigate(Routes.FOOD_DETAILS + "/${food.id}/${food.id}")
+                    }
+                    )
                 }
             }
         }
