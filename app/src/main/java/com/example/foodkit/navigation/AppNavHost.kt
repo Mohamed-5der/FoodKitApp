@@ -1,5 +1,7 @@
 package com.example.foodkit.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -37,7 +39,10 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Routes.MASTER) { MasterScreen(navController) }
 
-        composable(Routes.PRODUCT_DETAILS) { ProductDetailsScreen() }
-
+        composable(Routes.FOOD_DETAILS) {
+            val itemId = it.arguments?.getString("itemId") ?: ""
+            val userId = it.arguments?.getString("userId") ?: ""
+            ProductDetailsScreen(itemId, userId)
+        }
     }
 }

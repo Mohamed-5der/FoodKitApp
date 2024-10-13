@@ -78,6 +78,8 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             Spacer(modifier = Modifier.height(16.dp))
 
+
+            //////////////////////////////
             // State for user's rating
             val ratingState = remember { mutableStateOf(viewModel.userRating ?: 0f) }
 
@@ -99,45 +101,12 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                         // بدلًا من ذلك، تحديث التقييم القديم
                         ratingState.value = rating // تحديث القيمة الجديدة
                         viewModel.submitRating(food.id, rating, userId) // إرسال التقييم الجديد
-                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             )
-
-        }
-    }
-}
-
-
-
-@Composable
-fun AnimatedRatingBar(
-    currentRating: Float,
-    onRatingChanged: (Float) -> Unit,
-    maxRating: Int = 5,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        for (i in 1..maxRating) {
-            val isSelected = i <= currentRating
-            val starColor by animateColorAsState(
-                targetValue = if (isSelected) Color.Yellow else Color.Gray,
-                animationSpec = tween(durationMillis = 300) // Smooth color transition
-            )
-
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Rating Star",
-                modifier = Modifier
-                    .size(32.dp)
-                    .clickable {
-                        onRatingChanged(i.toFloat())
-                    },
-                tint = starColor
-            )
+            
         }
     }
 }

@@ -2,6 +2,8 @@ package com.example.foodkit.presentation.view
 
 import android.annotation.SuppressLint
 import android.inputmethodservice.Keyboard
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Arrangement.Top
 import androidx.compose.foundation.layout.Column
@@ -27,6 +29,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -47,6 +50,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.R
@@ -59,21 +63,20 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainScreen(navController: NavController) {
-//    FoodListScreen(navController)
-    Home()
-//    ProfileScreenContent()
-//    FavoriteScreenContent()
-//    CartScreenContent()
-//    HomeScreenContent()
-//    ProductDetailsScreen()
+    Surface(
+        modifier = Modifier.fillMaxSize(),
+        color = colorResource(id = R.color.white)
+    ) {
+            Home(navController)
+    }
+
 
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Home() {
+fun Home(navController: NavController) {
 
-    val context = LocalContext.current
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val selectedIndex = remember { mutableIntStateOf(0) }
 
@@ -85,10 +88,16 @@ fun Home() {
             BottomNavigation(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(bottom = 12.dp)
-                    .clip(RoundedCornerShape( 20.dp)),
+                    .clip(RoundedCornerShape(20.dp)),
+                elevation = 8.dp,
                 backgroundColor = Color.White
             ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 8.dp),
+                    horizontalArrangement = Arrangement.SpaceAround
+                ) {
 
                 BottomNavigationItem(
                     icon = {
@@ -187,22 +196,22 @@ fun Home() {
                         )
                     },
                 )
+                    }
 
 
             }
         }
 
     ) {
+        // Screen content
         Column(
-            modifier = Modifier.fillMaxSize()
-//                    .verticalScroll(rememberScrollState())
-            ,
+            modifier = Modifier,
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {
 
             when (selectedIndex.intValue) {
-                0 -> HomeScreenContent()
+                0 -> HomeScreenContent(navController)
                 1 -> CartScreenContent()
                 2 -> FavoriteScreenContent()
                 3 -> ProfileScreenContent()
@@ -218,84 +227,5 @@ fun Home() {
 
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun HomeTopAppBar() {
-    TopAppBar(
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = colorResource(id = R.color.secondaryColor)
-        ),
 
-        title = {
-
-            Column (modifier = Modifier.fillMaxSize()){
-                Text(
-                    text = "Hi Ahmed Emad",
-                    color = Color.Black,
-                    fontSize = 20.sp,
-                    fontWeight = FontWeight.Medium
-                )
-
-                Row () {
-                    IconButton(onClick = { /* Handle notification click */ }) {
-                        Icon(
-                            painter = painterResource(id = R.drawable.location_icon),
-                            contentDescription = "Location Icon",
-                            tint = Color.Black
-                        )
-                    }
-                    Text(
-                        text = "Location, Cairo, Egypt",
-                        color = Color.Gray,
-                        fontSize = 20.sp,
-                    )
-
-                }
-            }
-        },
-        actions = {
-            IconButton(onClick = { /* Handle notification click */ }) {
-                Icon(
-                    painter = painterResource(id = R.drawable.notification_icon),
-                    contentDescription = "Notification Icon",
-                    tint = Color.Black
-                )
-            }
-        },
-
-
-        /*
-        navigationIcon = {
-            IconButton(onClick = { /* Handle drawer click */ }) {
-                Icon(
-//                    tint: Color = LocalContentColor.current,
-                    painter = painterResource(id = R.drawable.dropdown_icon),
-                    contentDescription = "Menu Icon",
-                    tint = Color.Black
-                )
-            }
-        }
-        */
-    )
-}
-
-@Composable
-fun FoodListScreen(
-    navController: NavController,
-    viewModel: FoodListScreenViewModel = koinViewModel()) {
-
-    val foods by viewModel.foods.collectAsState(initial = emptyList())
-
-    LaunchedEffect(Unit) {
-        viewModel.loadAllFoods() // Load foods when the screen is displayed
-    }
-
-    LazyColumn (
-        modifier = Modifier.fillMaxSize().padding(16.dp)
-    ) {
-        items(foods) { food ->
-            FoodCard(food = food, navController = navController)
-        }
-    }
-}
 
