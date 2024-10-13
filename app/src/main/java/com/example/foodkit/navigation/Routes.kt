@@ -13,4 +13,11 @@ const val FOOD_DETAILS = "food_details/{itemId}/{userId}"
     const val CATEGORY_DETAIL = "categoryDetail/{categoryId}"
     const val ORDERS_LIST = "orderList"
     const val CART_FOR_TEST = "cartForTest"
+    const val SETTINGS = "settings"
+    const val PROFILE = "profile"
+    const val ORDERS = "orders"
+    const val COUPONS = "coupons"
+    const val NOTIFICATIONS = "notifications"
+
+
 }

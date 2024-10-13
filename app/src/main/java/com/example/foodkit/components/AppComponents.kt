@@ -1,6 +1,14 @@
 package com.example.foodkit.components
 
+import android.content.ContentResolver
+import android.content.Context
+import android.database.Cursor
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -23,11 +31,13 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -36,8 +46,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,12 +62,18 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import coil.compose.rememberAsyncImagePainter
 import com.example.foodkit.R
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
+import java.io.ByteArrayOutputStream
+import java.io.File
+import java.io.FileOutputStream
+import java.io.IOException
+import java.io.InputStream
 
 @Composable
 fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
@@ -66,6 +86,7 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
         Text("Select Image")
     }
 }
+
 
 
 @Composable
@@ -353,6 +374,47 @@ fun CartFoodCard(){
                     error = painterResource(id = R.drawable.food_photo)
                 )
             }
+
+val poppins = FontFamily(
+    Font(R.font.poppins_regular, FontWeight.Normal),
+    Font(R.font.poppins_bold, FontWeight.Bold),
+    Font(R.font.poppins_medium, FontWeight.Medium),
+    Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
+    Font(R.font.poppins_bold, FontWeight.ExtraBold),
+)
+fun saveImageToFile(context: Context, bitmap: Bitmap): File? {
+    val file = File(context.cacheDir, "image.jpg")
+    return try {
+        val stream = FileOutputStream(file)
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+        stream.flush()
+        stream.close()
+
+        file
+    } catch (e: IOException) {
+        e.printStackTrace()
+
+        null
+    }
+}
+
+fun imageRefactored(context: Context, uri: Uri): File? {
+    return try {
+        val inputStream = context.contentResolver.openInputStream(uri)
+        val myBitmap = BitmapFactory.decodeStream(inputStream)
+
+        val stream = ByteArrayOutputStream()
+        myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
+        inputStream!!.close()
+
+        saveImageToFile(context, myBitmap)
+
+    } catch (e: IOException) {
+        e.printStackTrace()
+
+        null
+    }
+}
 
             Spacer(modifier = Modifier.width(16.dp))
             Column(

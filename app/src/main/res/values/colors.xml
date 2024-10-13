@@ -11,6 +11,7 @@
     <color name="appColor">#FFFE8C00</color>
 
     <color name="secondaryColor">#FFF7F2EB</color>
+    <color name="_black">#282828</color>
 
     <color name="navIconColor">#FFB8B8D1</color>
     <color name="_black">#FF282828</color>

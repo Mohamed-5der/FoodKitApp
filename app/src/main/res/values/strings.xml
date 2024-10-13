@@ -30,6 +30,7 @@
     <string name="search">Search</string>
     <string name="wish_list">Wish List</string>
     <string name="profile">Profile</string>
+    <string name="your_profile">Your Profile</string>
     <string name="product">Product</string>
     <string name="viewAll">View All</string>
     <string name="addToCart">Add To Cart</string>
@@ -37,6 +38,12 @@
     <string name="checkout">Checkout</string>
     <string name="clothes">Clothes</string>
     <string name="sports">Sports</string>
+    <string name="orders">Orders</string>
+    <string name="settings">Settings</string>
+    <string name="logout">Logout</string>
+    <string name="coupons">Coupons</string>
+    <string name="confirm">Confirm</string>
+    <string name="notifications">Notifications</string>
 
     <string name="myCart">My Cart</string>
 
