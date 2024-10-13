@@ -181,7 +181,6 @@ fun LoginScreen(
             Text(text = it, color = Color.Red)
 
         }
-
         when (authState) {
             is LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
             is LoginState.Error -> {

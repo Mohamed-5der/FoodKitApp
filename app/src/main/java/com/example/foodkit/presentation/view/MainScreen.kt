@@ -60,7 +60,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun MainScreen(navController: NavController) {
 //    FoodListScreen(navController)
-    Home()
+    Home(navController)
 //    ProfileScreenContent()
 //    FavoriteScreenContent()
 //    CartScreenContent()
@@ -71,7 +71,7 @@ fun MainScreen(navController: NavController) {
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun Home() {
+fun Home(navController: NavController) {
 
     val context = LocalContext.current
     val errorMessage by remember { mutableStateOf<String?>(null) }
@@ -205,7 +205,7 @@ fun Home() {
                 0 -> HomeScreenContent()
                 1 -> CartScreenContent()
                 2 -> FavoriteScreenContent()
-                3 -> ProfileScreenContent()
+                3 -> ProfileScreenContent(navController)
             }
         }
     }

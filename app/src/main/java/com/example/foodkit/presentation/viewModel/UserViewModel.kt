@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.foodkit.local.UserDao
 import com.example.foodkit.model.User
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -14,12 +15,13 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
     private val _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> get() = _user
 
-    fun addUser(name: String, email: String, phoneNumber: String, imageUrl: String) {
+    fun addUser(name: String, email: String, phoneNumber: String, imageUrl: String,onAddSuccess: (String) -> Unit) {
         viewModelScope.launch {
             try {
                 val newUser = User(name = name, email = email, phoneNumber = phoneNumber, imageUrl = imageUrl)
                 userDao.insert(newUser)
                 // Handle success (e.g., log or show success message)
+                onAddSuccess(newUser.id.toString())
                 Log.d("UserAddition", "User added successfully")
                 // You can also show a message in the UI using LiveData or another mechanism
             } catch (e: Exception) {
@@ -44,9 +46,13 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         }
     }
 
-     fun getUserByEmail(email: String){
+    fun getUserByEmail(email: String){
          viewModelScope.launch {
-             _user.value = userDao.getUserByEmail(email)
+             try {
+                 _user.value = userDao.getUserByEmail(email)
+             }catch (e:Exception){
+                 Log.e("UserAddition", "Error adding user: ${e.message}")
+             }
          }
 
     }

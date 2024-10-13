@@ -177,7 +177,7 @@ class HomeScreen: Screen {
                     0 -> HomeScreenContent()
                     1 -> CartScreenContent()
                     2 -> FavoriteScreenContent()
-                    3 -> ProfileScreenContent()
+//                    3 -> ProfileScreenContent()
                 }
             }
         }

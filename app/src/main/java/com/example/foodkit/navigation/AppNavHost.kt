@@ -1,26 +1,36 @@
 package com.example.foodkit.navigation
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.foodkit.Constants
+import com.example.foodkit.local.AppPreferences
+import com.example.foodkit.presentation.view.Account.ProfileScreen
 import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
 import com.example.foodkit.presentation.view.MainScreen
 import com.example.foodkit.presentation.view.MasterScreen
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.view.SignUpScreen
+import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
-
+    val appPreferences = AppPreferences(LocalContext.current)
+    appPreferences.init()
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
         if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL ) {
             Routes.MASTER
         } else {
-            Routes.MAIN
+            val email = appPreferences.getString("email", "")
+            if (email == "" ) {
+                Routes.COMPLETE_PROFILE
+            }else{
+                Routes.MAIN
+            }
         }
     } else {
         Routes.LOGIN
@@ -38,6 +48,9 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.MASTER) { MasterScreen(navController) }
 
         composable(Routes.PRODUCT_DETAILS) { ProductDetailsScreen() }
+
+        composable(Routes.PROFILE) { ProfileScreen(navController) }
+
 
     }
 }

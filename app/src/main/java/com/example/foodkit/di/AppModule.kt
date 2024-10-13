@@ -8,6 +8,7 @@ import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.presentation.viewModel.LoginViewModel
+import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import com.example.foodkit.presentation.viewModel.MasterViewModel
 import com.example.foodkit.presentation.viewModel.SignUpViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
@@ -25,8 +26,7 @@ val appModule = module {
             get(),
             UserDatabase::class.java,
             "user_database"
-        ).fallbackToDestructiveMigration()
-            .build()
+        ).fallbackToDestructiveMigration().build()
     }
     // Provide the UserDao
     single { get<UserDatabase>().userDao() }
@@ -48,5 +48,6 @@ val appModule = module {
     viewModel { CategoryViewModel(get()) }
     viewModel { UserViewModel(get()) }
     viewModel { FavoriteFoodViewModel(get()) }
+    viewModel { LogoutViewModel(get()) }
 
 }
