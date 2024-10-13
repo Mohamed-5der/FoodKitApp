@@ -214,7 +214,7 @@ fun Home(navController: NavController) {
                 0 -> HomeScreenContent(navController)
                 1 -> CartScreenContent()
                 2 -> FavoriteScreenContent()
-                3 -> ProfileScreenContent()
+                3 -> ProfileScreenContent(navController)
             }
         }
     }

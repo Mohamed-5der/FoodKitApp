@@ -49,8 +49,6 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Routes.MASTER) { MasterScreen(navController) }
 
-        composable(Routes.PRODUCT_DETAILS) { ProductDetailsScreen() }
-
         composable(Routes.PROFILE) { ProfileScreen(navController) }
 
 

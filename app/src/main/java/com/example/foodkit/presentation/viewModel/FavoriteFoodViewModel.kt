@@ -36,7 +36,7 @@ class FavoriteFoodViewModel(private val favoriteFoodDao: FavoriteFoodDao) : View
                 imageUrl = imageUrl,
                 price = price,
                 category = category,
-                rating = rating,
+                rating = rating.toDouble(),
                 isFavorite = true,
                 numberRating = 0
             )
