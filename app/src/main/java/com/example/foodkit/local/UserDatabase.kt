@@ -7,7 +7,7 @@ import androidx.sqlite.db.SupportSQLiteDatabase
 import com.example.foodkit.model.FavoriteFood
 import com.example.foodkit.model.User
 
-@Database(entities = [User::class, FavoriteFood::class], version = 3, exportSchema = false)
+@Database(entities = [User::class, FavoriteFood::class], version = 2, exportSchema = false)
 abstract class UserDatabase : RoomDatabase() {
     abstract fun userDao(): UserDao
     abstract fun favoriteFoodDao(): FavoriteFoodDao

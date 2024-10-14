@@ -58,7 +58,8 @@ import org.koin.core.parameter.parametersOf
 
 
 @Composable
-fun ProductDetailsScreen( foodId: String, userId: String) {
+fun ProductDetailsScreen( foodId: String) {
+    val userId=""
     val viewModel: FoodDetailViewModel = koinViewModel( parameters = { parametersOf(userId) } )
     val context = LocalContext.current
 

@@ -154,7 +154,7 @@ fun Home(navController: NavController) {
                         Icon(
                             modifier = Modifier
                                 .weight(1f)
-                                .size(35.dp)
+                                .size(32.dp)
                                 .padding(vertical = 4.dp),
                             painter = painterResource(id = R.drawable.favorite_un),
                             contentDescription = "Favorite Icon",
@@ -213,7 +213,7 @@ fun Home(navController: NavController) {
             when (selectedIndex.intValue) {
                 0 -> HomeScreenContent(navController)
                 1 -> CartScreenContent()
-                2 -> FavoriteScreenContent()
+                2 -> FavoriteScreenContent(navController)
                 3 -> ProfileScreenContent(navController)
             }
         }

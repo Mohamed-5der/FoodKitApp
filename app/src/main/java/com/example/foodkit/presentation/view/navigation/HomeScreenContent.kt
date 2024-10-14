@@ -76,6 +76,7 @@ import com.example.foodkit.components.FoodCard
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
+import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
@@ -421,12 +422,12 @@ fun ProductSection(
     foods: List<Food> = emptyList(),
     viewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
+
     val foodList =
         if (foods.isNotEmpty()) foods else viewModel.foods.collectAsState(initial = emptyList()).value
-
     LaunchedEffect(Unit) {
         if (foods.isEmpty()) {
-            viewModel.loadAllFoods() // Load foods only if no filtered foods
+            viewModel.loadAllFoods()
         }
     }
 
@@ -445,16 +446,14 @@ fun ProductSection(
         Box(modifier = Modifier.fillMaxHeight()) {
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
+
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(foodList) { food ->
-                    FoodCard(food, onClick = {
-//                        navController.navigate(Routes.FOOD_DETAILS)
 
-//                ProductDetailsScreen(foodId = food.id, userId = "userId" )
-                        navController.navigate(Routes.FOOD_DETAILS + "/${food.id}/${food.id}")
+                    FoodCard(food, onClick = {
+                        navController.navigate("food_details/${food.id}")
+                    }, onClickFavorite = {
                     }
                     )
                 }

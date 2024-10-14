@@ -9,6 +9,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -37,16 +38,15 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
-import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -60,15 +60,12 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.navigation.NavController
 import coil.compose.AsyncImage
-import coil.compose.rememberAsyncImagePainter
 import com.example.foodkit.R
-import com.example.foodkit.navigation.Routes
-import com.example.foodkit.presentation.view.ProductDetailsScreen
-
+import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
+import org.koin.androidx.compose.koinViewModel
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
@@ -90,21 +87,23 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
 
 
 @Composable
-fun FoodCard(food: Food, onClick: () -> Unit,/* favoriteViewModel: FavoriteFoodViewModel, userId: Int */) {
+fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit) {
 
     // Check if the food is already a favorite when the composable is first loaded
 //    LaunchedEffect(food) {
 //        val favoriteFoods = favoriteViewModel.getFavoriteFoods(userId)}
 //        isFavorite.value = favoriteFoods.any { it.name == food.name }
 //    }
+    val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
+    val getFavoriteFoods = favoriteViewModel.favoriteFoods.collectAsState(initial = emptyList())
+    val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
+    val context = LocalContext.current
 
-
-    val isSelected by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
             .width(200.dp)
-            .padding(top = 8.dp, start = 4.dp, end = 4.dp, bottom = 8.dp)
+            .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
             .wrapContentHeight()
             .clickable(onClick = onClick),
         colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
@@ -196,24 +195,40 @@ fun FoodCard(food: Food, onClick: () -> Unit,/* favoriteViewModel: FavoriteFoodV
                         )
                     }
                 }
+                val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(food.id ?: ""))}
 
                 Icon(
                     painterResource(
-                        id = if (isSelected) R.drawable.favorite_se else R.drawable.favorite_un
+                        id = if (isFavorite.value) R.drawable.favorite_se else R.drawable.favorite_un
                     ),
                     contentDescription = "Favorite",
                     modifier = Modifier
                         .align(Alignment.TopEnd)
                         .size(24.dp)
                         .clickable {
-//                            favoriteViewModel.addOrDeleteFavorite(product.id.toString()) {
-//                                Toast
-//                                    .makeText(context, it, Toast.LENGTH_SHORT)
-//                                    .show()
-//                                homeViewModel.homeResponse
-//                            }
-//                            isSelected = !isSelected!!
-
+                            if (isFavorite.value) {
+                                isFavorite.value = !isFavorite.value
+                                favoriteViewModel.deleteFavoriteFood(food.id){
+                                        Toast
+                                            .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                } else {
+                                isFavorite.value = !isFavorite.value
+                                favoriteViewModel.addFavoriteFood(
+                                        name = food.name,
+                                        imageUrl = food.imageUrl, price = food.price,
+                                        description = food.description,
+                                        rating = food.rating.toFloat(),
+                                        category = "",
+                                        numberRating = food.rating.toDouble(),
+                                        idFood = food.id
+                                    ) {
+                                        Toast
+                                            .makeText(context, "Added to favorites", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                }
                         },
                     tint = colorResource(id = R.color.appColor)
 //                    if (isSelected) colorResource(id = R.color.appColor) else Color.Gray
@@ -347,20 +362,20 @@ fun CartFoodCard(){
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
             .padding(8.dp),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
 
         ) {
-//                cartItem ->
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .background(Color.White, shape = RoundedCornerShape(8.dp)),
+                .background(Color.White, shape = RoundedCornerShape(12.dp)),
             verticalAlignment = Alignment.CenterVertically
         ) {
             Card(
                 modifier = Modifier.padding(8.dp),
                 colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                shape = RoundedCornerShape(8.dp)
             ) {
                 AsyncImage(
                     model = R.drawable.onboarding_photo1,
@@ -402,7 +417,7 @@ fun CartFoodCard(){
                 modifier = Modifier
                     .padding(4.dp)
                     .background(
-                        color = Color.Gray,
+                        color = Color.LightGray,
                         shape = RoundedCornerShape(8.dp)
                     )
                     .size(24.dp)

@@ -75,6 +75,7 @@ fun ProfileScreenContent(navController: NavController) {
                 elevation = 1.dp,
                 modifier = Modifier.height(70.dp)
             )
+
         }
     ) {innerPadding ->
         Column(

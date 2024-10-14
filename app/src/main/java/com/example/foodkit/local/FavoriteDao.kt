@@ -14,10 +14,9 @@ interface FavoriteFoodDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insert(food: FavoriteFood)
 
-    @Delete
-    suspend fun delete(food: FavoriteFood)
-
+    @Query("DELETE FROM favorite_food_table WHERE idFood = :foodId")
+    suspend fun delete(foodId : String)
 
     @Query("SELECT * FROM favorite_food_table WHERE userId = :userId")
-    suspend fun getFavoriteFoodsForUser(userId: Int): List<FavoriteFood>
+    suspend fun getFavoriteFoodsForUser(userId: String): List<FavoriteFood>
 }
