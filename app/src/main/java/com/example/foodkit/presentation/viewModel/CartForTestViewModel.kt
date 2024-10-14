@@ -15,6 +15,8 @@ import kotlinx.coroutines.flow.stateIn
 class CartForTestViewModel(private val repository: CartRepository) : ViewModel() {
 
     // قائمة منتجات العربة
+
+
     private var _cartItems = MutableStateFlow<List<CartItem>>(emptyList())
     val cartItems: StateFlow<List<CartItem>> get() = _cartItems
 

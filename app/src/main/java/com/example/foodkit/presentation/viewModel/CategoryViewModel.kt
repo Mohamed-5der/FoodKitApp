@@ -33,6 +33,7 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
         if (categoryName.text.isBlank() || selectedImageUri == null) {
             Toast.makeText(context, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show()
             return
+            
         }
         // Create a new category object
         val newCategory = Category(name = categoryName.text)
