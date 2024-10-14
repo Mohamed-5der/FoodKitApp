@@ -18,6 +18,6 @@ object Routes {
     const val ORDERS = "orders"
     const val COUPONS = "coupons"
     const val NOTIFICATIONS = "notifications"
-
+    const val PRODUCT_DETAILS = "product_details"
 
 }

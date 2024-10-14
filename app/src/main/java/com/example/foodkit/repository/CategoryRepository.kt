@@ -12,6 +12,7 @@ data class Category(
     val imageUrl: String = ""
 )
 
+
 class CategoryRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :KoinComponent {
 
     fun addCategory(category: Category, imageUri: Uri, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
