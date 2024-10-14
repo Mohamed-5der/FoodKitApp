@@ -54,6 +54,7 @@ fun CategoryDetailScreen(
             )
         }
     ) {
+
         LazyColumn(
             modifier = Modifier
                 .fillMaxSize()

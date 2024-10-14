@@ -25,6 +25,8 @@ fun CategoryListScreen(
         viewModel.loadCategories()
     }
 
+
+
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
