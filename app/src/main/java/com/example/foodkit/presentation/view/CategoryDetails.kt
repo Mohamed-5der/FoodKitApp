@@ -62,7 +62,7 @@ fun CategoryDetailScreen(
                 .padding(16.dp)
         ) {
             items(foodsInCategory.value) { food ->
-                FoodCard( food ,navController )
+                FoodCard( food ,{},{} )
             }
         }
     }

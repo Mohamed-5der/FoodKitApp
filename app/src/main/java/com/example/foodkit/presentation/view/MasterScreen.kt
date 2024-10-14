@@ -87,7 +87,7 @@ fun MasterScreen(navController: NavController) {
             expanded = expanded,
             onDismissRequest = { expanded = false }
         ) {
-            categoryViewModel.categories.forEach { category ->
+            categoryViewModel.categories.value.forEach { category ->
                 DropdownMenuItem(
                     text = { Text(text = category.name) },
                     onClick = {

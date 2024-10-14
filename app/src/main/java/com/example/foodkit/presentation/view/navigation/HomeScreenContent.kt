@@ -118,7 +118,7 @@ fun HomeScreenContent(
                     emptyList()
                 }
                 filteredCategories = if (query.isNotEmpty()) {
-                    categoryViewModel.categories.filter { it.name.contains(query, ignoreCase = true) }
+                    categoryViewModel.categories.value.filter { it.name.contains(query, ignoreCase = true) }
                 } else {
                     emptyList()
                 }
@@ -406,7 +406,7 @@ fun CategoriesSection(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            items(viewModel.categories) { category ->
+            items(viewModel.categories.value) { category ->
                 CategoryCard(category, onClick = {
 
                 })
