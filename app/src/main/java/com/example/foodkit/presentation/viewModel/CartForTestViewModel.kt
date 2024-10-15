@@ -43,7 +43,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
     }
 
     // إضافة منتج إلى العربة
-    fun addToCart(food: Food, quantity: Int = 1, userId: String) {
+    fun addToCart(food: Food, quantity: Int = 1, userId: String,onAddToCartSuccess: () -> Unit) {
         val existingItem = _cartItems.value.find { it.foodId == food.id }
 
         if (existingItem != null) {
@@ -65,6 +65,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
                     Log.d("CartViewModel", "Adding to cart: ${food.name} with quantity: $quantity")
                     // تحديث الحالة مباشرةً
                     _cartItems.value += newItem
+                    onAddToCartSuccess()
                 },
                 onFailure = { exception ->
                     Log.e("CartViewModel", "Failed to add item to cart: ${exception.message}")
@@ -84,6 +85,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
                 newQuantity = updatedQuantity,  // تمرير الكمية الجديدة المحددة فقط
                 foodName = currentItem.foodName,
                 foodPrice = currentItem.foodPrice,
+                imageFood = currentItem.imageUrl,
                 onSuccess = {
                     // تحديث العناصر في الذاكرة بعد نجاح التحديث
                     _cartItems.value = _cartItems.value.map {

@@ -63,6 +63,7 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.example.foodkit.R
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
+import com.example.foodkit.repository.CartItem
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
 import org.koin.androidx.compose.koinViewModel
@@ -357,7 +358,8 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(){
+fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit){
+    var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier
             .clip(RoundedCornerShape(12.dp))
@@ -378,13 +380,13 @@ fun CartFoodCard(){
                 shape = RoundedCornerShape(8.dp)
             ) {
                 AsyncImage(
-                    model = R.drawable.onboarding_photo1,
+                    model =food.imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(100.dp)
                         .clip(RoundedCornerShape(8.dp))
                         .padding(8.dp),
-                    contentScale = ContentScale.Fit,
+                    contentScale = ContentScale.Crop,
                     placeholder = painterResource(id = R.drawable.food_photo),
                     error = painterResource(id = R.drawable.food_photo)
                 )
@@ -395,7 +397,7 @@ fun CartFoodCard(){
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    "item.name",
+                    food.foodName,
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = Color.Black
@@ -403,7 +405,7 @@ fun CartFoodCard(){
 
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    "item.price",
+                    food.foodPrice.toString(),
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = Color.Black
@@ -413,7 +415,12 @@ fun CartFoodCard(){
 
 
             IconButton(
-                onClick = { },
+                onClick = {
+                    if (numberCart.value > -1) {
+                        numberCart.value--
+                        onIncrease(numberCart.value)
+                    }
+                },
                 modifier = Modifier
                     .padding(4.dp)
                     .background(
@@ -426,13 +433,10 @@ fun CartFoodCard(){
                     painter = painterResource(id = R.drawable.minus_icon),
                     tint = Color.White,
                     contentDescription = "Decrease quantity"
-
                 )
-
             }
-
             Text(
-                text = "1",
+                text =numberCart.value.toString(),
                 color = Color.Black,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
@@ -440,7 +444,10 @@ fun CartFoodCard(){
             )
 
             IconButton(
-                onClick = { },
+                onClick = {
+                    numberCart.value++
+                    onIncrease(numberCart.value)
+                },
                 modifier = Modifier
                     .padding(4.dp)
                     .background(

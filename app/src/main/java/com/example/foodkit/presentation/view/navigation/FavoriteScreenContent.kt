@@ -106,7 +106,7 @@ fun FavoriteScreenContent(navController: NavController) {
                     items(favoriteFoods.value?: emptyList()) { food ->
 
                         FoodCardFav(food = food, onClick = {
-                          //  navController.navigate(Routes.FOOD_DETAILS + "/${food.id}/${food.id}")
+                            navController.navigate("food_details/${food.id}")
                         }
                         )
                     }

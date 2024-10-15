@@ -69,8 +69,6 @@ fun MainScreen(navController: NavController) {
     ) {
             Home(navController)
     }
-
-
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
@@ -78,7 +76,7 @@ fun MainScreen(navController: NavController) {
 fun Home(navController: NavController) {
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
-    val selectedIndex = remember { mutableIntStateOf(0) }
+    var selectedIndex = remember { mutableIntStateOf(0) }
 
 
     Scaffold(
@@ -212,7 +210,7 @@ fun Home(navController: NavController) {
 
             when (selectedIndex.intValue) {
                 0 -> HomeScreenContent(navController)
-                1 -> CartScreenContent()
+                1 -> CartScreenContent(navController)
                 2 -> FavoriteScreenContent(navController)
                 3 -> ProfileScreenContent(navController)
             }

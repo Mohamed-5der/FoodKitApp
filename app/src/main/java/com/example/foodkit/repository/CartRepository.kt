@@ -11,7 +11,8 @@ data class CartItem(
     val foodName: String = "",
     val foodPrice: Double = 0.0,
     var quantity: Int = 1,
-    val userId: String = ""
+    val userId: String = "",
+    val imageUrl: String = ""
 )
 
 
@@ -55,7 +56,8 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                         "foodId" to food.id,
                         "foodName" to food.name,
                         "foodPrice" to food.price,
-                        "quantity" to newQuantity
+                        "quantity" to newQuantity,
+                        "imageUrl" to food.imageUrl
                     )
                     cartDocRef.update("items.${food.id}", cartItem)
                         .addOnSuccessListener { onSuccess() }
@@ -69,7 +71,9 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                             "foodId" to food.id,
                             "foodName" to food.name,
                             "foodPrice" to food.price,
-                            "quantity" to newQuantity
+                            "quantity" to newQuantity,
+                            "imageUrl" to food.imageUrl
+
                         )
                     )
                 )
@@ -97,7 +101,8 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                             foodName = item["foodName"] as? String ?: "",
                             foodPrice = (item["foodPrice"] as? Number)?.toDouble() ?: 0.0,
                             quantity = (item["quantity"] as? Number)?.toInt() ?: 1,
-                            userId = userId
+                            userId = userId,
+                            imageUrl = item["imageUrl"] as? String ?: ""
                         )
                     }
                     onSuccess(cartItems)
@@ -118,6 +123,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
         newQuantity: Int,
         foodName: String,
         foodPrice: Double,
+        imageFood: String,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
@@ -146,7 +152,8 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                     val newItem = hashMapOf(
                         "quantity" to newQuantity,
                         "foodName" to foodName,
-                        "foodPrice" to foodPrice
+                        "foodPrice" to foodPrice,
+                        "imageUrl" to imageFood
                     )
                     cartDocRef.update("items.$foodId", newItem)
                         .addOnSuccessListener { onSuccess() }
@@ -158,7 +165,8 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                     "items" to hashMapOf(foodId to hashMapOf(
                         "quantity" to newQuantity,
                         "foodName" to foodName,
-                        "foodPrice" to foodPrice
+                        "foodPrice" to foodPrice,
+                        "imageUrl" to imageFood
                     ))
                 )
                 cartDocRef.set(newCart)

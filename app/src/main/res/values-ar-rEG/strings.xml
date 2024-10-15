@@ -45,6 +45,7 @@
     <string name="coupons">الخصومات</string>
     <string name="notifications">الاشعارات</string>
     <string name="confirm">تاكيد</string>
+    <string name="description">الوصف </string>
 
     <string name="myCart">ةالسل</string>
 </resources>

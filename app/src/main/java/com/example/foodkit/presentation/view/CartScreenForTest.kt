@@ -40,16 +40,17 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.repository.CartItem
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CartScreenForTest(
     navController: NavController,
-    userId: String,
-    viewModel: CartForTestViewModel = koinViewModel()
 ) {
+    val  viewModel: CartForTestViewModel = koinViewModel()
     val cartItems = viewModel.cartItems.collectAsState(initial = emptyList())
     val totalPrice by viewModel.totalPriceState.collectAsState(initial = 0.0)
+    val userId =FirebaseAuth.getInstance().currentUser?.uid ?: ""
     val context = LocalContext.current
 
     // تحميل العناصر عند تشغيل الشاشة

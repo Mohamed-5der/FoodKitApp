@@ -3,6 +3,7 @@ package com.example.foodkit.di
 import androidx.room.Room
 import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.local.UserDatabase
+import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
@@ -12,6 +13,7 @@ import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import com.example.foodkit.presentation.viewModel.MasterViewModel
 import com.example.foodkit.presentation.viewModel.SignUpViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
+import com.example.foodkit.repository.CartRepository
 import com.example.foodkit.repository.CategoryRepository
 import com.example.foodkit.repository.FoodRepository
 import com.google.firebase.auth.FirebaseAuth
@@ -39,6 +41,7 @@ val appModule = module {
     single { CategoryRepository(get(),get())}
     single { AppPreferences(get()) }
     single { AppPreferences(get()).init() }
+    single { CartRepository(get(),get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
@@ -49,5 +52,6 @@ val appModule = module {
     viewModel { UserViewModel(get()) }
     viewModel { FavoriteFoodViewModel(get()) }
     viewModel { LogoutViewModel(get()) }
+    viewModel { CartForTestViewModel(get()) }
 
 }

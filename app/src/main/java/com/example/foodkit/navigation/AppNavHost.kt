@@ -54,7 +54,7 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Routes.FOOD_DETAILS) {
             val itemId = it.arguments?.getString("itemId") ?: ""
-            ProductDetailsScreen(itemId)
+            ProductDetailsScreen(itemId,navController)
         }
     }
 }
