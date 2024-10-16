@@ -358,7 +358,7 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit){
+fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit, onClick: () -> Unit){
     var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier
@@ -374,7 +374,9 @@ fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit
             verticalAlignment = Alignment.CenterVertically
         ) {
             Card(
-                modifier = Modifier.padding(8.dp),
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable(onClick = onClick),
                 colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
                 elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
                 shape = RoundedCornerShape(8.dp)
@@ -405,7 +407,7 @@ fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit
 
                 Spacer(modifier = Modifier.height(4.dp))
                 Text(
-                    food.foodPrice.toString(),
+                    text = "£${food.foodPrice}",
                     fontWeight = FontWeight.Bold,
                     fontSize = 16.sp,
                     color = Color.Black

@@ -1,12 +1,5 @@
 package com.example.foodkit.presentation.view.navigation
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,13 +18,11 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
-import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
 import androidx.compose.material3.Card
@@ -59,29 +50,21 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import android.Manifest
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.items
 import com.example.foodkit.R
 import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
-import com.example.foodkit.navigation.Routes
-import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
-import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -103,7 +86,6 @@ fun HomeScreenContent(
     ) {
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .background(Color.White)
 
@@ -123,26 +105,32 @@ fun HomeScreenContent(
                     emptyList()
                 }
             })
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .background(Color.White)
 
+            ) {
+                // Only show the banner and DotsIndicator if not in search mode
+                if (!isSearchMode) {
+                    BannerSection()
+                }
 
-            // Only show the banner and DotsIndicator if not in search mode
-            if (!isSearchMode) {
-                BannerSection()
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (isSearchMode) {
-                // Show filtered categories
-                CategoriesSection(categories = filteredCategories)
                 Spacer(modifier = Modifier.height(16.dp))
-                // Show filtered products
-                ProductSection(navController, foods = filteredFoods)
-            } else {
-                // Show all categories and products
-                CategoriesSection()
-                Spacer(modifier = Modifier.height(16.dp))
-                ProductSection(navController)
+
+                if (isSearchMode) {
+                    // Show filtered categories
+                    CategoriesSection(categories = filteredCategories)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    // Show filtered products
+                    ProductSection(navController, foods = filteredFoods)
+                } else {
+                    // Show all categories and products
+                    CategoriesSection()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ProductSection(navController)
+                }
+
             }
         }
     }
@@ -408,7 +396,7 @@ fun CategoriesSection(
         ) {
             items(viewModel.categories.value) { category ->
                 CategoryCard(category, onClick = {
-
+                    viewModel.selectCategory(category)
                 })
             }
         }
@@ -420,14 +408,17 @@ fun CategoriesSection(
 fun ProductSection(
     navController: NavController,
     foods: List<Food> = emptyList(),
-    viewModel: FoodListScreenViewModel = koinViewModel(),
+//    categoryViewModel: CategoryViewModel = koinViewModel()
+    foodViewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
+//    val foodsInCategory by categoryViewModel.foodsInCategory.collectAsState()
+
 
     val foodList =
-        if (foods.isNotEmpty()) foods else viewModel.foods.collectAsState(initial = emptyList()).value
+        if (foods.isNotEmpty()) foods else foodViewModel.foods.collectAsState(initial = emptyList()).value
     LaunchedEffect(Unit) {
         if (foods.isEmpty()) {
-            viewModel.loadAllFoods()
+            foodViewModel.loadAllFoods()
         }
     }
 

@@ -106,7 +106,11 @@ import org.koin.androidx.compose.koinViewModel
                             viewModel.updateQuantity(it.foodId, userId, increment)
                         }, onRemove = {
                             viewModel.removeFromCart(it.foodId, userId)
-                        })
+                        }, onClick = {
+                            navController.navigate("food_details/${it.foodId}")
+
+                        }
+                            )
                     }
                     item {
                         Button(

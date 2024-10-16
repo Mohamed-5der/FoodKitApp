@@ -47,7 +47,7 @@ class CategoryRepository(private val db: FirebaseFirestore, private val storage:
                 val foodIds = querySnapshot.documents.mapNotNull { it.getString("foodId") }
                 val foodReferences = foodIds.map { id -> db.collection("foods").document(id) }
 
-                // جلب الأطعمة بناءً على معرفات (IDs)
+                // Get food by category id
                 db.runBatch { batch ->
                     val tasks = foodReferences.map { ref ->
                         ref.get().continueWith { task -> task.result?.toObject(Food::class.java) }
