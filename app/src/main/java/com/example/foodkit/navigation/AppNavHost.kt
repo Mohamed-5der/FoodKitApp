@@ -4,6 +4,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.Constraints
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -24,7 +25,7 @@ fun AppNavigation(navController: NavHostController) {
     val appPreferences = AppPreferences(LocalContext.current)
     appPreferences.init()
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
-        if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL ) {
+        if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL || FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL2 ) {
             Routes.MASTER
         } else {
             val email = appPreferences.getString("email", "")
