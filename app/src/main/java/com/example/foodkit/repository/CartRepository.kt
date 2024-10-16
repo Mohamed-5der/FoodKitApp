@@ -123,7 +123,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
         newQuantity: Int,
         foodName: String,
         foodPrice: Double,
-        imageFood: String,
+        foodImageUrl: String,
         onSuccess: () -> Unit,
         onFailure: (Exception) -> Unit
     ) {
@@ -153,7 +153,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                         "quantity" to newQuantity,
                         "foodName" to foodName,
                         "foodPrice" to foodPrice,
-                        "imageUrl" to imageFood
+                        "imageUrl" to foodImageUrl
                     )
                     cartDocRef.update("items.$foodId", newItem)
                         .addOnSuccessListener { onSuccess() }
@@ -166,7 +166,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                         "quantity" to newQuantity,
                         "foodName" to foodName,
                         "foodPrice" to foodPrice,
-                        "imageUrl" to imageFood
+                        "imageUrl" to foodImageUrl
                     ))
                 )
                 cartDocRef.set(newCart)
@@ -177,7 +177,6 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
             onFailure(exception)
         }
     }
-
 
 
     fun calculateTotalPrice(cartItems: List<CartItem>): Double {
@@ -225,8 +224,8 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
             .addOnFailureListener { exception ->
                 Log.e("CartRepository", "Failed to update quantity: ${exception.message}")
                 onFailure(exception)
-            }
-    }
+                }
+        }
 
 
     fun submitOrder(cartItems: List<CartItem>, userId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {

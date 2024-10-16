@@ -108,8 +108,6 @@ fun Home(navController: NavController) {
                             contentDescription = "Home Icon",
                             tint = if (selectedIndex.intValue == 0) colorResource(id = R.color.appColor) else Color.Black
                         )
-
-
                     },
                     selected = false,
                     onClick = { selectedIndex.intValue = 0 },
@@ -133,8 +131,6 @@ fun Home(navController: NavController) {
                             contentDescription = "Cart Icon",
                             tint = if (selectedIndex.intValue == 1) colorResource(id = R.color.appColor) else Color.Black
                         )
-
-
                     },
                     selected = false,
                     onClick = { selectedIndex.intValue = 1 },
@@ -157,7 +153,6 @@ fun Home(navController: NavController) {
                             painter = painterResource(id = R.drawable.favorite_un),
                             contentDescription = "Favorite Icon",
                             tint = if (selectedIndex.intValue == 2) colorResource(id = R.color.appColor) else Color.Black
-
                         )
                     },
                     selected = false,
@@ -181,7 +176,6 @@ fun Home(navController: NavController) {
                             painter = painterResource(id = R.drawable.profile_un),
                             contentDescription = "Profile Icon",
                             tint = if (selectedIndex.intValue == 3) colorResource(id = R.color.appColor) else Color.Black
-
                         )
                     },
                     selected = false,

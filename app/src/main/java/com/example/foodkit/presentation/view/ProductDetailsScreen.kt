@@ -38,6 +38,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +63,7 @@ import coil.compose.AsyncImage
 import com.example.foodkit.R
 import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
+import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
@@ -74,6 +76,10 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
     val userId=FirebaseAuth.getInstance().currentUser?.uid.toString()
     val viewModel: FoodDetailViewModel = koinViewModel( parameters = { parametersOf(userId) } )
     val cartViewModel :CartForTestViewModel =koinViewModel()
+    val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
+    favoriteViewModel.getFavoriteFoods()
+    val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
+
     val context = LocalContext.current
     val numberItem= remember { mutableStateOf(1) }
 
@@ -88,7 +94,6 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
     ) {
         viewModel.food?.let { food ->
             Box {
-
                 //Food Image
                 Column(
                     modifier = Modifier
@@ -280,15 +285,39 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                         colors = CardDefaults.cardColors(Color.White),
                         shape = RoundedCornerShape(10.dp)
                     ) {
+                        val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(foodId ?: ""))}
                         Icon(
                             painterResource(
-                                id = if (true) R.drawable.favorite_un else R.drawable.favorite_se
+                                id = if (isFavorite.value) R.drawable.favorite_se else R.drawable.favorite_un
                             ),
                             contentDescription = "Favorite",
                             modifier = Modifier
                                 .fillMaxSize()
                                 .padding(4.dp)
                                 .clickable {
+                                    if (isFavorite.value) {
+                                        isFavorite.value = !isFavorite.value
+                                        favoriteViewModel.deleteFavoriteFood(food.id){
+                                            Toast
+                                                .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+                                    } else {
+                                        isFavorite.value = !isFavorite.value
+                                        favoriteViewModel.addFavoriteFood(
+                                            name = food.name,
+                                            imageUrl = food.imageUrl, price = food.price,
+                                            description = food.description,
+                                            rating = food.rating.toFloat(),
+                                            category = "",
+                                            numberRating = food.rating.toDouble(),
+                                            idFood = food.id
+                                        ) {
+                                            Toast
+                                                .makeText(context, "Added to favorites", Toast.LENGTH_SHORT)
+                                                .show()
+                                        }
+                                    }
 
                                 },
                             tint = if (true) colorResource(id = R.color.appColor) else Color.Gray

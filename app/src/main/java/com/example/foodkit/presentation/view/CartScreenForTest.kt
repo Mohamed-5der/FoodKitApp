@@ -106,7 +106,7 @@ fun CartScreenForTest(
                 CartItemRow(
                     item = item,
                     onQuantityChange = { increment ->
-                        viewModel.updateQuantity(item.foodId, userId, increment)
+                        viewModel.updateQuantityInCartScreen(item.foodId, userId, increment)
                     },
                     onRemove = {
                         viewModel.removeFromCart(item.foodId, userId)

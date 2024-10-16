@@ -53,7 +53,6 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.foodkit.R
-import com.example.foodkit.components.imageRefactored
 import com.example.foodkit.components.poppins
 import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
@@ -72,11 +71,14 @@ fun CompleteSignUpScreen(
     val appPreferences = AppPreferences(context)
     appPreferences.init()
     val email = FirebaseAuth.getInstance().currentUser?.email?:""
-    var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    var selectedImagePath by remember { mutableStateOf<String?>(null) }
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
-        selectedImageUri = uri
+        uri?.let {
+            selectedImagePath = it.toString()
+        }
+
     }
 
     Surface(
@@ -120,8 +122,8 @@ fun CompleteSignUpScreen(
 
                 Image(
                     painter = rememberImagePainter(
-                        data = if (selectedImageUri==null)  R.drawable.profile_image
-                        else  selectedImageUri,
+                        data = if (selectedImagePath==null)  R.drawable.profile_image
+                        else  selectedImagePath,
                         builder = {
                             crossfade(true)
                         }
@@ -202,25 +204,21 @@ fun CompleteSignUpScreen(
 
             Button(
                 onClick = {
-                    if (selectedImageUri == null) {
+                    if (selectedImagePath == null) {
                         Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
                     }else if (userName.isEmpty()|| phoneNumber.isEmpty()) {
                         Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                     }else{
-                        val image = imageRefactored(context, selectedImageUri!!)
-                        if (image != null) {
                             viewModelDb.addUser(
                                 name = userName,
                                 email = email,
-                                phoneNumber = phoneNumber, imageUrl = image.toString()
+                                phoneNumber = phoneNumber, imageUrl = selectedImagePath!!
                             ) {
                                 navController.navigate(Routes.MAIN)
                                 appPreferences.putString("email", email)
                                 Toast.makeText(context, "Complete Successful", Toast.LENGTH_SHORT)
                                     .show()
                             }
-                        }
-
 
                     }
 

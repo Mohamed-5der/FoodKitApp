@@ -102,8 +102,8 @@ import org.koin.androidx.compose.koinViewModel
                         .padding(bottom = 16.dp)
                 ) {
                     items(cartItems.value) {
-                        CartFoodCard(it, onIncrease = {increment ->
-                            viewModel.updateQuantity(it.foodId, userId, increment)
+                        CartFoodCard(it, onIncreaseOrDecrease = {increment ->
+                            viewModel.updateQuantityInCartScreen(it.foodId, userId, increment)
                         }, onRemove = {
                             viewModel.removeFromCart(it.foodId, userId)
                         })

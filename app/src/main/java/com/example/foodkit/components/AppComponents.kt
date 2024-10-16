@@ -9,6 +9,7 @@ import android.graphics.ImageDecoder
 import android.net.Uri
 import android.os.Build
 import android.provider.MediaStore
+import android.util.Base64
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
@@ -40,6 +41,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -72,6 +74,7 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
 import java.io.InputStream
+import java.io.OutputStream
 
 @Composable
 fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
@@ -88,17 +91,7 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
 
 
 @Composable
-fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit) {
-
-    // Check if the food is already a favorite when the composable is first loaded
-//    LaunchedEffect(food) {
-//        val favoriteFoods = favoriteViewModel.getFavoriteFoods(userId)}
-//        isFavorite.value = favoriteFoods.any { it.name == food.name }
-//    }
-    val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
-    val getFavoriteFoods = favoriteViewModel.favoriteFoods.collectAsState(initial = emptyList())
-    val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
-    val context = LocalContext.current
+fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFavorite: MutableState<Boolean>) {
 
 
     Card(
@@ -106,7 +99,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit) {
             .width(200.dp)
             .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
             .wrapContentHeight()
-            .clickable(onClick = onClick),
+            .clickable(onClick = { onClick() }),
         colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
         elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
         shape = RoundedCornerShape(12.dp),
@@ -196,7 +189,6 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit) {
                         )
                     }
                 }
-                val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(food.id ?: ""))}
 
                 Icon(
                     painterResource(
@@ -207,29 +199,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit) {
                         .align(Alignment.TopEnd)
                         .size(24.dp)
                         .clickable {
-                            if (isFavorite.value) {
-                                isFavorite.value = !isFavorite.value
-                                favoriteViewModel.deleteFavoriteFood(food.id){
-                                        Toast
-                                            .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
-                                            .show()
-                                    }
-                                } else {
-                                isFavorite.value = !isFavorite.value
-                                favoriteViewModel.addFavoriteFood(
-                                        name = food.name,
-                                        imageUrl = food.imageUrl, price = food.price,
-                                        description = food.description,
-                                        rating = food.rating.toFloat(),
-                                        category = "",
-                                        numberRating = food.rating.toDouble(),
-                                        idFood = food.id
-                                    ) {
-                                        Toast
-                                            .makeText(context, "Added to favorites", Toast.LENGTH_SHORT)
-                                            .show()
-                                    }
-                                }
+                            onClickFavorite()
                         },
                     tint = colorResource(id = R.color.appColor)
 //                    if (isSelected) colorResource(id = R.color.appColor) else Color.Gray
@@ -358,7 +328,7 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit){
+fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: () -> Unit){
     var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier
@@ -418,7 +388,7 @@ fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit
                 onClick = {
                     if (numberCart.value > -1) {
                         numberCart.value--
-                        onIncrease(numberCart.value)
+                        onIncreaseOrDecrease(-1)
                     }
                 },
                 modifier = Modifier
@@ -446,7 +416,7 @@ fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit
             IconButton(
                 onClick = {
                     numberCart.value++
-                    onIncrease(numberCart.value)
+                    onIncreaseOrDecrease(1)
                 },
                 modifier = Modifier
                     .padding(4.dp)
@@ -476,36 +446,41 @@ val poppins = FontFamily(
     Font(R.font.poppins_semi_bold, FontWeight.SemiBold),
     Font(R.font.poppins_bold, FontWeight.ExtraBold),
 )
-fun saveImageToFile(context: Context, bitmap: Bitmap): File? {
-    val file = File(context.cacheDir, "image.jpg")
+
+
+fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
     return try {
-        val stream = FileOutputStream(file)
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-        stream.flush()
-        stream.close()
-
-        file
-    } catch (e: IOException) {
+        // Get the input stream from the URI
+        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
+        // Decode the input stream into a bitmap
+        BitmapFactory.decodeStream(inputStream)
+    } catch (e: Exception) {
         e.printStackTrace()
-
         null
     }
 }
 
-fun imageRefactored(context: Context, uri: Uri): File? {
+fun bitmapToFile(bitmap: Bitmap, file: File): File? {
     return try {
-        val inputStream = context.contentResolver.openInputStream(uri)
-        val myBitmap = BitmapFactory.decodeStream(inputStream)
+        val outputStream: OutputStream = FileOutputStream(file)
 
-        val stream = ByteArrayOutputStream()
-        myBitmap.compress(Bitmap.CompressFormat.PNG, 100, stream)
-        inputStream!!.close()
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
 
-        saveImageToFile(context, myBitmap)
-
-    } catch (e: IOException) {
+        outputStream.flush()
+        outputStream.close()
+        file
+    } catch (e: Exception) {
         e.printStackTrace()
+        null
+    }
+}
 
+fun fileToBase64String(file: File): String? {
+    return try {
+        val bytes = file.readBytes()
+        Base64.encodeToString(bytes, Base64.DEFAULT)
+    } catch (e: Exception) {
+        e.printStackTrace()
         null
     }
 }

@@ -69,6 +69,7 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import android.Manifest
+import android.widget.Toast
 import androidx.compose.foundation.layout.width
 import com.example.foodkit.R
 import com.example.foodkit.components.CategoryCard
@@ -78,10 +79,12 @@ import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
+import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 
 
@@ -92,7 +95,10 @@ fun HomeScreenContent(
     foodViewModel: FoodListScreenViewModel = koinViewModel(),
     categoryViewModel: CategoryViewModel = koinViewModel(),
 ) {
-    // State to manage search mode and filtered products
+    val userViewModel: UserViewModel = koinViewModel()
+    val email = FirebaseAuth.getInstance().currentUser?.email?:""
+    userViewModel.getUserByEmail(email)
+    val user = userViewModel.user.collectAsState().value
     var isSearchMode by remember { mutableStateOf(false) }
     var filteredFoods by remember { mutableStateOf<List<Food>>(emptyList()) }
     var filteredCategories by remember { mutableStateOf<List<Category>>(emptyList()) }
@@ -108,7 +114,7 @@ fun HomeScreenContent(
                 .background(Color.White)
 
         ) {
-            HomeTopAppBar()
+            HomeTopAppBar(user?.name?:"User Name")
 
             SearchBar(onSearch = { query ->
                 isSearchMode = query.isNotEmpty()
@@ -150,7 +156,7 @@ fun HomeScreenContent(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopAppBar() {
+fun HomeTopAppBar(name :String) {
     val context = LocalContext.current
     lateinit var fusedLocationClient: FusedLocationProviderClient
 
@@ -167,7 +173,7 @@ fun HomeTopAppBar() {
 
             Column {
                 Text(
-                    text = "Hi Ahmed Emad",
+                    text = "Hi $name",
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
@@ -422,7 +428,6 @@ fun ProductSection(
     foods: List<Food> = emptyList(),
     viewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
-
     val foodList =
         if (foods.isNotEmpty()) foods else viewModel.foods.collectAsState(initial = emptyList()).value
     LaunchedEffect(Unit) {
@@ -430,6 +435,10 @@ fun ProductSection(
             viewModel.loadAllFoods()
         }
     }
+    val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
+    favoriteViewModel.getFavoriteFoods()
+    val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
+    val context = LocalContext.current
 
 
 
@@ -450,10 +459,33 @@ fun ProductSection(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(foodList) { food ->
-
-                    FoodCard(food, onClick = {
+                    val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(food.id ?: "")) }
+                    FoodCard(food, isFavorite=isFavorite,onClick = {
                         navController.navigate("food_details/${food.id}")
                     }, onClickFavorite = {
+                        if (isFavorite.value) {
+                            isFavorite.value = !isFavorite.value
+                            favoriteViewModel.deleteFavoriteFood(food.id){
+                                Toast
+                                    .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        } else {
+                            isFavorite.value = !isFavorite.value
+                            favoriteViewModel.addFavoriteFood(
+                                name = food.name,
+                                imageUrl = food.imageUrl, price = food.price,
+                                description = food.description,
+                                rating = food.rating.toFloat(),
+                                category = "",
+                                numberRating = food.rating.toDouble(),
+                                idFood = food.id
+                            ) {
+                                Toast
+                                    .makeText(context, "Added to favorites", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
+                        }
                     }
                     )
                 }

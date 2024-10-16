@@ -1,6 +1,7 @@
 package com.example.foodkit.presentation.view.Account
 
 
+import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -78,9 +79,7 @@ fun ProfileScreen(navController: NavController){
     val email = FirebaseAuth.getInstance().currentUser?.email?:""
     userViewModel.getUserByEmail(email)
     val user = userViewModel.user.collectAsState().value
-    val file = File(user?.imageUrl.toString())
-    var image by remember { mutableStateOf(file) }
-
+    val userImagePath = user?.imageUrl
 
     Scaffold(
         topBar = {
@@ -121,14 +120,14 @@ fun ProfileScreen(navController: NavController){
             Spacer(modifier = Modifier.height(16.dp))
 
             Box(contentAlignment = Alignment.BottomEnd) {
+
+
                 Image(
-                    painter = rememberAsyncImagePainter(ImageRequest.Builder(LocalContext.current)
-                        .data(
-                            data = if (image==null)  R.drawable.profile_image
-                            else  image
-                        ).apply(block = fun ImageRequest.Builder.() {
+                    painter = rememberImagePainter(
+                        data = userImagePath ?: R.drawable.profile_image, // Use default image if URL is null
+                        builder = {
                             crossfade(true)
-                        }).build()
+                        }
                     ),
                     contentDescription = "Profile Image",
                     modifier = Modifier
@@ -136,7 +135,6 @@ fun ProfileScreen(navController: NavController){
                         .clip(CircleShape),
                     contentScale = ContentScale.Crop
                 )
-
             }
 
             Spacer(modifier = Modifier.height(24.dp))

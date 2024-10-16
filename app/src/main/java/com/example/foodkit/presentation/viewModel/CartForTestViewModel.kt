@@ -85,7 +85,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
                 newQuantity = updatedQuantity,  // تمرير الكمية الجديدة المحددة فقط
                 foodName = currentItem.foodName,
                 foodPrice = currentItem.foodPrice,
-                imageFood = currentItem.imageUrl,
+                foodImageUrl = currentItem.imageUrl,
                 onSuccess = {
                     // تحديث العناصر في الذاكرة بعد نجاح التحديث
                     _cartItems.value = _cartItems.value.map {
@@ -99,7 +99,6 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
             )
         }
     }
-
 
 
     // حذف منتج من العربة
@@ -126,7 +125,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
         )
     }
 
-    fun updateQuantity(foodId: String, userId: String, increment: Int) {
+    fun updateQuantityInCartScreen(foodId: String, userId: String, increment: Int) {
         repository.updateQuantityInCartScreen(foodId, userId, increment,
             onSuccess = {
                 // تحديث العناصر بعد تعديل الكمية
@@ -135,7 +134,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
             onFailure = { exception ->
                 Log.e("CartViewModel", "Failed to update quantity: ${exception.message}")
             }
-        )
+           )
     }
 
 
