@@ -71,6 +71,7 @@ import androidx.navigation.compose.rememberNavController
 import android.Manifest
 import android.widget.Toast
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.grid.items
 import com.example.foodkit.R
 import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
@@ -129,26 +130,32 @@ fun HomeScreenContent(
                     emptyList()
                 }
             })
+            Column(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .background(Color.White)
 
+            ) {
+                // Only show the banner and DotsIndicator if not in search mode
+                if (!isSearchMode) {
+                    BannerSection()
+                }
 
-            // Only show the banner and DotsIndicator if not in search mode
-            if (!isSearchMode) {
-                BannerSection()
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            if (isSearchMode) {
-                // Show filtered categories
-                CategoriesSection(categories = filteredCategories)
                 Spacer(modifier = Modifier.height(16.dp))
-                // Show filtered products
-                ProductSection(navController, foods = filteredFoods)
-            } else {
-                // Show all categories and products
-                CategoriesSection()
-                Spacer(modifier = Modifier.height(16.dp))
-                ProductSection(navController)
+
+                if (isSearchMode) {
+                    // Show filtered categories
+                    CategoriesSection(categories = filteredCategories)
+                    Spacer(modifier = Modifier.height(16.dp))
+                    // Show filtered products
+                    ProductSection(navController, foods = filteredFoods)
+                } else {
+                    // Show all categories and products
+                    CategoriesSection()
+                    Spacer(modifier = Modifier.height(16.dp))
+                    ProductSection(navController)
+                }
+
             }
         }
     }
@@ -414,7 +421,7 @@ fun CategoriesSection(
         ) {
             items(viewModel.categories.value) { category ->
                 CategoryCard(category, onClick = {
-
+                    viewModel.selectCategory(category)
                 })
             }
         }
@@ -426,13 +433,17 @@ fun CategoriesSection(
 fun ProductSection(
     navController: NavController,
     foods: List<Food> = emptyList(),
-    viewModel: FoodListScreenViewModel = koinViewModel(),
+//    categoryViewModel: CategoryViewModel = koinViewModel()
+    foodViewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
+//    val foodsInCategory by categoryViewModel.foodsInCategory.collectAsState()
+
+
     val foodList =
-        if (foods.isNotEmpty()) foods else viewModel.foods.collectAsState(initial = emptyList()).value
+        if (foods.isNotEmpty()) foods else foodViewModel.foods.collectAsState(initial = emptyList()).value
     LaunchedEffect(Unit) {
         if (foods.isEmpty()) {
-            viewModel.loadAllFoods()
+            foodViewModel.loadAllFoods()
         }
     }
     val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()

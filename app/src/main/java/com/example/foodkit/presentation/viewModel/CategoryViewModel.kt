@@ -20,6 +20,8 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
 
     var categoryName by mutableStateOf(TextFieldValue(""))
     var selectedImageUri by mutableStateOf<Uri?>(null)
+    var selectedCategory by mutableStateOf<Category?>(null)
+
 
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories : StateFlow<List<Category>> = _categories.asStateFlow()
@@ -76,5 +78,10 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
                 Log.e("ViewModel", "Error loading foods for category", exception)
             }
         )
+    }
+    // New function to select a category
+    fun selectCategory(category: Category) {
+        selectedCategory = category
+        loadFoodsByCategory(category.id)
     }
 }
