@@ -138,7 +138,6 @@ fun ProfileScreen(navController: NavController){
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-
             ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_unselect), label =user?.name.toString()?:"User Name")
             ProfileOptionItem(icon = Icons.Outlined.Email, label =user?.email.toString()?:"Email@gmail.com")
             ProfileOptionItem(icon = Icons.Outlined.Phone, label =user?.phoneNumber.toString()?:"01203498410")

@@ -1,6 +1,7 @@
 package com.example.foodkit.presentation.view.navigation
 import android.annotation.SuppressLint
 import android.net.Uri
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.Image
@@ -16,6 +17,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
 import androidx.compose.material.icons.outlined.ShoppingCart
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -27,6 +29,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
@@ -52,6 +55,7 @@ import org.koin.core.parameter.parametersOf
 fun ProfileScreenContent(navController: NavController) {
     val userViewModel: UserViewModel = koinViewModel()
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val user = userViewModel.user.collectAsState().value
 
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
@@ -67,7 +71,7 @@ fun ProfileScreenContent(navController: NavController) {
                     fontFamily = poppins,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(top = 30.dp,end = 16.dp),
+                        .padding(top = 30.dp, end = 16.dp),
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center)
                         },
                 backgroundColor = Color.White,
@@ -110,7 +114,8 @@ fun ProfileScreenContent(navController: NavController) {
                     modifier = Modifier
                         .background(color = colorResource(id = R.color.appColor), CircleShape)
                         .border(1.dp, Color.White, CircleShape)
-                        .size(40.dp).clickable {
+                        .size(40.dp)
+                        .clickable {
                             galleryLauncher.launch("image/*")
                         },
                     shape = CircleShape,
@@ -151,7 +156,7 @@ fun ProfileScreenContent(navController: NavController) {
 
 @Composable
 fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navController: NavController) {
-
+    val context = LocalContext.current
     val logoutViewModel: LogoutViewModel = koinViewModel()
     Row(
         modifier = Modifier
@@ -160,10 +165,14 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
             .clickable {
                 if (route == Routes.LOGIN) {
                     logoutViewModel.logout() {
-                        navController.navigate(Routes.PROFILE)
+                        Toast
+                            .makeText(context, "Logout Successfully", Toast.LENGTH_SHORT)
+                            .show()
+                        navController.navigate(Routes.LOGIN)
                     }
                 } else {
-                    navController.navigate(Routes.PROFILE)                }
+                    navController.navigate(Routes.PROFILE)
+                }
             },
         verticalAlignment = Alignment.CenterVertically,
     ) {
