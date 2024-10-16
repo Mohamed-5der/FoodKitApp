@@ -30,9 +30,12 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.Surface
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -69,6 +72,12 @@ fun MainScreen(navController: NavController) {
     ) {
             Home(navController)
     }
+   // FoodListScreen(navController)
+  //  Home()
+//    CartScreenContent()
+//    HomeScreenContent()
+//    ProductDetailsScreen()
+
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
