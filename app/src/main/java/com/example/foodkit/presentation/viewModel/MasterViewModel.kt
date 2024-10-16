@@ -27,9 +27,18 @@ class MasterViewModel(
     var selectedImageUri by mutableStateOf<Uri?>(null)
     var foodPrice by mutableStateOf(TextFieldValue(""))
     var selectedCategory by mutableStateOf("")
+    var categoryName by mutableStateOf("")
+    var availableQuantityNumber by mutableStateOf(TextFieldValue(""))
+    var calories by mutableStateOf(TextFieldValue(""))
+    var protein by mutableStateOf(TextFieldValue(""))
+    var fats by mutableStateOf(TextFieldValue(""))
 
     private val _orders = MutableStateFlow<List<Order>>(emptyList())
     val orders: StateFlow<List<Order>> get() = _orders
+
+    var food by mutableStateOf<Food?>(null)
+        private set
+
 
     fun addFoodToCategory(context: Context) {
         if (foodName.text.isBlank() || foodDescription.text.isBlank() || selectedImageUri == null || foodPrice.text.isBlank() || selectedCategory.isBlank()) {
@@ -38,6 +47,10 @@ class MasterViewModel(
         }
 
         val price = foodPrice.text.toDoubleOrNull()
+        val availableQuantity = availableQuantityNumber.text.toInt()
+        val caloriesQuantity = calories.text.toInt()
+        val proteinsQuantity = calories.text.toInt()
+        val fatsQuantity = calories.text.toInt()
         if (price == null) {
             Toast.makeText(context, "Please enter a valid price", Toast.LENGTH_SHORT).show()
             return
@@ -45,13 +58,26 @@ class MasterViewModel(
         val food = Food(name = foodName.text, description = foodDescription.text, price = price)
 
         selectedImageUri?.let { imageUri ->
-            foodRepository.addFoodToCategory(food, imageUri, price, selectedCategory, {
+            foodRepository.addFoodToCategory(
+                food,
+                imageUri,
+                price,
+                selectedCategory,
+                categoryName,
+                availableQuantity,
+                caloriesQuantity,
+                proteinsQuantity,
+                fatsQuantity, {
                 // clear the form fields
                 foodName = TextFieldValue("")
                 foodDescription = TextFieldValue("")
                 selectedImageUri = null
                 foodPrice = TextFieldValue("")
                 selectedCategory = ""
+                availableQuantityNumber = TextFieldValue("")
+                    calories = TextFieldValue("")
+                    protein = TextFieldValue("")
+                    fats = TextFieldValue("")
                 Toast.makeText(context, "Food added successfully", Toast.LENGTH_SHORT).show()
             }, { exception ->
                 Toast.makeText(context, "Failed to add food: ${exception.message}", Toast.LENGTH_SHORT).show()

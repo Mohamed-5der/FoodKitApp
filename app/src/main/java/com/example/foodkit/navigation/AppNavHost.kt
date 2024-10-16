@@ -9,6 +9,7 @@ import com.example.foodkit.presentation.view.AddCategoryScreen
 import com.example.foodkit.presentation.view.CartScreenForTest
 import com.example.foodkit.presentation.view.CategoryDetailScreen
 import com.example.foodkit.presentation.view.CategoryListScreen
+import com.example.foodkit.presentation.view.DetailsAnalysisForMaster
 import com.example.foodkit.presentation.view.FoodDetailScreen
 import com.example.foodkit.presentation.view.LoginScreen
 import com.example.foodkit.presentation.view.MainScreen
@@ -50,6 +51,11 @@ fun AppNavigation(navController: NavHostController) {
             }
         }
 
+        composable(Routes.ADD_CATEGORY) { AddCategoryScreen(navController) }
+
+
+        composable(Routes.CATEGORY_LIST) { CategoryListScreen(navController) }
+
         composable(Routes.CATEGORY_DETAIL) { backStackEntry ->
             val categoryId = backStackEntry.arguments?.getString("categoryId") ?: return@composable
             CategoryDetailScreen(navController, categoryId)
@@ -62,5 +68,15 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.ORDERS_LIST) {
             MasterOrdersScreen()
         }
+
+        composable(Routes.DETAILS_ANALYSIS) {backStackEntry ->
+
+            val itemId = backStackEntry.arguments?.getString("itemId")
+            if (itemId != null) {
+                DetailsAnalysisForMaster(navController, itemId , curentUserId)
+            }
+        }
+
+
     }
 }

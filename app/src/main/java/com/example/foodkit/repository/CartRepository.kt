@@ -1,10 +1,12 @@
 package com.example.foodkit.repository
 
 import android.util.Log
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.core.component.KoinComponent
+import kotlin.math.absoluteValue
 
 data class CartItem(
     val foodId: String = "",
@@ -221,23 +223,136 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
     }
 
 
-    fun submitOrder(cartItems: List<CartItem>, userId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun calculateLastWeekRevenue(foodId: String, onSuccess: (Double) -> Unit, onFailure: (Exception) -> Unit) {
+        // الحصول على توقيت الأسبوع الماضي
+        val lastWeekTimestamp = Timestamp.now().seconds - 7 * 24 * 60 * 60
 
+        // الاستعلام عن الطلبات التي تمت خلال آخر 7 أيام
+        db.collection("orders")
+            .whereGreaterThan("timestamp", Timestamp(lastWeekTimestamp, 0))
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                var totalRevenue = 0.0
+
+                // المرور عبر الطلبات المسترجعة
+                for (document in querySnapshot.documents) {
+                    // الحصول على عناصر السلة من كل طلب
+                    val cartItems = document.get("items") as? List<HashMap<String, Any>> ?: continue
+
+                    cartItems.forEach { item ->
+                        val currentFoodId = item["foodId"] as? String ?: return@forEach
+                        val quantity = (item["quantity"] as? Long)?.toInt() ?: 0
+                        val price = item["price"] as? Double ?: 0.0
+
+                        // حساب الإيرادات إذا تطابق الـ foodId
+                        if (currentFoodId == foodId) {
+                            totalRevenue += price * quantity
+                        }
+                    }
+                }
+
+                // إرجاع الإيرادات المحسوبة
+                onSuccess(totalRevenue)
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
+    fun submitOrder(
+        cartItems: List<CartItem>,
+        userId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
         val totalPrice = calculateTotalPrice(cartItems)
 
+        // Create the order data
         val order = hashMapOf(
             "userId" to userId,
             "items" to cartItems,
             "totalPrice" to totalPrice,
             "timestamp" to FieldValue.serverTimestamp()
         )
+
+        // Submit the order
         db.collection("orders").add(order)
-            .addOnSuccessListener {
+            .addOnSuccessListener { orderRef ->
                 Log.d("CartRepository", "Order submitted successfully")
+
+                // Update total sales and total revenue for each cart item
+                cartItems.forEach { cartItem ->
+                    val foodId = cartItem.foodId
+                    val quantity = cartItem.quantity
+
+                    // Fetch the food item data to get the price
+                    db.collection("foods").document(foodId)
+                        .get()
+                        .addOnSuccessListener { document ->
+                            if (document.exists()) {
+                                val foodPrice = document.getDouble("price") ?: 0.0
+                                val totalSales = document.getLong("totalSales")?.toInt() ?: 0
+                                val currentQuantity = document.getLong("availableQuantity") ?: 0
+
+                                // Update total sales
+                                db.collection("foods").document(foodId)
+                                    .update("totalSales", FieldValue.increment(quantity.toLong()))
+                                    .addOnSuccessListener {
+
+                                        val newQuantity = currentQuantity - quantity
+
+                                        Log.d("CartRepository", "Total sales updated for food ID: $foodId")
+
+                                        db.collection("foods").document(foodId)
+                                            .update("availableQuantity", newQuantity )
+
+                                        // Calculate and update total revenue
+                                        val newTotalRevenue = (totalSales + quantity) * foodPrice
+                                        db.collection("foods").document(foodId)
+                                            .update("totalRevenue", newTotalRevenue)
+                                            .addOnSuccessListener {
+                                                Log.d("CartRepository", "Total revenue updated for food ID: $foodId")
+                                            }
+                                            .addOnFailureListener { exception ->
+                                                Log.e("CartRepository", "Failed to update total revenue: ${exception.message}")
+                                            }
+
+                                        // Update last week's revenue
+                                        calculateLastWeekRevenue(foodId, { lastWeekRevenue ->
+                                            db.collection("foods").document(foodId)
+                                                .update("lastWeekRevenue", lastWeekRevenue)
+                                                .addOnSuccessListener {
+                                                    Log.d("CartRepository", "Last week revenue updated for food ID: $foodId")
+                                                }
+                                                .addOnFailureListener { exception ->
+                                                    Log.e("CartRepository", "Failed to update last week revenue: ${exception.message}")
+                                                }
+                                        }, { exception ->
+                                            Log.e("CartRepository", "Failed to calculate last week revenue: ${exception.message}")
+                                        })
+
+                                    }
+                                    .addOnFailureListener { exception ->
+                                        Log.e("CartRepository", "Failed to update total sales: ${exception.message}")
+                                    }
+                            } else {
+                                Log.e("CartRepository", "Food item not found: $foodId")
+                            }
+                        }
+                        .addOnFailureListener { exception ->
+                            Log.e("CartRepository", "Failed to fetch food item: ${exception.message}")
+                        }
+                }
+
                 onSuccess()
+
+            }.addOnFailureListener { exception ->
+                onFailure(exception)
             }
-            .addOnFailureListener(onFailure)
     }
+
+
 
 
     fun getOrders(onSuccess: (List<Order>) -> Unit, onFailure: (Exception) -> Unit) {

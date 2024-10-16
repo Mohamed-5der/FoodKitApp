@@ -3,7 +3,10 @@ package com.example.foodkit.repository
 import android.net.Uri
 import android.util.Log
 import com.android.identity.util.UUID
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import com.google.firebase.storage.FirebaseStorage
 import org.koin.core.component.KoinComponent
 
@@ -16,18 +19,46 @@ data class Food(
     val imageUrl: String = "",
     val price: Double = 0.0,
     var rating: Float = 0f,
-    var ratingCount: Int = 0
+    var ratingCount: Int = 0,
+    var totalSales: Int = 0,
+    var category: String = "",
+    val calories : Int = 0,
+    val protein : Int = 0,
+    val fats : Int = 0,
+    var lastWeekRevenue: Double = 0.0,
+    val availableQuantity: Int = 1,
+    val totalRevenue : Int = 0
 )
 
 class FoodRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) : KoinComponent {
 
-    fun addFoodToCategory(food: Food, imageUri: Uri, price: Double, categoryId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun addFoodToCategory(
+        food: Food,
+        imageUri: Uri,
+        price: Double,
+        categoryId: String,
+        categoryName: String,
+        availableQuantity: Int,
+        calories: Int,
+        protein: Int,
+        fats: Int,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit) {
         val imageRef = storage.reference.child("food_images/${UUID.randomUUID()}.jpg")
         val uploadTask = imageRef.putFile(imageUri)
 
         uploadTask.addOnSuccessListener {
             imageRef.downloadUrl.addOnSuccessListener { uri ->
-                val foodWithImage = food.copy(imageUrl = uri.toString(), price = price)
+                val foodWithImage = food.copy(
+                    imageUrl = uri.toString(),
+                    price = price,
+                    category = categoryName,
+                    availableQuantity = availableQuantity,
+                    calories = calories,
+                    protein = protein,
+                    fats = fats
+
+                )
                 // أضف الطعام إلى Collection العامة foods
                 db.collection("foods").add(foodWithImage)
                     .addOnSuccessListener { documentReference ->
@@ -59,8 +90,6 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             onFailure(e)
         }
     }
-
-
 
     fun getFoodById(foodId: String, onFoodLoaded: (Food) -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("foods").document(foodId).get()
@@ -128,6 +157,45 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             }
             .addOnFailureListener(onFailure)
     }
+
+
+    fun getTopFiveFoods(onSuccess: (List<Food>) -> Unit, onFailure: (Exception) -> Unit) {
+        // استعلام لجلب الأكلات وترتيبها حسب عدد الطلبات
+        db.collection("foods")
+            .orderBy("totalSales", Query.Direction.DESCENDING) // ترتيب حسب totalSales
+            .limit(5) // تحديد العدد إلى 5
+            .get()
+            .addOnSuccessListener { querySnapshot ->
+                val topFoods = mutableListOf<Food>()
+
+                for (document in querySnapshot.documents) {
+                    // تحويل البيانات إلى كائن Food
+                    val food = document.toObject(Food::class.java)
+                    food?.let { topFoods.add(it) } // إضافة الأكلة إلى القائمة
+                }
+
+                onSuccess(topFoods) // إرجاع القائمة عند النجاح
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception) // إرجاع الخطأ في حالة الفشل
+            }
+    }
+
+    fun RemoveFromFoods(foodId : String, onSuccess: () -> Unit , onFailure: (Exception) -> Unit ){
+
+        val foodDocRef = FirebaseFirestore.getInstance()
+            .collection("foods")
+            .document(foodId)
+
+        foodDocRef.update("foods.$foodId" , FieldValue.delete())
+            .addOnSuccessListener {
+                onSuccess()
+            }
+            .addOnFailureListener{ exception ->
+                onFailure(exception)
+            }
+    }
+
 }
 
 

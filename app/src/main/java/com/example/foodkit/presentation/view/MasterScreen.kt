@@ -68,6 +68,32 @@ fun MasterScreen(navController: NavController) {
         )
         Spacer(modifier = Modifier.height(16.dp))
 
+        OutlinedTextField(
+            value = viewModel.availableQuantityNumber,
+            onValueChange = { viewModel.availableQuantityNumber = it },
+            label = { Text("AvailableQuantity") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+        )
+        OutlinedTextField(
+            value = viewModel.calories,
+            onValueChange = { viewModel.availableQuantityNumber = it },
+            label = { Text("CaloriesQuantity") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+        )
+        OutlinedTextField(
+            value = viewModel.protein,
+            onValueChange = { viewModel.availableQuantityNumber = it },
+            label = { Text("ProteinQuantity") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+        )
+        OutlinedTextField(
+            value = viewModel.fats,
+            onValueChange = { viewModel.availableQuantityNumber = it },
+            label = { Text("FatsQuantity") },
+            keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
+        )
+        Spacer(modifier = Modifier.height(16.dp))
+
         SelectImageButton { uri ->
             viewModel.selectedImageUri = uri
         }

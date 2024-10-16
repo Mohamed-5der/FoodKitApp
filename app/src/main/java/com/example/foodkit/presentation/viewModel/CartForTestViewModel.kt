@@ -124,7 +124,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
         )
     }
 
-    fun updateQuantity(foodId: String, userId: String, increment: Int) {
+    fun updateQuantityInCartScreen(foodId: String, userId: String, increment: Int) {
         repository.updateQuantityInCartScreen(foodId, userId, increment,
             onSuccess = {
                 // تحديث العناصر بعد تعديل الكمية

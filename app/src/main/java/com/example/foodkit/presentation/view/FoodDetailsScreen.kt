@@ -40,6 +40,7 @@ import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
+import com.example.foodkit.presentation.viewModel.MasterViewModel
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
@@ -47,6 +48,7 @@ import org.koin.core.parameter.parametersOf
 fun FoodDetailScreen(navController: NavController, foodId: String, userId: String) {
     val foodDetailViewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val cartViewModel: CartForTestViewModel = koinViewModel(parameters = { parametersOf(userId) })
+    val masterViewModel: MasterViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val context = LocalContext.current
 
     // Load food details and user rating when the screen is launched
@@ -82,6 +84,11 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             val averageRating = if (food.ratingCount > 0) food.rating / food.ratingCount else 0f
             Text(text = "Rating: $averageRating (${food.ratingCount} reviews)")
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            // Display total revenue for the food
+            Text(text = "Total Revenue: \$${food.totalRevenue}")
 
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -129,7 +136,7 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                 Text(text = quantity.toString(), style = MaterialTheme.typography.bodyLarge)
 
                 IconButton(onClick = {
-                    quantity++
+                    if (quantity < food.availableQuantity) quantity++ // زيادة الكمية بشرط ألا تتجاوز المتاحة
                 }) {
                     Icon(Icons.Default.Add, contentDescription = "Increase Quantity")
                 }
@@ -139,8 +146,12 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             Button(
                 onClick = {
-                    cartViewModel.addToCart(food, quantity, userId)
-                    Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
+                    if (quantity <= food.availableQuantity) { // تحقق من أن الكمية المطلوبة غير أكبر من المتاحة
+                        cartViewModel.addToCart(food, quantity, userId)
+                        Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
+                    } else {
+                        Toast.makeText(context, "Not enough quantity available", Toast.LENGTH_SHORT).show()
+                    }
                 }
             ) {
                 Text(text = "Add to Cart")
@@ -180,4 +191,3 @@ fun AnimatedRatingBar(
         }
     }
 }
-

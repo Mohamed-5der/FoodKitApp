@@ -24,7 +24,10 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.mutableStateOf
@@ -53,8 +56,8 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun MainScreen(navController: NavController) {
-//    FoodListScreen(navController)
-    Home()
+    FoodListScreen(navController)
+  //  Home()
 //    CartScreenContent()
 //    HomeScreenContent()
 //    ProductDetailsScreen()
@@ -270,5 +273,42 @@ fun HomeTopAppBar() {
 }
 
 
+@Composable
+fun FoodListScreen(
+    navController: NavController,
+    viewModel: FoodListScreenViewModel = koinViewModel()) {
+
+    val foods by viewModel.foods.collectAsState(initial = emptyList())
+    val topFiveFoods by viewModel.topFiveFoods.collectAsState(initial = emptyList())
+
+    LaunchedEffect(Unit) {
+        viewModel.loadAllFoods() // Load foods when the screen is displayed
+        viewModel.fetchTopFiveFoods() // Fetch top five foods
+    }
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Button(onClick = { navController.navigate(Routes.CART_FOR_TEST) }) {
+            Text(text = "Cart")
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(16.dp)
+        ) {
+            items(foods) { food ->
+                FoodCard(food = food, navController = navController)
+            }
+        }
+    }
+}
 
 
