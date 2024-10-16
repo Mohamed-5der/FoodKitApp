@@ -328,7 +328,7 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(food: CartItem, onIncrease: (Int) -> Unit, onRemove: () -> Unit, onClick: () -> Unit){
+fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: () -> Unit, onClick: () -> Unit){
     var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier

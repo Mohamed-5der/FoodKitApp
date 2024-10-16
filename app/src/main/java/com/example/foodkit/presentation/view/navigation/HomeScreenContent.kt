@@ -110,7 +110,6 @@ fun HomeScreenContent(
     ) {
         Column(
             modifier = Modifier
-                .verticalScroll(rememberScrollState())
                 .fillMaxSize()
                 .background(Color.White)
 
