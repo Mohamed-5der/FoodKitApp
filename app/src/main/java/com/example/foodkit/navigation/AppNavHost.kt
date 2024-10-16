@@ -27,6 +27,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
+
+    val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     val appPreferences = AppPreferences(LocalContext.current)
     appPreferences.init()
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
@@ -76,7 +78,7 @@ fun AppNavigation(navController: NavHostController) {
 
             val itemId = backStackEntry.arguments?.getString("itemId")
             if (itemId != null) {
-                DetailsAnalysisForMaster(navController, itemId , curentUserId)
+                DetailsAnalysisForMaster(navController, itemId , currentUserId)
             }
         }
 

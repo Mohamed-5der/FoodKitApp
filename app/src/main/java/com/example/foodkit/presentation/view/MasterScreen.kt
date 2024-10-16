@@ -1,5 +1,6 @@
 package com.example.foodkit.presentation.view
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -29,6 +30,7 @@ import com.example.foodkit.presentation.viewModel.MasterViewModel
 import org.koin.androidx.compose.koinViewModel
 
 //master screen
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun MasterScreen(navController: NavController) {
     val viewModel: MasterViewModel = koinViewModel()

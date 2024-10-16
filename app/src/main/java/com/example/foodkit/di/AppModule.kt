@@ -45,7 +45,7 @@ val appModule = module {
 
     viewModel { LoginViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
-    viewModel { MasterViewModel(get()) }
+    viewModel { MasterViewModel(get(),get()) }
     viewModel { FoodListScreenViewModel(get()) }
     viewModel { FoodDetailViewModel(get(), get()) }
     viewModel { CategoryViewModel(get()) }

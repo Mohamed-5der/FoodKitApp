@@ -147,7 +147,7 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
             Button(
                 onClick = {
                     if (quantity <= food.availableQuantity) { // تحقق من أن الكمية المطلوبة غير أكبر من المتاحة
-                        cartViewModel.addToCart(food, quantity, userId)
+                        cartViewModel.addToCart(food, quantity, userId,{})
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
                     } else {
                         Toast.makeText(context, "Not enough quantity available", Toast.LENGTH_SHORT).show()
@@ -156,38 +156,6 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
             ) {
                 Text(text = "Add to Cart")
             }
-        }
-    }
-}
-
-@Composable
-fun AnimatedRatingBar(
-    currentRating: Float,
-    onRatingChanged: (Float) -> Unit,
-    maxRating: Int = 5,
-    modifier: Modifier = Modifier
-) {
-    Row(
-        modifier = modifier,
-        horizontalArrangement = Arrangement.Center
-    ) {
-        for (i in 1..maxRating) {
-            val isSelected = i <= currentRating
-            val starColor by animateColorAsState(
-                targetValue = if (isSelected) Color.Yellow else Color.Gray,
-                animationSpec = tween(durationMillis = 300) // Smooth color transition
-            )
-
-            Icon(
-                imageVector = Icons.Default.Star,
-                contentDescription = "Rating Star",
-                modifier = Modifier
-                    .size(32.dp)
-                    .clickable {
-                        onRatingChanged(i.toFloat())
-                    },
-                tint = starColor
-            )
         }
     }
 }
