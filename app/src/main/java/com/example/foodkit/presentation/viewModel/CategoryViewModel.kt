@@ -21,8 +21,6 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
     var categoryName by mutableStateOf(TextFieldValue(""))
     var selectedImageUri by mutableStateOf<Uri?>(null)
     var selectedCategory by mutableStateOf<Category?>(null)
-
-
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
     val categories : StateFlow<List<Category>> = _categories.asStateFlow()
 

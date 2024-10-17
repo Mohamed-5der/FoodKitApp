@@ -297,6 +297,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                        fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Gray,
+                        maxLines = 1,
                         modifier = Modifier.padding(start = 4.dp)
                     )
                 }

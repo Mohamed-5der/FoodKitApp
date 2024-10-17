@@ -46,6 +46,14 @@
     <string name="notifications">الاشعارات</string>
     <string name="confirm">تاكيد</string>
     <string name="description">الوصف </string>
+    <string name="foods">الطعام</string>
+    <string name="staff">العمال</string>
+    <string name="all_food">طعامال</string>
+    <string name="all_order">الاوردارات</string>
+    <string name="all_category">السكاشن</string>
+    <string name="add_food">اضافه طعام</string>
+    <string name="add_category">اضافه سكشن</string>
+
 
     <string name="myCart">ةالسل</string>
 </resources>

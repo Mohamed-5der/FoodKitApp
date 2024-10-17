@@ -9,7 +9,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.foodkit.Constants
-import com.example.foodkit.presentation.view.AddCategoryScreen
 import com.example.foodkit.presentation.view.CartScreenForTest
 import com.example.foodkit.presentation.view.CategoryDetailScreen
 import com.example.foodkit.presentation.view.CategoryListScreen
@@ -60,7 +59,7 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Routes.PROFILE) { ProfileScreen(navController) }
 
-        composable(Routes.ADD_CATEGORY) { AddCategoryScreen(navController) }
+//        composable(Routes.ADD_CATEGORY) { AddCategoryScreen(navController) }
 
 
         composable(Routes.CATEGORY_LIST) { CategoryListScreen(navController) }

@@ -40,7 +40,7 @@ class MasterViewModel(
         private set
 
 
-    fun addFoodToCategory(context: Context) {
+    fun addFoodToCategory(context: Context, onAddSuccess:()->Unit) {
         if (foodName.text.isBlank() || foodDescription.text.isBlank() || selectedImageUri == null || foodPrice.text.isBlank() || selectedCategory.isBlank()) {
             Toast.makeText(context, "Please fill in all fields, select an image, and choose a category", Toast.LENGTH_SHORT).show()
             return
@@ -49,8 +49,8 @@ class MasterViewModel(
         val price = foodPrice.text.toDoubleOrNull()
         val availableQuantity = availableQuantityNumber.text.toInt()
         val caloriesQuantity = calories.text.toInt()
-        val proteinsQuantity = calories.text.toInt()
-        val fatsQuantity = calories.text.toInt()
+        val proteinsQuantity = protein.text.toInt()
+        val fatsQuantity = fats.text.toInt()
         if (price == null) {
             Toast.makeText(context, "Please enter a valid price", Toast.LENGTH_SHORT).show()
             return

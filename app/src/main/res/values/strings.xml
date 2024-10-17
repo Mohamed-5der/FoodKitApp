@@ -45,6 +45,13 @@
     <string name="confirm">Confirm</string>
     <string name="notifications">Notifications</string>
     <string name="description">Description</string>
+    <string name="foods">Foods</string>
+    <string name="staff">Staff</string>
+    <string name="all_food">Foods</string>
+    <string name="add_food">Add Food</string>
+    <string name="all_order">All order</string>
+    <string name="all_category">Categories</string>
+    <string name="add_category">Add Category</string>
 
     <string name="myCart">My Cart</string>
 

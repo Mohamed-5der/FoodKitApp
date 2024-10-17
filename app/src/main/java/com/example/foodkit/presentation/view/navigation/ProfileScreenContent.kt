@@ -97,8 +97,8 @@ fun ProfileScreenContent(navController: NavController) {
             Box(contentAlignment = Alignment.BottomEnd) {
                 Image(
                     painter = rememberImagePainter(
-                        data = if (selectedImageUri==null)  R.drawable.profile_image
-                            else  selectedImageUri,
+                        data = if (selectedImageUri == null) R.drawable.profile_image
+                        else selectedImageUri,
                         builder = {
                             crossfade(true)
                         }
@@ -128,7 +128,7 @@ fun ProfileScreenContent(navController: NavController) {
                         tint = Color.White
                     )
                 }
-                
+
             }
 
             Spacer(modifier = Modifier.height(8.dp))
@@ -170,8 +170,12 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
                             .show()
                         navController.navigate(Routes.LOGIN)
                     }
-                } else {
+                } else if (route == Routes.PROFILE) {
                     navController.navigate(Routes.PROFILE)
+                } else {
+                    Toast
+                        .makeText(context, "Coming Soon", Toast.LENGTH_SHORT)
+                        .show()
                 }
             },
         verticalAlignment = Alignment.CenterVertically,

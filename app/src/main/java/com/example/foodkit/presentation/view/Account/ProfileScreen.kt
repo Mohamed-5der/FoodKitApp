@@ -124,7 +124,7 @@ fun ProfileScreen(navController: NavController){
 
                 Image(
                     painter = rememberImagePainter(
-                        data = userImagePath ?: R.drawable.profile_image, // Use default image if URL is null
+                        data =  R.drawable.profile_image,
                         builder = {
                             crossfade(true)
                         }

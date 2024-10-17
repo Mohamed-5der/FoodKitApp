@@ -14,7 +14,9 @@ import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -32,9 +34,11 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -63,6 +67,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import coil.compose.rememberImagePainter
 import com.example.foodkit.R
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
@@ -77,15 +82,60 @@ import java.io.InputStream
 import java.io.OutputStream
 
 @Composable
-fun SelectImageButton(onImageSelected: (Uri) -> Unit) {
+fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let { onImageSelected(it) }
         }
 
-    Button(onClick = { launcher.launch("image/*") }) {
-        Text("Select Image")
+    if (uri == null) {
+
+        Button(onClick = { launcher.launch("image/*") },
+            modifier = Modifier
+                .fillMaxWidth(),
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
+            {
+            Text("Select Image")
+           }
+    }else{
+        Box(contentAlignment = Alignment.BottomEnd) {
+            Image(
+                painter = rememberImagePainter(
+                    data = uri,
+                    builder = {
+                        crossfade(true)
+                    }
+                ),
+                contentDescription = "Profile Image",
+                modifier = Modifier
+                    .height(120.dp).fillMaxWidth().padding(4.dp)
+                    .clip(RoundedCornerShape(8.dp)),
+                contentScale = ContentScale.Crop
+            )
+
+            androidx.compose.material.Card(
+                modifier = Modifier
+                    .background(color = colorResource(id = R.color.appColor), CircleShape)
+                    .border(1.dp, Color.White, CircleShape)
+                    .size(32.dp)
+                    .clickable {
+                        launcher.launch("image/*")
+                    },
+                shape = CircleShape,
+                colorResource(id = R.color.appColor)
+            ) {
+                androidx.compose.material.Icon(
+                    imageVector = Icons.Default.Edit,
+                    contentDescription = "Edit",
+                    modifier = Modifier.padding(4.dp),
+                    tint = Color.White
+                )
+            }
+
+        }
+
     }
+
 }
 
 
@@ -225,7 +275,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
                 text = food.description ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
 //                fontFamily = poppins,
