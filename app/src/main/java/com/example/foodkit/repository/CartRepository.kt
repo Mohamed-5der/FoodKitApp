@@ -249,7 +249,14 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                     cartItems.forEach { item ->
                         val currentFoodId = item["foodId"] as? String ?: return@forEach
                         val quantity = (item["quantity"] as? Long)?.toInt() ?: 0
-                        val price = item["price"] as? Double ?: 0.0
+
+                        // تحسين معالجة السعر
+                        val price = when (val priceValue = item["price"]) {
+                            is Double -> priceValue
+                            is Long -> priceValue.toDouble()
+                            is String -> priceValue.toDoubleOrNull() ?: 0.0
+                            else -> 0.0
+                        }
 
                         // حساب الإيرادات إذا تطابق الـ foodId
                         if (currentFoodId == foodId) {
@@ -265,6 +272,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                 onFailure(exception)
             }
     }
+
 
 
     fun submitOrder(

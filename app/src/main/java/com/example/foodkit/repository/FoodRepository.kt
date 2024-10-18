@@ -3,7 +3,6 @@ package com.example.foodkit.repository
 import android.net.Uri
 import android.util.Log
 import com.android.identity.util.UUID
-import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.Query
@@ -57,7 +56,6 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
                     calories = calories,
                     protein = protein,
                     fats = fats
-
                 )
                 // أضف الطعام إلى Collection العامة foods
                 db.collection("foods").add(foodWithImage)
@@ -90,6 +88,62 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             onFailure(e)
         }
     }
+
+    fun updateFoodDetails(
+        foodId: String,
+        updatedFood: Food,
+        name: String,
+        description: String,
+        imageUri: Uri?,
+        price: Double,
+        availableQuantity: Int,
+        calories: Int,
+        protein: Int,
+        fats: Int,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit
+    ) {
+        val foodRef = db.collection("foods").document(foodId)
+
+        if (imageUri != null) {
+            val imageRef = storage.reference.child("food_images/$foodId.jpg")
+            val uploadTask = imageRef.putFile(imageUri)
+
+            uploadTask.addOnSuccessListener {
+                imageRef.downloadUrl.addOnSuccessListener { uri ->
+                    val updatedFoodWithImage = updatedFood.copy(
+                        imageUrl = uri.toString(),
+                        name = name,
+                        description = description,
+                        price = price,
+                        availableQuantity = availableQuantity,
+                        calories = calories,
+                        protein = protein,
+                        fats = fats
+                    )
+
+                    foodRef.set(updatedFoodWithImage)
+                        .addOnSuccessListener { onSuccess() }
+                        .addOnFailureListener { e -> onFailure(e) }
+                }
+            }.addOnFailureListener { e -> onFailure(e) }
+        } else {
+            val updatedFoodWithoutChangeOnImage = updatedFood.copy(
+                name = name,
+                description = description,
+                price = price,
+                imageUrl = updatedFood.imageUrl,
+                calories = calories,
+                protein = protein,
+                fats = fats
+            )
+
+            foodRef.set(updatedFoodWithoutChangeOnImage)
+                .addOnSuccessListener { onSuccess() }
+                .addOnFailureListener { e -> onFailure(e) }
+        }
+    }
+
 
 
 

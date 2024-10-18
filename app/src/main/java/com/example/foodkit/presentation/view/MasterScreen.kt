@@ -76,19 +76,19 @@ fun MasterScreen(navController: NavController) {
         )
         OutlinedTextField(
             value = viewModel.calories,
-            onValueChange = { viewModel.availableQuantityNumber = it },
+            onValueChange = { viewModel.calories = it },
             label = { Text("CaloriesQuantity") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         OutlinedTextField(
             value = viewModel.protein,
-            onValueChange = { viewModel.availableQuantityNumber = it },
+            onValueChange = { viewModel.protein = it },
             label = { Text("ProteinQuantity") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
         OutlinedTextField(
             value = viewModel.fats,
-            onValueChange = { viewModel.availableQuantityNumber = it },
+            onValueChange = { viewModel.fats = it },
             label = { Text("FatsQuantity") },
             keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number)
         )
@@ -110,7 +110,7 @@ fun MasterScreen(navController: NavController) {
         Button(onClick = { expanded = !expanded }) {
             Text("Select Category")
         }
-        // عرض التصنيفات في DropdownMenu
+
         DropdownMenu(
             expanded = expanded,
             onDismissRequest = { expanded = false }
@@ -120,6 +120,7 @@ fun MasterScreen(navController: NavController) {
                     text = { Text(text = category.name) },
                     onClick = {
                         viewModel.selectedCategory = category.name
+                        viewModel.categoryName = category.name
                         expanded = false
                     }
                 )
