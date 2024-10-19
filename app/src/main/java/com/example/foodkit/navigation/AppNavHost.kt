@@ -18,6 +18,7 @@ import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.presentation.view.Account.ProfileScreen
 import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
+import com.example.foodkit.presentation.view.MainDetailsAnalysis
 import com.example.foodkit.presentation.view.MainScreen
 import com.example.foodkit.presentation.view.MasterScreen
 import com.example.foodkit.presentation.view.ProductDetailsScreen
@@ -78,7 +79,7 @@ fun AppNavigation(navController: NavHostController) {
 
             val itemId = backStackEntry.arguments?.getString("itemId")
             if (itemId != null) {
-                DetailsAnalysisForMaster(navController, itemId , currentUserId)
+                MainDetailsAnalysis(navController, itemId , currentUserId)
             }
         }
 

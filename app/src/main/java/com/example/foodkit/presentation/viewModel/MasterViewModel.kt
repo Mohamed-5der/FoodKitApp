@@ -4,6 +4,7 @@ import android.content.Context
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
@@ -39,6 +40,8 @@ class MasterViewModel(
     var food by mutableStateOf<Food?>(null)
         private set
 
+    private val _updateState = MutableStateFlow<UpdateState>(UpdateState.Idle)
+    val updateState: StateFlow<UpdateState> = _updateState
 
     fun addFoodToCategory(context: Context, onAddSuccess:()->Unit) {
         if (foodName.text.isBlank() || foodDescription.text.isBlank() || selectedImageUri == null || foodPrice.text.isBlank() || selectedCategory.isBlank()) {
@@ -85,7 +88,43 @@ class MasterViewModel(
         }
     }
 
-     fun loadOrders() {
+    fun updateFood(
+        foodId: String,
+        updatedFood: Food,
+        name: String,
+        description: String,
+        availableQuantity: Int,
+        imageUri: Uri?,
+        price: Double,
+        calories: Int,
+        protein: Int,
+        fats: Int
+    ) {
+        _updateState.value = UpdateState.Loading
+
+        foodRepository.updateFoodDetails(
+            foodId = foodId,
+            updatedFood = updatedFood,
+            name = name,
+            description = description,
+            imageUri = imageUri,
+            price = price,
+            availableQuantity = availableQuantity,
+            calories = calories,
+            protein = protein,
+            fats = fats,
+            onSuccess = {
+                _updateState.value = UpdateState.Success
+            },
+            onFailure = { exception ->
+                _updateState.value = UpdateState.Error(exception.message ?: "Unknown error")
+            }
+        )
+    }
+
+
+
+    fun loadOrders() {
         cartRepository.getOrders(
             onSuccess = { ordersList ->
                 _orders.value = ordersList
@@ -95,4 +134,11 @@ class MasterViewModel(
             }
         )
     }
+}
+
+sealed class UpdateState {
+    object Idle : UpdateState()
+    object Loading : UpdateState()
+    object Success : UpdateState()
+    data class Error(val message: String) : UpdateState()
 }

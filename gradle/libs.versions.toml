@@ -1,5 +1,6 @@
 [versions]
 agp = "8.5.2"
+animation = "1.7.3"
 kotlin = "2.0.20"
 coreKtx = "1.13.1"
 junit = "4.13.2"
@@ -7,15 +8,19 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.6"
 activityCompose = "1.9.2"
-composeBom = "2024.09.02"
+composeBom = "2024.09.03"
 koin = "3.5.3"
-composeNavigation = "2.8.1"
+composeNavigation = "2.8.2"
 identityJvm = "202408.1"
 firebaseAuthKtx = "23.0.0"
 firebaseFirestoreKtx = "25.1.0"
 firebaseStorageKtx = "21.0.1"
+ycharts = "2.1.0"
+githubComposeCharts = "0.2.1"
+
 
 [libraries]
+androidx-animation = { module = "androidx.compose.animation:animation", version.ref = "animation" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }
@@ -38,6 +43,8 @@ identity-jvm = { group = "com.android.identity", name = "identity-jvm", version.
 firebase-auth-ktx = { group = "com.google.firebase", name = "firebase-auth-ktx", version.ref = "firebaseAuthKtx" }
 firebase-firestore-ktx = { group = "com.google.firebase", name = "firebase-firestore-ktx", version.ref = "firebaseFirestoreKtx" }
 firebase-storage-ktx = { group = "com.google.firebase", name = "firebase-storage-ktx", version.ref = "firebaseStorageKtx" }
+ycharts = { module = "co.yml:ycharts", version.ref = "ycharts" }
+bytebeats-compose-charts = { module = "io.github.bytebeats:compose-charts", version.ref = "githubComposeCharts" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
