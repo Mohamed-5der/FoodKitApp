@@ -120,10 +120,10 @@ fun HomeScreenContent(
 
                 if (isSearchMode) {
                     // Show filtered categories
-                    CategoriesSection(categories = filteredCategories)
+                    CategoriesSection()
                     Spacer(modifier = Modifier.height(16.dp))
                     // Show filtered products
-                    ProductSection(navController, foods = filteredFoods)
+                    ProductSection(navController)
                 } else {
                     // Show all categories and products
                     CategoriesSection()
@@ -353,11 +353,10 @@ fun DotsIndicator(
 
 @Composable
 fun CategoriesSection(
-    categories: List<Category> = emptyList(),
+//    categories: List<Category> = emptyList(),
     viewModel: CategoryViewModel = koinViewModel(),
 ) {
-    val navController = rememberNavController()
-
+    val categories by viewModel.categories.collectAsState()
     // Load categories only if categories list is empty
     if (categories.isEmpty()) {
         LaunchedEffect(Unit) {
@@ -377,7 +376,6 @@ fun CategoriesSection(
         ) {
             Text(
                 text = stringResource(id = R.string.findByCategory),
-                modifier = Modifier,
                 fontWeight = FontWeight.Bold
 
             )
@@ -385,7 +383,9 @@ fun CategoriesSection(
             Text(
                 text = stringResource(id = R.string.viewAll),
                 color = colorResource(id = R.color.appColor),
-                modifier = Modifier,
+                modifier = Modifier.clickable {
+                    viewModel.selectCategory(null) // Clear category selection to view all foods
+                },
                 fontWeight = FontWeight.Medium
             )
 
@@ -394,7 +394,7 @@ fun CategoriesSection(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            items(viewModel.categories.value) { category ->
+            items(categories) { category ->
                 CategoryCard(category, onClick = {
                     viewModel.selectCategory(category)
                 })
@@ -407,24 +407,43 @@ fun CategoriesSection(
 @Composable
 fun ProductSection(
     navController: NavController,
-    foods: List<Food> = emptyList(),
-//    categoryViewModel: CategoryViewModel = koinViewModel()
+  //foods: List<Food> = emptyList(),
+    categoryViewModel: CategoryViewModel = koinViewModel(),
     foodViewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
-//    val foodsInCategory by categoryViewModel.foodsInCategory.collectAsState()
+    val selectedCategory = categoryViewModel.selectedCategory
+    val foodsInCategory by categoryViewModel.foodsInCategory.collectAsState(/* initial = emptyList() */ )
+    val allFoods by foodViewModel.foods.collectAsState(initial = emptyList())
 
+    val foodList = if (selectedCategory != null) {
+        foodsInCategory
+    } else {
+        allFoods
+    }
 
-    val foodList =
-        if (foods.isNotEmpty()) foods else foodViewModel.foods.collectAsState(initial = emptyList()).value
+    // Load all foods initially when no category is selected
     LaunchedEffect(Unit) {
-        if (foods.isEmpty()) {
+        if (selectedCategory == null) {
             foodViewModel.loadAllFoods()
         }
     }
 
 
+//  val foodsInCategory =  categoryViewModel.foodsInCategory.collectAsState(initial = emptyList()).value
 
-    Column(modifier = Modifier.height(1000.dp)) {
+
+
+//    val foodList =
+//        if (foods.isNotEmpty()) foods else foodViewModel.foods.collectAsState(initial = emptyList()).value
+//    LaunchedEffect(Unit) {
+//        if (foods.isEmpty()) {
+//            foodViewModel.loadAllFoods()
+//        }
+//    }
+
+
+
+    Column(modifier = Modifier.height(1300.dp)) {
 
         Text(
             text = stringResource(id = R.string.product),
@@ -442,7 +461,7 @@ fun ProductSection(
             ) {
                 items(foodList) { food ->
 
-                    FoodCard(food, onClick = {
+                    FoodCard(food = food, onClick = {
                         navController.navigate("food_details/${food.id}")
                     }, onClickFavorite = {
                     }

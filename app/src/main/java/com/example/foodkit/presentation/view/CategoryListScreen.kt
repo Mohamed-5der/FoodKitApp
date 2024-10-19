@@ -33,7 +33,7 @@ fun CategoryListScreen(
             .padding(16.dp)
     ) {
         items(categories.value) { category ->
-            CategoryCard(category , onClick = {navController.navigate("categoryDetail/${category.name}")} )
+            CategoryCard(category , onClick = {navController.navigate("categoryDetail/${category.id}")} )
         }
     }
 }

@@ -80,8 +80,12 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
         )
     }
     // New function to select a category
-    fun selectCategory(category: Category) {
+    fun selectCategory(category: Category?) {
         selectedCategory = category
-        loadFoodsByCategory(category.id)
+        if (category != null) {
+            loadFoodsByCategory(category.id)
+        } else {
+            _foodsInCategory.value = emptyList() // Clear foods when no category is selected
+        }
     }
 }

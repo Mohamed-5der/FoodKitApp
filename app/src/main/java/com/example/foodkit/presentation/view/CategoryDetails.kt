@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.foodkit.components.FoodCard
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
+import com.example.foodkit.repository.Food
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +35,7 @@ fun CategoryDetailScreen(
     viewModel: CategoryViewModel = koinViewModel()
 
 ) {
+    val foods: List<Food> = emptyList()
     val foodsInCategory = viewModel.foodsInCategory.collectAsState(initial = emptyList())
 
     Log.d("Compose", "Navigated to CategoryDetailScreen with ID: $categoryId")
@@ -62,7 +64,9 @@ fun CategoryDetailScreen(
                 .padding(16.dp)
         ) {
             items(foodsInCategory.value) { food ->
-                FoodCard( food ,{},{} )
+                FoodCard( food , onClick = {
+                    navController.navigate("food_details/${food.id}")
+                },{} )
             }
         }
     }

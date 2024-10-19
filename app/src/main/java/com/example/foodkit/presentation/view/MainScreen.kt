@@ -68,6 +68,7 @@ fun MainScreen(navController: NavController) {
         color = colorResource(id = R.color.white)
     ) {
             Home(navController)
+//        CategoryListScreen(navController)
     }
 }
 
@@ -76,7 +77,7 @@ fun MainScreen(navController: NavController) {
 fun Home(navController: NavController) {
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
-    var selectedIndex = remember { mutableIntStateOf(0) }
+    val selectedIndex = remember { mutableIntStateOf(0) }
 
 
     Scaffold(

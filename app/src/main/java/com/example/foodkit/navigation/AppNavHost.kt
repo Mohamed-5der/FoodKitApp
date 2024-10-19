@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import com.example.foodkit.Constants
 import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.presentation.view.Account.ProfileScreen
+import com.example.foodkit.presentation.view.CategoryDetailScreen
 import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
 import com.example.foodkit.presentation.view.MainScreen
@@ -56,5 +57,10 @@ fun AppNavigation(navController: NavHostController) {
             val itemId = it.arguments?.getString("itemId") ?: ""
             ProductDetailsScreen(itemId,navController)
         }
+        composable(Routes.CATEGORY_DETAIL) {
+            val categoryId = it.arguments?.getString("categoryId") ?: ""
+            CategoryDetailScreen(navController,categoryId)
+        }
+
     }
 }
