@@ -92,7 +92,10 @@ dependencies {
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation("androidx.room:room-ktx:$room_version")
 
-
+    // Y charts
+    implementation (libs.ycharts)
+    // bytebeats type
+    implementation(libs.bytebeats.compose.charts)
 
     //Compose navigation
     implementation(libs.navigation.compose)

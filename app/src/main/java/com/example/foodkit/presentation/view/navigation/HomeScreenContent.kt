@@ -388,6 +388,7 @@ fun CategoriesSection(
             viewModel.loadCategories()
         }
     }
+    val categoriesState = viewModel.categories.collectAsState().value
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -418,7 +419,7 @@ fun CategoriesSection(
             modifier = Modifier
                 .fillMaxWidth(),
         ) {
-            items(viewModel.categories.value) { category ->
+            items(categoriesState) { category ->
                 CategoryCard(category, onClick = {
                     viewModel.selectCategory(category)
                 })
