@@ -172,6 +172,8 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
                     }
                 } else if (route == Routes.PROFILE) {
                     navController.navigate(Routes.PROFILE)
+                } else if (route == Routes.MAIN){
+                    navController.navigate(Routes.MAIN)
                 } else {
                     Toast
                         .makeText(context, "Coming Soon", Toast.LENGTH_SHORT)
@@ -206,6 +208,6 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
         thickness = 1.dp,
         modifier = Modifier.alpha(0.6f),
     )
-    Spacer(modifier = Modifier.height(16.dp))
+    Spacer(modifier = Modifier.height(8.dp))
 }
 

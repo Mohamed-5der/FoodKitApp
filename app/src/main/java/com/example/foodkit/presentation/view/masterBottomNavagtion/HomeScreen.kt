@@ -1,6 +1,8 @@
 package com.example.foodkit.presentation.view.masterBottomNavagtion
 
+import android.content.Context
 import android.widget.Toast
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -10,13 +12,16 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.magnifier
@@ -81,10 +86,11 @@ import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import com.example.foodkit.presentation.viewModel.MasterViewModel
 import com.example.foodkit.repository.Food
+import com.example.foodkit.repository.Order
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun HomeScreen(navController: NavController) {
+fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
     val viewModel: MasterViewModel = koinViewModel()
     val categoryViewModel : CategoryViewModel = koinViewModel()
     val logoutViewModel: LogoutViewModel = koinViewModel()
@@ -94,6 +100,10 @@ fun HomeScreen(navController: NavController) {
     val foods: List<Food> = emptyList()
     val showDialogAddFood = remember { mutableStateOf(false) }
     val showDialogAddCategory = remember { mutableStateOf(false) }
+    LaunchedEffect(Unit) {
+        viewModel.loadOrders()
+    }
+    val orders =viewModel.orders.collectAsState().value
     LaunchedEffect(Unit) {
         categoryViewModel.loadCategories()
     }
@@ -107,7 +117,7 @@ fun HomeScreen(navController: NavController) {
         }
     }
 
-    Column {
+    Column (modifier = Modifier.background(Color.White)){
         TopAppBar(title = { Text("Foodie Master",
             fontSize =16.sp,
             fontFamily = poppins,
@@ -122,7 +132,6 @@ fun HomeScreen(navController: NavController) {
             modifier = Modifier
                 .fillMaxSize()
                 .verticalScroll(rememberScrollState())
-                .background(Color.White)
                 .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
@@ -223,22 +232,22 @@ fun HomeScreen(navController: NavController) {
                 Text(
                     text = stringResource(id = R.string.all_order),
                     color = colorResource(id = R.color.appColor),
-                    modifier = Modifier,
+                    modifier = Modifier.clickable {
+                        onClickAllOrder()
+                    },
                     fontWeight = FontWeight.Medium,
                     fontSize = 16.sp,
                     fontFamily = poppins
                 )
 
             }
-            LazyRow(
+            LazyColumn(
                 modifier = Modifier
-                    .fillMaxWidth(),
+                    .fillMaxWidth()
+                    .heightIn(max = 600.dp),
             ) {
-                items(foodList?: emptyList()) { food ->
-                    FoodCardMaster(food = food, onClick = {
-                    }, onClickEdit = {
-
-                    })
+                items(orders?: emptyList()) { order ->
+                    OrderCard(order = order,context)
                 }
             }
 
@@ -479,32 +488,9 @@ fun HomeScreen(navController: NavController) {
                 )
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(70.dp))
 
-            Button(onClick = { navController.navigate(Routes.MAIN) }) {
-                Text("View Food List")
-            }
 
-//            Button(onClick = { navController.navigate(Routes.ADD_CATEGORY) }) {
-//                Text("Add Category")
-//            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-            Button(onClick = { navController.navigate(Routes.CATEGORY_LIST) }) {
-                Text("Category List Screen")
-            }
-            Button(onClick = {
-                logoutViewModel.logout() {
-                    Toast
-                        .makeText(context, "Logout Successfully", Toast.LENGTH_SHORT)
-                        .show()
-                    navController.navigate(Routes.LOGIN)
-                }
-
-            }) {
-                Text("Logout")
-            }
-            Spacer(modifier = Modifier.height(60.dp))
         }
     }
 
@@ -516,7 +502,7 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
 ) {
     Card(
         modifier = Modifier
-            .width(200.dp)
+            .width(180.dp)
             .height(240.dp)
             .wrapContentHeight()
             .padding(end = 4.dp, start = 4.dp)
@@ -560,14 +546,13 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                             fontWeight = FontWeight.Medium,
                             fontSize = 12.sp,
                             color = colorResource(id = R.color.white),
-//                            fontFamily = poppins,
+                            fontFamily = poppins,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.align(Alignment.Center)
                         )
                     }
                 }
             }
-
             Spacer(modifier = Modifier.height(4.dp))
 
             Box(
@@ -576,7 +561,7 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
             ) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Start,
+                    horizontalArrangement = Arrangement.SpaceBetween,
                     modifier = Modifier.fillMaxWidth()
                 ) {
                     if (food.price == food.price) {
@@ -587,8 +572,8 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                             fontSize = 14.sp,
                             textAlign = TextAlign.Start,
                             color = colorResource(id = R.color.black),
-//                            fontFamily = poppins,
-                            modifier = Modifier.fillMaxWidth()
+                            fontFamily = poppins,
+                            modifier = Modifier.weight(1f)
                         )
                     } else {
 
@@ -598,7 +583,8 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                             fontSize = 12.sp,
                             color = Color.Gray,
                             textDecoration = TextDecoration.LineThrough,
-//                            fontFamily = poppins,
+                            fontFamily = poppins,
+
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(
@@ -606,23 +592,33 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                             fontWeight = FontWeight.Bold,
                             fontSize = 14.sp,
                             color = colorResource(id = R.color._black),
-//                            fontFamily = poppins,
+                            fontFamily = poppins,
                         )
                     }
                 }
 
-                Icon(
-                        Icons.Default.Edit
-                    ,
-                    contentDescription = "Favorite",
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .size(24.dp)
-                        .clickable {
-                            onClickEdit()
-                        },
-                    tint = colorResource(id = R.color.appColor)
-                )
+                Row(
+                    modifier = Modifier.align(Alignment.TopEnd),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.SpaceBetween
+
+                ) {
+                    Text(
+                        text = food.rating.toString(),
+                        fontSize = 14.sp,
+                        fontFamily = poppins,
+                        fontWeight = FontWeight.SemiBold,
+                        color = Color.Gray,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                    Icon(
+                        imageVector = Icons.Filled.Star,
+                        contentDescription = "Rating",
+                        tint = Color(0xFFFFD700),
+                        modifier = Modifier.size(18.dp)
+                    )
+
+                }
             }
 
             Spacer(modifier = Modifier.height(4.dp))
@@ -656,65 +652,121 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
         }
     }
 }
-@Composable
-fun ShowCustomDialog(
-    showDialog: Boolean,
-    onDismiss: () -> Unit,
-    onConfirm: () -> Unit,
-) {
-    if (showDialog) {
-        AlertDialog(
-            onDismissRequest = onDismiss,
-            confirmButton = {
-                TextButton(onClick = onConfirm) {
-                    Text("Add")
-                }
-            },
-            dismissButton = {
-                TextButton(onClick = onDismiss) {
-                    Text("Cancel")
-                }
-            },
-            title = { Text("Dialog Title") },
-            text = {}
-        )
-    }
-}
 
 @Composable
-fun DropdownMenuExample() {
-    var expanded by remember { mutableStateOf(false) }
-    val items = listOf("Item 1", "Item 2", "Item 3")
-    var selectedItem by remember { mutableStateOf(items[0]) }
-
-      Column {
-        TextField(
-            value = selectedItem,
-            onValueChange = { },
-            label = { Text("Select") },
-            trailingIcon = {
-                Icons.Filled.ArrowDropDown.let {
-                    androidx.compose.material.Icon(
-                        imageVector = it,
-                        contentDescription = "Dropdown arrow",
-                        modifier = Modifier.clickable {
-                            expanded = !expanded
-                        },
+fun OrderCard(order: Order, context: Context) {
+        Card(
+            elevation= CardDefaults.cardElevation(defaultElevation = 1.dp),
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth(),
+            colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+        ) {
+            Column(
+                modifier = Modifier.padding(16.dp)
+            ) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "ID Order : ",
+                        fontWeight = FontWeight.SemiBold,
+                        color = colorResource(id = R.color._black),
+                        fontSize = 14.sp,
+                        fontFamily = poppins
+                    )
+                    Text(
+                        text = order.id,
+                        fontWeight = FontWeight.Normal,
+                        color = colorResource(id = R.color._black),
+                        fontSize = 14.sp,
+                        fontFamily = poppins
                     )
                 }
-            },
-            modifier = Modifier.fillMaxWidth()
-        )
-        DropdownMenu(
-            expanded = expanded,
-            onDismissRequest = { expanded = false },
-        ) {
-            items.forEach { item ->
-                DropdownMenuItem(text = { Text(text = item)}, onClick = {
-                     selectedItem=item
-                     expanded =false
-                })
+                Row(
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Text(
+                        text = "Total Price : $",
+                        fontWeight = FontWeight.SemiBold,
+                        color = colorResource(id = R.color._black),
+                        fontSize = 14.sp,
+                        fontFamily = poppins
+                    )
+                    Text(
+                        text = order.totalPrice.toString()
+                        ,fontWeight = FontWeight.Normal,
+                        color = colorResource(id = R.color._black),
+                        fontSize = 14.sp,
+                        fontFamily = poppins
+                    )
+                }
+
+                Column(
+                ) {
+                    Text(
+                        text = "Items :",
+                        fontWeight = FontWeight.SemiBold,
+                        color = colorResource(id = R.color._black),
+                        fontSize = 14.sp,
+                        fontFamily = poppins
+                    )
+                    LazyRow() {
+                        items(order.items){ item->
+                            Card (
+                                colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                                elevation = CardDefaults.cardElevation(defaultElevation = 0.dp),
+                                modifier = Modifier.padding(4.dp),
+                                shape = RoundedCornerShape(8.dp),
+                                border = BorderStroke(0.5.dp, colorResource(id = R.color.gray))
+
+                            ){
+                                Row(modifier = Modifier.padding(horizontal = 4.dp)){
+                                    Text(text = item.foodName,
+                                        fontWeight = FontWeight.Normal,
+                                        color = colorResource(id = R.color._black),
+                                        fontSize = 12.sp,
+                                        fontFamily = poppins)
+                                    Spacer(modifier = Modifier.width(4.dp))
+                                    Text(text = item.quantity.toString()+"x",
+                                        fontWeight = FontWeight.Normal,
+                                        color = colorResource(id = R.color._black),
+                                        fontSize = 12.sp,
+                                        fontFamily = poppins)
+                                }
+
+                            }
+                        }
+                    }
+                }
+                Row(modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(),
+                    horizontalArrangement = Arrangement.SpaceBetween) {
+                    Button(onClick = {
+                        Toast.makeText(context,"Order Cancelled",Toast.LENGTH_SHORT).show()
+                    }
+                        , modifier = Modifier.height(36.dp),
+                        colors = ButtonDefaults.buttonColors(Color.Gray),
+                        shape = RoundedCornerShape(12.dp))
+                    {
+                        Text("Cancel Order",
+                            fontWeight = FontWeight.Normal,
+                            color = colorResource(id = R.color.white),
+                            fontSize = 12.sp,
+                            fontFamily = poppins,
+                            modifier = Modifier.fillMaxHeight())
+                    }
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Button(onClick = {
+                        Toast.makeText(context,"Order Confirmed",Toast.LENGTH_SHORT).show()
+                    }, modifier = Modifier.height(36.dp),
+                        colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+                        ,shape = RoundedCornerShape(12.dp))
+                    {
+                        Text("Confirm Order ")
+                    }
+                }
+
             }
         }
-    }
+
 }
