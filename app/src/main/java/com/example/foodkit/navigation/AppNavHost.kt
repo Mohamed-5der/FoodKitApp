@@ -33,26 +33,29 @@ fun AppNavigation(navController: NavHostController) {
     val appPreferences = AppPreferences(LocalContext.current)
     appPreferences.init()
     val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
-        if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL || FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL2 ) {
+        if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL ||
+            FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL2 ||
+            FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL3
+        ) {
             Routes.MASTER
         } else {
             val email = appPreferences.getString("email", "")
-            if (email == "" ) {
+            if (email == "") {
                 Routes.COMPLETE_PROFILE
-            }else{
+            } else {
                 Routes.MAIN
             }
         }
     } else {
         Routes.LOGIN
     }
-    NavHost(navController = navController, startDestination = startDestination ) {
+    NavHost(navController = navController, startDestination = startDestination) {
 
-        composable( Routes.LOGIN) { LoginScreen(navController) }
+        composable(Routes.LOGIN) { LoginScreen(navController) }
 
-        composable( Routes.SIGNUP) { SignUpScreen(navController) }
+        composable(Routes.SIGNUP) { SignUpScreen(navController) }
 
-        composable( Routes.COMPLETE_PROFILE) { CompleteSignUpScreen(navController) }
+        composable(Routes.COMPLETE_PROFILE) { CompleteSignUpScreen(navController) }
 
         composable(Routes.MAIN) { MainScreen(navController) }
 
@@ -72,14 +75,14 @@ fun AppNavigation(navController: NavHostController) {
 
         composable(Routes.FOOD_DETAILS) {
             val itemId = it.arguments?.getString("itemId") ?: ""
-            ProductDetailsScreen(itemId,navController)
+            ProductDetailsScreen(itemId, navController)
         }
 
-        composable(Routes.DETAILS_ANALYSIS) {backStackEntry ->
+        composable(Routes.DETAILS_ANALYSIS) { backStackEntry ->
 
             val itemId = backStackEntry.arguments?.getString("itemId")
             if (itemId != null) {
-                MainDetailsAnalysis(navController, itemId , currentUserId)
+                MainDetailsAnalysis(navController, itemId, currentUserId)
             }
         }
 

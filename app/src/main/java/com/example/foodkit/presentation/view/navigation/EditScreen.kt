@@ -78,9 +78,10 @@ fun EditScreen(
             modifier = Modifier
                 .background(Color.White)
                 .fillMaxSize()
-                .background(brush = Brush.verticalGradient(listOf(Color(0xFFff0000), Color(0xFFff9a00)))
+                .background(
+                    brush = Brush.verticalGradient(listOf(Color(0xFFff0000), Color(0xFFff9a00)))
                 ),
-            color = Color.Black,
+            color = Color.White,
             shadowElevation = 8.dp
         ) {
             Column(
@@ -101,9 +102,11 @@ fun EditScreen(
                     )
                 )
 
-                SelectImageButton {Uri ->
+                SelectImageButton(onImageSelected = {Uri ->
                     imageUrl = Uri
-                }
+
+                })
+
 
                 if(imageUrl != null) {
                     imageUrl?.let { uri ->

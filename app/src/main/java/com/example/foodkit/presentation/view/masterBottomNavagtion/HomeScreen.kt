@@ -209,6 +209,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
             ) {
                 items(foodList?: emptyList()) { food ->
                     FoodCardMaster(food = food, onClick = {
+                        navController.navigate( "details_analysis/${food.id}")
                     }, onClickEdit = {
 
                     })
