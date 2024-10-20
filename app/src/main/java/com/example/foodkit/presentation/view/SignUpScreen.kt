@@ -48,7 +48,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.foodkit.R
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LoginState
 import com.example.foodkit.presentation.viewModel.SignUpState
@@ -72,9 +71,6 @@ fun SignUpScreen(
 
     val authState by viewModel.signUpStateFlow.collectAsState()
     val context = LocalContext.current
-    val appPreferences = AppPreferences(context)
-    appPreferences.init()
-
     val errorMessage by remember { mutableStateOf<String?>(null) }
 
     Surface(
@@ -275,8 +271,6 @@ fun SignUpScreen(
                                         Toast.LENGTH_SHORT
                                     ).show()
                                     viewModelDb.addUser(name = userName, email = email, phoneNumber = phoneNumber, imageUrl = ""){
-                                        appPreferences.putString("email", email)
-                                        appPreferences.putString("userId", it)
                                         navController.navigate(Routes.MAIN)
                                     }
 

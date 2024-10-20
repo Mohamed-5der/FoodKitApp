@@ -17,6 +17,7 @@ object Routes {
     const val PROFILE = "profile"
     const val ORDERS = "orders"
     const val COUPONS = "coupons"
+    const val SPLASH = "splash"
     const val NOTIFICATIONS = "notifications"
     const val DETAILS_ANALYSIS = "details_analysis/{itemId}"
 

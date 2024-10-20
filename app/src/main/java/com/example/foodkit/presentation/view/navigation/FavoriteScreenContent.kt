@@ -59,6 +59,7 @@ import coil.compose.AsyncImage
 import com.example.foodkit.R
 import com.example.foodkit.components.CartFoodCard
 import com.example.foodkit.components.FoodCard
+import com.example.foodkit.components.LottieAnimationEmpty
 import com.example.foodkit.components.poppins
 import com.example.foodkit.model.FavoriteFood
 import com.example.foodkit.navigation.Routes
@@ -79,38 +80,47 @@ fun FavoriteScreenContent(navController: NavController) {
     ) {
         Column(
             modifier = Modifier
-                .padding(bottom = 60.dp)
                 .background(colorResource(id = R.color.white))
 
         ) {
             TopAppBar(
-                modifier = Modifier.fillMaxWidth().height(60.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
                     .background(colorResource(id = R.color.white)),
-                title = { Text(text = stringResource(id = R.string.wish_list), modifier = Modifier.fillMaxWidth().padding(end = 16.dp), textAlign = TextAlign.Center)},
+                title = { Text(text = stringResource(id = R.string.wish_list), modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(end = 16.dp), textAlign = TextAlign.Center)},
                 colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(id = R.color.white),
                     titleContentColor = colorResource(id = R.color._black),
                     navigationIconContentColor = colorResource(id = R.color._black)
                 ),
                 scrollBehavior = null,
-
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Box(modifier = Modifier.fillMaxHeight()) {
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
-                ) {
-                    items(favoriteFoods.value?: emptyList()) { food ->
+                if (favoriteFoods.value==emptyList<FavoriteFood>()) {
+                    LottieAnimationEmpty()
+                }else{
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(horizontal = 8.dp),
+                    ) {
+                        items(favoriteFoods.value?: emptyList()) { food ->
 
-                        FoodCardFav(food = food, onClick = {
-                            navController.navigate("food_details/${food.idFood}")
+                            FoodCardFav(food = food, onClick = {
+                                navController.navigate("food_details/${food.idFood}")
+                            }
+                            )
                         }
-                        )
                     }
                 }
+
             }
 
         }
@@ -230,12 +240,12 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                         .align(Alignment.TopEnd)
                         .size(24.dp)
                         .clickable {
-                                isFavorite.value = !isFavorite.value
-                                favoriteViewModel.deleteFavoriteFood(food.idFood){
-                                    Toast
-                                        .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                            isFavorite.value = !isFavorite.value
+                            favoriteViewModel.deleteFavoriteFood(food.idFood) {
+                                Toast
+                                    .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
 
                         },
                     tint = colorResource(id = R.color.appColor)
@@ -260,7 +270,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                 text = food.description ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
                 modifier = Modifier.fillMaxWidth(),

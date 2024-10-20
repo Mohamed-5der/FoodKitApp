@@ -24,5 +24,7 @@ interface UserDao {
     @Query("DELETE FROM user_table WHERE id = :id")
     suspend fun deleteUserById(id: Int)
 
+    @Query("SELECT EXISTS(SELECT 1 FROM user_table WHERE email = :email)")
+    suspend fun doesEmailExist(email: String): Boolean
 
 }

@@ -12,17 +12,22 @@ import kotlinx.coroutines.flow.asStateFlow
 class FoodListScreenViewModel(private val repository: FoodRepository) : ViewModel() {
     private val _foods = MutableStateFlow<List<Food>>(emptyList())
     val foods: StateFlow<List<Food>> = _foods.asStateFlow()
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading : StateFlow<Boolean> get() = _isLoading
 
     private val _topFiveFoods = MutableStateFlow<List<Food>>(emptyList())
     val topFiveFoods: StateFlow<List<Food>> = _topFiveFoods.asStateFlow()
 
     fun loadAllFoods() {
+        _isLoading.value = true
         repository.getAllFoods(
             onSuccess = { foods ->
                 _foods.value = foods // تحديث الحالة هنا
+                _isLoading.value = false
             },
             onFailure = { exception ->
                 Log.e("Firestore", "Error loading foods", exception)
+                _isLoading.value = false
             }
         )
     }

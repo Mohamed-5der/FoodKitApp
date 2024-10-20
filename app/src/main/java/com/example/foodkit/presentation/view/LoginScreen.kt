@@ -48,9 +48,9 @@ import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.Lifecycle
 import androidx.navigation.NavController
 import com.example.foodkit.R
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LoginState
 import com.example.foodkit.presentation.viewModel.LoginViewModel
@@ -70,8 +70,6 @@ fun LoginScreen(
 
     val errorMessage by remember { mutableStateOf<String?>(null) }
     val context = LocalContext.current
-    val appPreferences = AppPreferences(context)
-    appPreferences.init()
     val authState by viewModel.loginStateFlow.collectAsState()
 
     Surface (color = Color.White,
@@ -213,16 +211,13 @@ fun LoginScreen(
                 }
                 is LoginState.UserSuccess -> {
                     LaunchedEffect(Unit) {
-                        navController.navigate(Routes.MAIN)
+                         val emailExists = userViewModel.checkIfEmailExists(email)
+                            if (emailExists) {
+                                navController.navigate(Routes.MAIN)
+                            } else {
+                                navController.navigate(Routes.COMPLETE_PROFILE)
 
-                        userViewModel.getUserByEmail(email)
-                        val user =userViewModel.user.value
-//                    if (user == null) {
-//                        navController.navigate(Routes.MAIN)
-//                    }else {
-//                        Toast.makeText(context, user.name, Toast.LENGTH_SHORT).show()
-//                        navController.navigate(Routes.MAIN)
-//                    }
+                            }
                     }
                 }
                 else -> {

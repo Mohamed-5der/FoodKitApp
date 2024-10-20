@@ -69,13 +69,13 @@ fun StaffScreen(navController: NavController) {
                     fontFamily = poppins,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 30.dp)
+                        .fillMaxWidth().padding(top = 30.dp)
                 )
             },
             windowInsets = androidx.compose.foundation.layout.WindowInsets(0.dp),
             backgroundColor = androidx.compose.ui.graphics.Color.White,
-            modifier = Modifier.height(70.dp),
+            modifier = Modifier.height(70.dp)
+
         )
         Column(
             modifier = Modifier

@@ -54,7 +54,6 @@ import androidx.navigation.NavController
 import coil.compose.rememberImagePainter
 import com.example.foodkit.R
 import com.example.foodkit.components.poppins
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
@@ -68,8 +67,6 @@ fun CompleteSignUpScreen(
     var userName by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     val context = LocalContext.current
-    val appPreferences = AppPreferences(context)
-    appPreferences.init()
     val email = FirebaseAuth.getInstance().currentUser?.email?:""
     var selectedImagePath by remember { mutableStateOf<String?>(null) }
     val galleryLauncher = rememberLauncherForActivityResult(
@@ -215,7 +212,6 @@ fun CompleteSignUpScreen(
                                 phoneNumber = phoneNumber, imageUrl = selectedImagePath!!
                             ) {
                                 navController.navigate(Routes.MAIN)
-                                appPreferences.putString("email", email)
                                 Toast.makeText(context, "Complete Successful", Toast.LENGTH_SHORT)
                                     .show()
                             }

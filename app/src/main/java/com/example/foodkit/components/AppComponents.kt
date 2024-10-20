@@ -1,5 +1,6 @@
 package com.example.foodkit.components
 
+import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
 import android.database.Cursor
@@ -68,6 +69,12 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieCompositionSpec.*
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.foodkit.R
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
@@ -82,7 +89,7 @@ import java.io.InputStream
 import java.io.OutputStream
 
 @Composable
-fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
+fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let { onImageSelected(it) }
@@ -90,14 +97,16 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
 
     if (uri == null) {
 
-        Button(onClick = { launcher.launch("image/*") },
+        Button(
+            onClick = { launcher.launch("image/*") },
             modifier = Modifier
                 .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
-            {
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+        )
+        {
             Text("Select Image")
-           }
-    }else{
+        }
+    } else {
         Box(contentAlignment = Alignment.BottomEnd) {
             Image(
                 painter = rememberImagePainter(
@@ -108,7 +117,9 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
                 ),
                 contentDescription = "Profile Image",
                 modifier = Modifier
-                    .height(120.dp).fillMaxWidth().padding(4.dp)
+                    .height(120.dp)
+                    .fillMaxWidth()
+                    .padding(4.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
@@ -139,9 +150,14 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
 }
 
 
-
+@SuppressLint("DefaultLocale")
 @Composable
-fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFavorite: MutableState<Boolean>) {
+fun FoodCard(
+    food: Food,
+    onClick: () -> Unit,
+    onClickFavorite: () -> Unit,
+    isFavorite: MutableState<Boolean>
+) {
 
 
     Card(
@@ -159,8 +175,10 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box {
-                Card (colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),){
+                Card(
+                    colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                ) {
                     AsyncImage(
                         model = food.imageUrl,
                         contentDescription = "",
@@ -307,10 +325,12 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
                         tint = Color(0xFFFFD700),
                         modifier = Modifier.size(18.dp)
                     )
+                    val rating = food.rating ?: 0.0
+                    val roundedRating = String.format("%.2f", rating).toDouble()
                     Text(
-                        text = food.rating.toString(),
+                        text = roundedRating.toString(),
                         fontSize = 14.sp,
-//                        fontFamily = poppins,
+                        fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Gray,
                         modifier = Modifier.padding(start = 4.dp)
@@ -319,8 +339,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
             }
         }
     }
-    }
-
+}
 
 
 @Composable
@@ -378,7 +397,12 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: () -> Unit, onClick: () -> Unit){
+fun CartFoodCard(
+    food: CartItem,
+    onIncreaseOrDecrease: (Int) -> Unit,
+    onRemove: () -> Unit,
+    onClick: () -> Unit
+) {
     var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier
@@ -402,7 +426,7 @@ fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: 
                 shape = RoundedCornerShape(8.dp)
             ) {
                 AsyncImage(
-                    model =food.imageUrl,
+                    model = food.imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(100.dp)
@@ -458,7 +482,7 @@ fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: 
                 )
             }
             Text(
-                text =numberCart.value.toString(),
+                text = numberCart.value.toString(),
                 color = Color.Black,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,
@@ -500,39 +524,50 @@ val poppins = FontFamily(
 )
 
 
-fun uriToBitmap(context: Context, uri: Uri): Bitmap? {
-    return try {
-        // Get the input stream from the URI
-        val inputStream: InputStream? = context.contentResolver.openInputStream(uri)
-        // Decode the input stream into a bitmap
-        BitmapFactory.decodeStream(inputStream)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
+@Composable
+fun LottieAnimationLoading(loading: Boolean = true) {
+    val composition by rememberLottieComposition(RawRes(R.raw.animation_loading))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever,
+        isPlaying = loading
+    )
+    if (loading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent),
+            contentAlignment = Alignment.Center,
+        ) {
+            LottieAnimation(
+                composition = composition,
+                progress = progress,
+                modifier = Modifier.size(150.dp),
+            )
+        }
     }
 }
 
-fun bitmapToFile(bitmap: Bitmap, file: File): File? {
-    return try {
-        val outputStream: OutputStream = FileOutputStream(file)
-
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, outputStream)
-
-        outputStream.flush()
-        outputStream.close()
-        file
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
-    }
-}
-
-fun fileToBase64String(file: File): String? {
-    return try {
-        val bytes = file.readBytes()
-        Base64.encodeToString(bytes, Base64.DEFAULT)
-    } catch (e: Exception) {
-        e.printStackTrace()
-        null
+@Composable
+fun LottieAnimationEmpty(loading: Boolean = true) {
+    val composition by rememberLottieComposition(RawRes(R.raw.animation_empty_cart))
+    val progress by animateLottieCompositionAsState(
+        composition = composition,
+        iterations = LottieConstants.IterateForever,
+        isPlaying = loading
+    )
+    if (loading) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.Transparent),
+            contentAlignment = Alignment.Center,
+        ) {
+            LottieAnimation(
+                composition = composition,
+                progress = progress,
+                modifier = Modifier.fillMaxSize(),
+            )
+        }
     }
 }

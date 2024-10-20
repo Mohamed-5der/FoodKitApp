@@ -1,7 +1,6 @@
 package com.example.foodkit.di
 
 import androidx.room.Room
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.local.UserDatabase
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
@@ -39,8 +38,6 @@ val appModule = module {
     single { FirebaseStorage.getInstance() }
     single { FoodRepository(get(),get()) }
     single { CategoryRepository(get(),get())}
-    single { AppPreferences(get()) }
-    single { AppPreferences(get()).init() }
     single { CartRepository(get(),get()) }
 
     viewModel { LoginViewModel(get()) }

@@ -37,26 +37,32 @@ import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import androidx.navigation.NavController
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
+import coil.request.ImageRequest
 import com.example.foodkit.R
 import com.example.foodkit.components.poppins
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
+import com.google.firebase.auth.FirebaseAuth
 import okhttp3.Route
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
+import coil.compose.rememberAsyncImagePainter as rememberAsyncImagePainter1
 
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun ProfileScreenContent(navController: NavController) {
     val userViewModel: UserViewModel = koinViewModel()
     var selectedImageUri by remember { mutableStateOf<Uri?>(null) }
+    val email = FirebaseAuth.getInstance().currentUser?.email?:""
+    userViewModel.getUserByEmail(email)
     val user = userViewModel.user.collectAsState().value
-
+    val userImagePath = user?.imageUrl?.toUri()
     val galleryLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->
@@ -96,12 +102,13 @@ fun ProfileScreenContent(navController: NavController) {
 
             Box(contentAlignment = Alignment.BottomEnd) {
                 Image(
-                    painter = rememberImagePainter(
-                        data = if (selectedImageUri == null) R.drawable.profile_image
-                        else selectedImageUri,
-                        builder = {
-                            crossfade(true)
-                        }
+                    painter = rememberAsyncImagePainter1(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(userImagePath)
+                            .placeholder(R.drawable.profile_unselect)
+                            .error(R.drawable.profile_unselect)
+                            .crossfade(true)
+                            .build()
                     ),
                     contentDescription = "Profile Image",
                     modifier = Modifier
@@ -172,8 +179,10 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
                     }
                 } else if (route == Routes.PROFILE) {
                     navController.navigate(Routes.PROFILE)
-                } else if (route == Routes.MAIN){
+                } else if (route == Routes.MAIN) {
                     navController.navigate(Routes.MAIN)
+                } else if (route == Routes.ORDERS) {
+                    navController.navigate(Routes.ORDERS)
                 } else {
                     Toast
                         .makeText(context, "Coming Soon", Toast.LENGTH_SHORT)

@@ -3,6 +3,7 @@ package com.example.foodkit.presentation.view
 import android.annotation.SuppressLint
 import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
@@ -57,6 +58,10 @@ fun MasterScreen(navController: NavController) {
         color = Color.White,
     ) {
         Scaffold (
+            modifier = Modifier
+                .fillMaxSize()
+                .background(Color.White),
+
             bottomBar = {
                 BottomNavigation(
                     modifier = Modifier
@@ -170,11 +175,19 @@ fun MasterScreen(navController: NavController) {
 
             }
         ){
-            when (selectedIndex.value) {
-                0 -> HomeScreen(navController){selectedIndex.value=1}
-                1 -> OrdersScreen(navController)
-                2 -> FoodsScreen(navController)
-                3 -> StaffScreen(navController)
+            Surface(color = Color.White) {
+                Column(
+                    modifier = Modifier
+                        .padding(bottom = it.calculateBottomPadding()),
+                    horizontalAlignment = Alignment.CenterHorizontally
+                ) {
+                    when (selectedIndex.value) {
+                        0 -> HomeScreen(navController){selectedIndex.value=1}
+                        1 -> OrdersScreen(navController)
+                        2 -> FoodsScreen(navController)
+                        3 -> StaffScreen(navController)
+                    }
+                }
             }
 
         }

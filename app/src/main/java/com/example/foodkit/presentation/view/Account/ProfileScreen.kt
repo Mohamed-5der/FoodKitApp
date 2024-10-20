@@ -1,7 +1,7 @@
 package com.example.foodkit.presentation.view.Account
 
-
 import android.net.Uri
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -62,7 +62,6 @@ import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.foodkit.R
 import com.example.foodkit.components.poppins
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
@@ -74,12 +73,11 @@ import java.io.File
 @Composable
 fun ProfileScreen(navController: NavController){
     val userViewModel: UserViewModel = koinViewModel()
-    val appPreferences = AppPreferences(LocalContext.current)
-    appPreferences.init()
     val email = FirebaseAuth.getInstance().currentUser?.email?:""
     userViewModel.getUserByEmail(email)
     val user = userViewModel.user.collectAsState().value
-    val userImagePath = user?.imageUrl
+    val userImagePath = user?.imageUrl?.toUri()
+    Log.d("userImagePath", userImagePath.toString())
 
     Scaffold(
         topBar = {
@@ -123,11 +121,13 @@ fun ProfileScreen(navController: NavController){
 
 
                 Image(
-                    painter = rememberImagePainter(
-                        data =  R.drawable.profile_image,
-                        builder = {
-                            crossfade(true)
-                        }
+                    painter = rememberAsyncImagePainter(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(userImagePath)
+                            .placeholder(R.drawable.profile_unselect)
+                            .error(R.drawable.profile_un)
+                            .crossfade(true)
+                            .build()
                     ),
                     contentDescription = "Profile Image",
                     modifier = Modifier

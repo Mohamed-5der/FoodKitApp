@@ -147,7 +147,6 @@ fun DetailsAnalysisForMaster(
                         contentScale = ContentScale.Crop
                     )
                 }
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

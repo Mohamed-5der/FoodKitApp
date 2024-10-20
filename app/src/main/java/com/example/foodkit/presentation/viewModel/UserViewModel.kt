@@ -20,14 +20,10 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
             try {
                 val newUser = User(name = name, email = email, phoneNumber = phoneNumber, imageUrl = imageUrl)
                 userDao.insert(newUser)
-                // Handle success (e.g., log or show success message)
                 onAddSuccess(newUser.id.toString())
                 Log.d("UserAddition", "User added successfully")
-                // You can also show a message in the UI using LiveData or another mechanism
             } catch (e: Exception) {
-                // Handle failure (e.g., log the error or show an error message)
                 Log.e("UserAddition", "Error adding user: ${e.message}")
-                // Optionally, show a message in the UI (use a Toast, Snackbar, or LiveData to update UI)
             }
         }
     }
@@ -46,6 +42,10 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
         }
     }
 
+    suspend fun checkIfEmailExists(email: String): Boolean {
+        return userDao.doesEmailExist(email)
+    }
+
     fun getUserByEmail(email: String){
          viewModelScope.launch {
              try {
@@ -54,6 +54,5 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
                  Log.e("UserAddition", "Error adding user: ${e.message}")
              }
          }
-
     }
 }

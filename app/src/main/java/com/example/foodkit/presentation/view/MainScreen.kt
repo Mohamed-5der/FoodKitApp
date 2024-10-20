@@ -206,7 +206,7 @@ fun Home(navController: NavController) {
     ) {
         // Screen content
         Column(
-            modifier = Modifier,
+            modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
             horizontalAlignment = Alignment.CenterHorizontally
 
         ) {

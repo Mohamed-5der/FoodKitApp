@@ -27,13 +27,14 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
     private val _foodsInCategory = MutableStateFlow<List<Food>>(emptyList())
     val foodsInCategory : StateFlow<List<Food>> = _foodsInCategory.asStateFlow()
 
+    private val _isLoading = MutableStateFlow(false)
+    val isLoading : StateFlow<Boolean> get() = _isLoading
 
 
     fun addCategory(context: Context) {
         if (categoryName.text.isBlank() || selectedImageUri == null) {
             Toast.makeText(context, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show()
             return
-
         }
         // Create a new category object
         val newCategory = Category(name = categoryName.text)
@@ -54,26 +55,32 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
 
 
     fun loadCategories() {
+        _isLoading.value = true
         repository.getCategories(
             onSuccess = { loadedCategories ->
                 _categories.value = loadedCategories
+                _isLoading.value = false
             },
             onFailure = { exception ->
                 Log.e("Firestore", "Error loading categories", exception)
+                _isLoading.value = false
             }
         )
     }
 
     fun loadFoodsByCategory(categoryId: String) {
+        _isLoading.value = true
         Log.d("ViewModel", "Loading foods for category with ID: $categoryId")
         repository.getFoodsByCategory(
             categoryId,
             onSuccess = { loadedFoods ->
                 Log.d("ViewModel", "Foods loaded successfully: ${loadedFoods.size}")
                 _foodsInCategory.value = loadedFoods
+                _isLoading.value = false
             },
             onFailure = { exception ->
                 Log.e("ViewModel", "Error loading foods for category", exception)
+                _isLoading.value = false
             }
         )
     }

@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -33,6 +34,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -41,7 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
+import com.example.foodkit.R
 import com.example.foodkit.components.SelectImageButton
+import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
 import com.example.foodkit.presentation.viewModel.MasterViewModel
 import com.example.foodkit.presentation.viewModel.UpdateState
@@ -135,62 +139,83 @@ fun EditScreen(
                 OutlinedTextField(
                     value = foodName,
                     onValueChange = { foodName = it },
-                    label = { Text("Food Name") },
+                    label = { Text("Food Name", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    textStyle = TextStyle(fontSize = 18.sp)
+                    shape = RoundedCornerShape(12.dp),
                 )
 
                 OutlinedTextField(
                     value = foodDescription,
                     onValueChange = { foodDescription = it },
-                    label = { Text("Description") },
+                    label = { Text("Description", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
-                    textStyle = TextStyle(fontSize = 18.sp)
+                    shape = RoundedCornerShape(12.dp),
                 )
 
                 OutlinedTextField(
                     value = price,
                     onValueChange = { price = it },
-                    label = { Text("Price") },
+                    label = { Text("Price", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
+                    shape = RoundedCornerShape(12.dp),
                 )
 
                 OutlinedTextField(
                     value = availableQuantity,
                     onValueChange = { availableQuantity = it },
-                    label = { Text("Available Quantity") },
+                    label = { Text("Available Quantity", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
                 )
 
                 OutlinedTextField(
                     value = calories,
                     onValueChange = { calories = it },
-                    label = { Text("Calories") },
+                    label = { Text("Calories", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
                 )
 
                 OutlinedTextField(
                     value = proteins,
                     onValueChange = { proteins = it },
-                    label = { Text("Proteins (g)") },
+                    label = { Text("Proteins (g)", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
                 )
 
                 OutlinedTextField(
                     value = fats,
                     onValueChange = { fats = it },
-                    label = { Text("Fats (g)") },
+                    label = { Text("Fats (g)", color = Color.Black,
+                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                        , fontSize = 12.sp)},
+                    singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
+                    shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -240,7 +265,8 @@ fun EditScreen(
                         )
                         navController.popBackStack()
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
                     Text(text = "Save Changes")
                 }

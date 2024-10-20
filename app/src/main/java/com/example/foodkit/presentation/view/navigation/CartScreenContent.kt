@@ -14,14 +14,22 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Card
 import androidx.compose.material.Divider
+import androidx.compose.material.Icon
+import androidx.compose.material.IconButton
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -34,25 +42,32 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.example.foodkit.R
 import com.example.foodkit.components.CartFoodCard
 import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.repository.CartItem
 import com.google.firebase.auth.FirebaseAuth
+import com.khedr.ShopVerse.util.SwipeToDeleteContainer
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
@@ -67,7 +82,8 @@ import org.koin.androidx.compose.koinViewModel
         viewModel.loadCartItems(userId)
     }
 
-    Box(
+    Scaffold(
+        containerColor = colorResource(id = R.color.white),
         modifier = Modifier
             .fillMaxSize()
             .background(colorResource(id = R.color.white))
@@ -96,21 +112,29 @@ import org.koin.androidx.compose.koinViewModel
 
             Spacer(modifier = Modifier.height(8.dp))
 
-            Box(modifier = Modifier.fillMaxWidth()) {
+            Column(modifier = Modifier.fillMaxWidth()) {
                 LazyColumn(
                     modifier = Modifier
                         .padding(bottom = 16.dp)
                 ) {
                     items(cartItems.value) {
-                        CartFoodCard(it, onIncreaseOrDecrease = {increment ->
-                            viewModel.updateQuantityInCartScreen(it.foodId, userId, increment)
-                        }, onRemove = {
-                            viewModel.removeFromCart(it.foodId, userId)
-                        }, onClick = {
-                            navController.navigate("food_details/${it.foodId}")
-
-                        }
+                        SwipeToDeleteContainer(
+                            item = it,
+                            cartItem = it,
+                            onDelete = { deletedItem ->
+                                viewModel.removeFromCart(it.foodId, userId)
+                            }
+                        ) { item ->
+                            CartFoodCard(item, onIncreaseOrDecrease = {increment ->
+                                viewModel.updateQuantityInCartScreen(it.foodId, userId, increment)
+                            }, onRemove = {
+                                viewModel.removeFromCart(it.foodId, userId)
+                            }, onClick = {
+                                navController.navigate("food_details/${it.foodId}")
+                            }
                             )
+                        }
+
                     }
                     item {
                         Button(
@@ -151,7 +175,7 @@ fun CheckoutBottomSheet(isSheetOpen: MutableState<Boolean>,viewModel: CartForTes
                       isSheetOpen.value = false
                   },
                   modifier = Modifier
-                      .heightIn(600.dp)
+                      .height(600.dp)
                       .align(Alignment.BottomCenter),
                   containerColor = Color.White,
                   shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),

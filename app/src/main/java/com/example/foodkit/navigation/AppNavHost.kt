@@ -9,12 +9,12 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.example.foodkit.Constants
+import com.example.foodkit.presentation.view.Account.MyOrderScreen
 import com.example.foodkit.presentation.view.CartScreenForTest
 import com.example.foodkit.presentation.view.CategoryDetailScreen
 import com.example.foodkit.presentation.view.CategoryListScreen
 import com.example.foodkit.presentation.view.DetailsAnalysisForMaster
 import com.example.foodkit.presentation.view.FoodDetailScreen
-import com.example.foodkit.local.AppPreferences
 import com.example.foodkit.presentation.view.Account.ProfileScreen
 import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
@@ -23,32 +23,15 @@ import com.example.foodkit.presentation.view.MainScreen
 import com.example.foodkit.presentation.view.MasterScreen
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.view.SignUpScreen
+import com.example.foodkit.presentation.view.SplashScreen
 import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable
 fun AppNavigation(navController: NavHostController) {
-
     val currentUserId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
-    val appPreferences = AppPreferences(LocalContext.current)
-    appPreferences.init()
-    val startDestination = if (FirebaseAuth.getInstance().currentUser != null) {
-        if (FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL ||
-            FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL2 ||
-            FirebaseAuth.getInstance().currentUser?.email == Constants.ADMIN_EMAIL3
-        ) {
-            Routes.MASTER
-        } else {
-            val email = appPreferences.getString("email", "")
-            if (email == "") {
-                Routes.COMPLETE_PROFILE
-            } else {
-                Routes.MAIN
-            }
-        }
-    } else {
-        Routes.LOGIN
-    }
+    val startDestination = Routes.SPLASH
+
     NavHost(navController = navController, startDestination = startDestination) {
 
         composable(Routes.LOGIN) { LoginScreen(navController) }
@@ -62,6 +45,9 @@ fun AppNavigation(navController: NavHostController) {
         composable(Routes.MASTER) { MasterScreen(navController) }
 
         composable(Routes.PROFILE) { ProfileScreen(navController) }
+
+        composable(Routes.SPLASH) { SplashScreen(navController) }
+        composable(Routes.ORDERS) { MyOrderScreen(navController, currentUserId) }
 
 //        composable(Routes.ADD_CATEGORY) { AddCategoryScreen(navController) }
 

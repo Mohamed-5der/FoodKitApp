@@ -75,6 +75,7 @@ import androidx.compose.foundation.lazy.grid.items
 import com.example.foodkit.R
 import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
+import com.example.foodkit.components.LottieAnimationLoading
 import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
@@ -103,60 +104,67 @@ fun HomeScreenContent(
     var isSearchMode by remember { mutableStateOf(false) }
     var filteredFoods by remember { mutableStateOf<List<Food>>(emptyList()) }
     var filteredCategories by remember { mutableStateOf<List<Category>>(emptyList()) }
+    val foods = categoryViewModel.foodsInCategory.collectAsState().value
+    val isLoadingFood = foodViewModel.isLoading.collectAsState().value
+    val isLoadingCategory = categoryViewModel.isLoading.collectAsState().value
 
     Surface(
         modifier = Modifier.fillMaxSize(),
         color = Color.White
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxSize()
-                .background(Color.White)
-
-        ) {
-            HomeTopAppBar(user?.name?:"User Name")
-
-            SearchBar(onSearch = { query ->
-                isSearchMode = query.isNotEmpty()
-                filteredFoods = if (query.isNotEmpty()) {
-                    foodViewModel.foods.value.filter { it.name.contains(query, ignoreCase = true) }
-                } else {
-                    emptyList()
-                }
-                filteredCategories = if (query.isNotEmpty()) {
-                    categoryViewModel.categories.value.filter { it.name.contains(query, ignoreCase = true) }
-                } else {
-                    emptyList()
-                }
-            })
+        Box (){
             Column(
                 modifier = Modifier
-                    .verticalScroll(rememberScrollState())
+                    .fillMaxSize()
                     .background(Color.White)
-
             ) {
-                // Only show the banner and DotsIndicator if not in search mode
-                if (!isSearchMode) {
-                    BannerSection()
-                }
+                HomeTopAppBar(user?.name?:"User Name")
 
-                Spacer(modifier = Modifier.height(16.dp))
+                SearchBar(onSearch = { query ->
+                    isSearchMode = query.isNotEmpty()
+                    filteredFoods = if (query.isNotEmpty()) {
+                        foodViewModel.foods.value.filter { it.name.contains(query, ignoreCase = true) }
+                    } else {
+                        emptyList()
+                    }
+                    filteredCategories = if (query.isNotEmpty()) {
+                        categoryViewModel.categories.value.filter { it.name.contains(query, ignoreCase = true) }
+                    } else {
+                        emptyList()
+                    }
+                })
+                Column(
+                    modifier = Modifier
+                        .verticalScroll(rememberScrollState())
+                        .background(Color.White)
 
-                if (isSearchMode) {
-                    // Show filtered categories
-                    CategoriesSection(categories = filteredCategories)
+                ) {
+                    if (!isSearchMode) {
+                        BannerSection()
+                    }
+
                     Spacer(modifier = Modifier.height(16.dp))
-                    // Show filtered products
-                    ProductSection(navController, foods = filteredFoods)
-                } else {
-                    // Show all categories and products
-                    CategoriesSection()
-                    Spacer(modifier = Modifier.height(16.dp))
-                    ProductSection(navController)
-                }
 
+                    if (isSearchMode) {
+                        // Show filtered categories
+                        CategoriesSection(categories = filteredCategories)
+                        Spacer(modifier = Modifier.height(16.dp))
+                        // Show filtered products
+                        ProductSection(navController, foods = filteredFoods)
+                    } else {
+                        // Show all categories and products
+                        CategoriesSection()
+                        Spacer(modifier = Modifier.height(16.dp))
+                        ProductSection(navController, foods = foods)
+                    }
+
+                }
+            }
+            if (isLoadingFood || isLoadingCategory) {
+                LottieAnimationLoading()
             }
         }
+
     }
 }
 
@@ -421,7 +429,7 @@ fun CategoriesSection(
         ) {
             items(categoriesState) { category ->
                 CategoryCard(category, onClick = {
-                    viewModel.selectCategory(category)
+                    viewModel.loadFoodsByCategory(categoryId =category.name)
                 })
             }
         }

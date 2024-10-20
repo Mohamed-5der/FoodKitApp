@@ -87,6 +87,7 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
         viewModel.loadFood(foodId)
         viewModel.loadUserRating(foodId, userId)
     }
+    val rating = viewModel.userRating
 
     Surface(
         modifier = Modifier.fillMaxSize(),
