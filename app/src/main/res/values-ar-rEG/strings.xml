@@ -48,14 +48,49 @@
     <string name="description">الوصف </string>
     <string name="foods">الطعام</string>
     <string name="staff">العمال</string>
-    <string name="all_food">طعامال</string>
+    <string name="all_food">كل الأطعمه</string>
     <string name="all_order">الاوردارات</string>
-    <string name="all_category">السكاشن</string>
+    <string name="all_category">الفئات</string>
     <string name="add_food">اضافه طعام</string>
     <string name="add_category">اضافه سكشن</string>
     <string name="remove_from_cart">أزاله من السله</string>
     <string name="remove">أزاله </string>
     <string name="cancel">الغاء  </string>
+
+
+    <string name="add_category">اضافة فئة</string>
+    <string name="top_foods">أفضل الأطعمة</string>
+    <string name="foods_master">رئيس الأطعمة</string>
+    <string name="foodie_master">رئيس عشاق الطعام</string>
+    <string name="orders_master">رئيس الطلبات</string>
+    <string name="staff_master">رئيس الموظفين</string>
+    <string name="view_user">عرض المستخدم</string>
+    <string name="submit_your_rating">أرسل تقييمك : </string>
+    <string name="your_rating">تقييمك :</string>
+    <string name="user_name">اسم المستخدم</string>
+    <string name="hi">مرحبا</string>
+    <string name="select_image">حدد صورة</string>
+    <string name="category_name">اسم الفئة</string>
+    <string name="add">إضافة</string>
+    <string name="cancel">إلغاء</string>
+    <string name="food_name">اسم الطعام</string>
+    <string name="price">السعر</string>
+    <string name="available">متاح</string>
+    <string name="calories">السعرات الحرارية</string>
+    <string name="protein">البروتين</string>
+    <string name="fats">الدهون</string>
+    <string name="id_order">رقم الطلب : </string>
+    <string name="total_price">إجمالي السعر : £</string>
+    <string name="items">العناصر : </string>
+    <string name="cancel_order">إلغاء الطلب</string><string name="confirm_order">تأكيد الطلب</string>
+    <string name="connect">اتصال</string>
+    <string name="food_description">وصف الطعام</string>
+    <string name="select_category">اختر الفئة</string>
+    <string name="subtotal">المجموع الفرعي</string>
+    <string name="delivery_charge">رسوم التوصيل</string>
+    <string name="total">الإجمالي</string>
+    <string name="proceed_to_checkout">انتقل إلى الدفع</string>
+    <string name="kcal">سعرة حرارية</string>
 
 
 

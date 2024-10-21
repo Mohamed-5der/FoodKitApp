@@ -21,15 +21,16 @@ data class Food(
     var ratingCount: Int = 0,
     var totalSales: Int = 0,
     var category: String = "",
-    val calories : Int = 0,
-    val protein : Int = 0,
-    val fats : Int = 0,
+    val calories: Int = 0,
+    val protein: Int = 0,
+    val fats: Int = 0,
     var lastWeekRevenue: Double = 0.0,
     val availableQuantity: Int = 1,
-    val totalRevenue : Int = 0
+    val totalRevenue: Int = 0,
 )
 
-class FoodRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) : KoinComponent {
+class FoodRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :
+    KoinComponent {
 
     fun addFoodToCategory(
         food: Food,
@@ -42,7 +43,8 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
         protein: Int,
         fats: Int,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit) {
+        onFailure: (Exception) -> Unit,
+    ) {
         val imageRef = storage.reference.child("food_images/${UUID.randomUUID()}.jpg")
         val uploadTask = imageRef.putFile(imageUri)
 
@@ -63,12 +65,20 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
                         db.collection("foods").document(documentReference.id).set(foodWithId)
                             .addOnSuccessListener {
                                 val foodReference = mapOf("foodId" to foodWithId.id)
-                                db.collection("categories").document(categoryId).collection("foods").document(foodWithId.id).set(foodReference)
+                                db.collection("categories").document(categoryId).collection("foods")
+                                    .document(foodWithId.id).set(foodReference)
                                     .addOnSuccessListener {
-                                        Log.d("Firestore", "Food reference added to category with ID: ${categoryId}")
+                                        Log.d(
+                                            "Firestore",
+                                            "Food reference added to category with ID: ${categoryId}"
+                                        )
                                         onSuccess()
                                     }.addOnFailureListener { e ->
-                                        Log.w("Firestore", "Error adding food reference to category", e)
+                                        Log.w(
+                                            "Firestore",
+                                            "Error adding food reference to category",
+                                            e
+                                        )
                                         onFailure(e)
                                     }
                             }.addOnFailureListener { e ->
@@ -99,7 +109,7 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
         protein: Int,
         fats: Int,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ) {
         val foodRef = db.collection("foods").document(foodId)
 
@@ -143,8 +153,6 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
     }
 
 
-
-
     fun getFoodById(foodId: String, onFoodLoaded: (Food) -> Unit, onFailure: (Exception) -> Unit) {
         db.collection("foods").document(foodId).get()
             .addOnSuccessListener { documentSnapshot ->
@@ -163,15 +171,20 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             val currentRating = foodSnapshot.getDouble("rating")?.toFloat() ?: 0f
             val ratingCount = foodSnapshot.getLong("ratingCount")?.toInt() ?: 0
 
+            // تحقق مما إذا كان المستخدم قد قدم تقييمًا سابقًا
             val userRatingSnapshot = transaction.get(userRatingDocRef)
 
             if (userRatingSnapshot.exists()) {
+                // إذا كان المستخدم قد قدم تقييمًا مسبقًا، احسب المتوسط الجديد
                 val oldRating = userRatingSnapshot.getDouble("rating")?.toFloat() ?: 0f
-                val newAverageRating = (currentRating * ratingCount - oldRating + newRating) / ratingCount
+                val newAverageRating =
+                    (currentRating * ratingCount - oldRating + newRating) / ratingCount
 
+                // تحديث متوسط التقييم
                 transaction.update(foodDocRef, "rating", newAverageRating)
                 transaction.update(userRatingDocRef, "rating", newRating)
             } else {
+                // إذا كان هذا هو التقييم الأول لهذا المستخدم، قم بزيادة عدد التقييمات
                 val newAverageRating = (currentRating * ratingCount + newRating) / (ratingCount + 1)
                 transaction.update(foodDocRef, "rating", newAverageRating)
                 transaction.update(foodDocRef, "ratingCount", ratingCount + 1)
@@ -184,7 +197,12 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
         }
     }
 
-    fun getUserRating(foodId: String, userId: String, onSuccess: (Float?) -> Unit, onFailure: (Exception) -> Unit) {
+    fun getUserRating(
+        foodId: String,
+        userId: String,
+        onSuccess: (Float?) -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         db.collection("food_ratings").document("$foodId-$userId").get()
             .addOnSuccessListener { documentSnapshot ->
                 val rating = documentSnapshot.getDouble("rating")?.toFloat()
@@ -210,6 +228,7 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
 
 
     fun getTopFiveFoods(onSuccess: (List<Food>) -> Unit, onFailure: (Exception) -> Unit) {
+        // استعلام لجلب الأكلات وترتيبها حسب عدد الطلبات
         db.collection("foods")
             .orderBy("totalSales", Query.Direction.DESCENDING) // ترتيب حسب totalSales
             .limit(5)
@@ -218,14 +237,15 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
                 val topFoods = mutableListOf<Food>()
 
                 for (document in querySnapshot.documents) {
+                    // تحويل البيانات إلى كائن Food
                     val food = document.toObject(Food::class.java)
                     food?.let { topFoods.add(it) }
                 }
 
-                onSuccess(topFoods)
+                onSuccess(topFoods) // إرجاع القائمة عند النجاح
             }
             .addOnFailureListener { exception ->
-                onFailure(exception)
+                onFailure(exception) // إرجاع الخطأ في حالة الفشل
             }
     }
 

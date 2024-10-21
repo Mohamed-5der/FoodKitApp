@@ -10,13 +10,19 @@ import java.util.UUID
 data class Category(
     val id: String = UUID.randomUUID().toString(),
     val name: String = "",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
 )
 
 
-class CategoryRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :KoinComponent {
+class CategoryRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :
+    KoinComponent {
 
-    fun addCategory(category: Category, imageUri: Uri, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun addCategory(
+        category: Category,
+        imageUri: Uri,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
 
         val imageRef = storage.reference.child("categories/${UUID.randomUUID()}.jpg")
         val uploadTask = imageRef.putFile(imageUri)
@@ -41,7 +47,11 @@ class CategoryRepository(private val db: FirebaseFirestore, private val storage:
             }.addOnFailureListener(onFailure)
     }
 
-    fun getFoodsByCategory(categoryId: String, onSuccess: (List<Food>) -> Unit, onFailure: (Exception) -> Unit) {
+    fun getFoodsByCategory(
+        categoryId: String,
+        onSuccess: (List<Food>) -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         db.collection("categories").document(categoryId).collection("foods").get()
             .addOnSuccessListener { querySnapshot ->
                 val foodIds = querySnapshot.documents.mapNotNull { it.getString("foodId") }

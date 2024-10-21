@@ -72,8 +72,10 @@ fun LoginScreen(
     val context = LocalContext.current
     val authState by viewModel.loginStateFlow.collectAsState()
 
-    Surface (color = Color.White,
-        modifier = Modifier.fillMaxSize()){
+    Surface(
+        color = Color.White,
+        modifier = Modifier.fillMaxSize()
+    ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
@@ -130,7 +132,7 @@ fun LoginScreen(
             OutlinedTextField(
                 value = password,
                 onValueChange = { password = it },
-                label = { Text(stringResource(id = R.string.password) , color = Color.Black)  },
+                label = { Text(stringResource(id = R.string.password), color = Color.Black) },
                 modifier = Modifier.fillMaxWidth(),
                 shape = RoundedCornerShape(20.dp),
                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
@@ -140,8 +142,8 @@ fun LoginScreen(
                         contentDescription = "Password Icon",
                         tint = Color.Black
                     )
-                }
-                ,visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
+                },
+                visualTransformation = if (passwordVisible) VisualTransformation.None else PasswordVisualTransformation(),
 
                 trailingIcon = {
                     val image =
@@ -183,10 +185,18 @@ fun LoginScreen(
 
             }
             when (authState) {
-                is LoginState.Loading -> CircularProgressIndicator(modifier = Modifier.align(Alignment.CenterHorizontally))
+                is LoginState.Loading -> CircularProgressIndicator(
+                    modifier = Modifier.align(
+                        Alignment.CenterHorizontally
+                    )
+                )
+
                 is LoginState.Error -> {
                     Column {
-                        Text(text = (authState as LoginState.Error).message, color = MaterialTheme.colorScheme.error)
+                        Text(
+                            text = (authState as LoginState.Error).message,
+                            color = MaterialTheme.colorScheme.error
+                        )
                         Button(
                             onClick = { viewModel.login(email, password) },
                             modifier = Modifier
@@ -209,6 +219,7 @@ fun LoginScreen(
                         navController.navigate(Routes.MASTER)
                     }
                 }
+
                 is LoginState.UserSuccess -> {
                     LaunchedEffect(Unit) {
                          val emailExists = userViewModel.checkIfEmailExists(email)
@@ -217,12 +228,16 @@ fun LoginScreen(
                             } else {
                                 navController.navigate(Routes.COMPLETE_PROFILE)
 
+                        userViewModel.getUserByEmail(email)
+                        val user = userViewModel.user.value
                             }
                     }
                 }
+
                 else -> {
                     Button(
-                        onClick = { viewModel.login(email, password)
+                        onClick = {
+                            viewModel.login(email, password)
                         },
                         modifier = Modifier
                             .fillMaxWidth()

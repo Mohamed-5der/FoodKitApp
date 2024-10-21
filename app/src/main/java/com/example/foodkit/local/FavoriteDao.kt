@@ -15,7 +15,7 @@ interface FavoriteFoodDao {
     suspend fun insert(food: FavoriteFood)
 
     @Query("DELETE FROM favorite_food_table WHERE idFood = :foodId")
-    suspend fun delete(foodId : String)
+    suspend fun delete(foodId: String)
 
     @Query("SELECT * FROM favorite_food_table WHERE userId = :userId")
     suspend fun getFavoriteFoodsForUser(userId: String): List<FavoriteFood>

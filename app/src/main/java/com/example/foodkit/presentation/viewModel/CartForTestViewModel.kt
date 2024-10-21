@@ -43,7 +43,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
     }
 
     // إضافة منتج إلى العربة
-    fun addToCart(food: Food, quantity: Int = 1, userId: String,onAddToCartSuccess: () -> Unit) {
+    fun addToCart(food: Food, quantity: Int = 1, userId: String, onAddToCartSuccess: () -> Unit) {
         val existingItem = _cartItems.value.find { it.foodId == food.id }
 
         if (existingItem != null) {
@@ -134,7 +134,7 @@ class CartForTestViewModel(private val repository: CartRepository) : ViewModel()
             onFailure = { exception ->
                 Log.e("CartViewModel", "Failed to update quantity: ${exception.message}")
             }
-           )
+        )
     }
 
 

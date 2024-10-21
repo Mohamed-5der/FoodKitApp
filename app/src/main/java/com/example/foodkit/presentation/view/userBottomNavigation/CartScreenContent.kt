@@ -1,4 +1,4 @@
-package com.example.foodkit.presentation.view.navigation
+package com.example.foodkit.presentation.view.userBottomNavigation
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -39,7 +39,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -60,7 +59,6 @@ import com.example.foodkit.R
 import com.example.foodkit.components.CartFoodCard
 import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
-import com.example.foodkit.repository.CartItem
 import com.google.firebase.auth.FirebaseAuth
 import com.khedr.ShopVerse.util.SwipeToDeleteContainer
 import kotlinx.coroutines.launch
@@ -71,9 +69,9 @@ import org.koin.androidx.compose.koinViewModel
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 
- fun CartScreenContent(navController: NavController) {
+fun CartScreenContent(navController: NavController) {
     var showDialog = remember { mutableStateOf(false) }  // State to show dialog
-    val  viewModel: CartForTestViewModel = koinViewModel()
+    val viewModel: CartForTestViewModel = koinViewModel()
     val cartItems = viewModel.cartItems.collectAsState(initial = emptyList())
     val totalPrice by viewModel.totalPriceState.collectAsState(initial = 0.0)
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
@@ -99,16 +97,24 @@ import org.koin.androidx.compose.koinViewModel
                     .fillMaxWidth()
                     .height(60.dp)
                     .background(colorResource(id = R.color.white)),
-                title = { Text(text = stringResource(id = R.string.cart), modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(end = 16.dp), textAlign = TextAlign.Center)},
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.cart),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        fontFamily = poppins,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 16.dp), textAlign = TextAlign.Center
+                    )
+                },
                 colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(id = R.color.white),
                     titleContentColor = colorResource(id = R.color._black),
                     navigationIconContentColor = colorResource(id = R.color._black)
                 ),
                 scrollBehavior = null,
-                )
+            )
 
             Spacer(modifier = Modifier.height(8.dp))
 
@@ -155,15 +161,20 @@ import org.koin.androidx.compose.koinViewModel
 
                 }
             }
-            CheckoutBottomSheet(showDialog,viewModel,userId,totalPrice.toString())
+            CheckoutBottomSheet(showDialog, viewModel, userId, totalPrice.toString())
         }
     }
- }
+}
 
 @SuppressLint("SuspiciousIndentation")
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun CheckoutBottomSheet(isSheetOpen: MutableState<Boolean>,viewModel: CartForTestViewModel,userId: String,total: String) {
+fun CheckoutBottomSheet(
+    isSheetOpen: MutableState<Boolean>,
+    viewModel: CartForTestViewModel,
+    userId: String,
+    total: String,
+) {
     val sheetState = androidx.compose.material3.rememberModalBottomSheetState()
     val context = LocalContext.current
 
@@ -180,24 +191,24 @@ fun CheckoutBottomSheet(isSheetOpen: MutableState<Boolean>,viewModel: CartForTes
                   containerColor = Color.White,
                   shape = RoundedCornerShape(topStart = 20.dp, topEnd = 20.dp),
 
-              ) {
-                  CheckoutCardContent(onSuccessfulCheckout = {
-                      viewModel.checkout(userId, onSuccess = {
-                          Toast.makeText(context, "Order Confirmed!", Toast.LENGTH_SHORT).show()
-                      }, onFailure = { exception ->
-                          Log.e("Checkout", "Failed to checkout: ${exception.message}")
-                      })
-                      viewModel.clearCart(userId)
-                  }, total.toString())
-              }
-          }
+                ) {
+                CheckoutCardContent(onSuccessfulCheckout = {
+                    viewModel.checkout(userId, onSuccess = {
+                        Toast.makeText(context, "Order Confirmed!", Toast.LENGTH_SHORT).show()
+                    }, onFailure = { exception ->
+                        Log.e("Checkout", "Failed to checkout: ${exception.message}")
+                    })
+                    viewModel.clearCart(userId)
+                }, total.toString())
+            }
+        }
 
-      }
+    }
 
 }
 
 @Composable
-fun CheckoutCardContent(onSuccessfulCheckout: () -> Unit,total :String) {
+fun CheckoutCardContent(onSuccessfulCheckout: () -> Unit, total: String) {
     val context = LocalContext.current
     Column(
         modifier = Modifier
@@ -205,9 +216,9 @@ fun CheckoutCardContent(onSuccessfulCheckout: () -> Unit,total :String) {
             .padding(16.dp)
     ) {
         Spacer(modifier = Modifier.height(8.dp))
-        CheckoutRow(label = "Subtotal", amount =total.toString() )
+        CheckoutRow(label = stringResource(id = R.string.subtotal), amount = total.toString())
         Spacer(modifier = Modifier.height(8.dp))
-        CheckoutRow(label = "Delivery charge", amount = "$50.00")
+        CheckoutRow(label = stringResource(id = R.string.delivery_charge), amount = "$50.00")
         Spacer(modifier = Modifier.height(12.dp))
 
 
@@ -219,15 +230,15 @@ fun CheckoutCardContent(onSuccessfulCheckout: () -> Unit,total :String) {
             thickness = 1.5.dp
         )
         Spacer(modifier = Modifier.height(12.dp))
-        val totalPrice =total.toDouble()+50.00
-        CheckoutRow(label = "Total", amount = totalPrice.toString())
+        val totalPrice = total.toDouble() + 50.00
+        CheckoutRow(label = stringResource(id = R.string.total), amount = totalPrice.toString())
 
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
             onClick = {
                 onSuccessfulCheckout()
-                      },
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(50.dp),
@@ -235,7 +246,7 @@ fun CheckoutCardContent(onSuccessfulCheckout: () -> Unit,total :String) {
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
         ) {
             Text(
-                text = "Proceed To Checkout",
+                text = stringResource(id = R.string.proceed_to_checkout),
                 color = Color.White,
             )
         }
@@ -249,17 +260,20 @@ fun CheckoutRow(label: String, amount: String) {
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
-        Text(text = label,
+        Text(
+            text = label,
             color = colorResource(id = R.color.gray),
             fontSize = 16.sp,
             fontFamily = poppins,
             fontWeight = FontWeight.Medium
         )
-        Text(text = amount,
-            color =Color.Black,
+        Text(
+            text = amount,
+            color = Color.Black,
             fontSize = 16.sp,
             fontFamily = poppins,
-            fontWeight = FontWeight.Medium)
+            fontWeight = FontWeight.Medium
+        )
     }
 }
 

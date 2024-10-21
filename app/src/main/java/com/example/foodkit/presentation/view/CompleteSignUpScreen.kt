@@ -61,9 +61,9 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun CompleteSignUpScreen(
-    navController: NavController
+    navController: NavController,
 ) {
-    val viewModelDb : UserViewModel = koinViewModel()
+    val viewModelDb: UserViewModel = koinViewModel()
     var userName by remember { mutableStateOf("") }
     var phoneNumber by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -115,12 +115,15 @@ fun CompleteSignUpScreen(
 
             Spacer(modifier = Modifier.height(30.dp))
 
-            Box(contentAlignment = Alignment.BottomEnd, modifier = Modifier.align(Alignment.CenterHorizontally)) {
+            Box(
+                contentAlignment = Alignment.BottomEnd,
+                modifier = Modifier.align(Alignment.CenterHorizontally)
+            ) {
 
                 Image(
                     painter = rememberImagePainter(
-                        data = if (selectedImagePath==null)  R.drawable.profile_image
-                        else  selectedImagePath,
+                        data = if (selectedImagePath == null) R.drawable.profile_image
+                        else selectedImagePath,
                         builder = {
                             crossfade(true)
                         }
@@ -136,7 +139,8 @@ fun CompleteSignUpScreen(
                     modifier = Modifier
                         .background(color = colorResource(id = R.color.appColor), CircleShape)
                         .border(1.dp, Color.White, CircleShape)
-                        .size(40.dp).clickable {
+                        .size(40.dp)
+                        .clickable {
                             galleryLauncher.launch("image/*")
                         },
                     shape = CircleShape,
@@ -153,7 +157,7 @@ fun CompleteSignUpScreen(
             }
             Spacer(modifier = Modifier.height(16.dp))
             Text(
-                text =email,
+                text = email,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = TextAlign.Center,
@@ -203,7 +207,7 @@ fun CompleteSignUpScreen(
                 onClick = {
                     if (selectedImagePath == null) {
                         Toast.makeText(context, "Please select an image", Toast.LENGTH_SHORT).show()
-                    }else if (userName.isEmpty()|| phoneNumber.isEmpty()) {
+                    } else if (userName.isEmpty() || phoneNumber.isEmpty()) {
                         Toast.makeText(context, "Please fill all fields", Toast.LENGTH_SHORT).show()
                     }else{
                             viewModelDb.addUser(

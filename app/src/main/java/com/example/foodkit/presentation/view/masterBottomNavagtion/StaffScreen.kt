@@ -2,10 +2,8 @@ package com.example.foodkit.presentation.view.masterBottomNavagtion
 
 import android.content.Intent
 import android.net.Uri
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -21,7 +19,6 @@ import androidx.compose.material.Divider
 import androidx.compose.material.Icon
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.KeyboardArrowRight
 import androidx.compose.material.icons.outlined.Call
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Person
@@ -36,7 +33,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -48,7 +44,7 @@ import coil.compose.rememberImagePainter
 import com.example.foodkit.R
 import com.example.foodkit.components.poppins
 import com.example.foodkit.navigation.Routes
-import com.example.foodkit.presentation.view.navigation.ProfileOptionItem
+import com.example.foodkit.presentation.view.userBottomNavigation.ProfileOptionItem
 import com.example.foodkit.presentation.viewModel.LogoutViewModel
 import org.koin.androidx.compose.koinViewModel
 
@@ -64,7 +60,8 @@ fun StaffScreen(navController: NavController) {
         TopAppBar(
             title = {
                 Text(
-                    "Staff Master",
+                    stringResource(id = R.string.staff_master),
+                    color = Color.Black,
                     fontSize = 16.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.SemiBold,
@@ -91,7 +88,7 @@ fun StaffScreen(navController: NavController) {
             AddStaff(name = "Ahmed Emad", phone = "+201029550695", email ="ahmed.emad.23112003@gmail.com" , imageVector =R.drawable.emad ,"https://www.linkedin.com/in/ahmed-emad-%F0%9F%87%B5%F0%9F%87%B8-010a52262/")
             Spacer(modifier = Modifier.height(16.dp))
 
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = "View user",route = Routes.MAIN,navController)
+            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = stringResource(id = R.string.view_user),route = Routes.MAIN,navController)
             ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.logout), label = stringResource(id = R.string.logout),route = Routes.LOGIN,navController)
 
 
@@ -181,7 +178,7 @@ fun AddStaff(name:String, phone:String, email:String, imageVector: Int, link:Str
                     startActivity(context, intent, null) },
                     modifier = Modifier.padding(end = 16.dp),
                     colors = androidx.compose.material.ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.appColor))) {
-                    Text(text = "Connect",
+                    Text(text = stringResource(id = R.string.connect),
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.white),
                         fontFamily = poppins,

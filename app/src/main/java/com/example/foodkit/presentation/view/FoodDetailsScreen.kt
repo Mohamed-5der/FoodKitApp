@@ -46,7 +46,8 @@ import org.koin.core.parameter.parametersOf
 
 @Composable
 fun FoodDetailScreen(navController: NavController, foodId: String, userId: String) {
-    val foodDetailViewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
+    val foodDetailViewModel: FoodDetailViewModel =
+        koinViewModel(parameters = { parametersOf(userId) })
     val cartViewModel: CartForTestViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val masterViewModel: MasterViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val context = LocalContext.current
@@ -112,8 +113,13 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                     } else {
                         // بدلًا من ذلك، تحديث التقييم القديم
                         ratingState.value = rating // تحديث القيمة الجديدة
-                        foodDetailViewModel.submitRating(food.id, rating, userId) // إرسال التقييم الجديد
-                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT).show()
+                        foodDetailViewModel.submitRating(
+                            food.id,
+                            rating,
+                            userId
+                        ) // إرسال التقييم الجديد
+                        Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             )
@@ -147,10 +153,11 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
             Button(
                 onClick = {
                     if (quantity <= food.availableQuantity) { // تحقق من أن الكمية المطلوبة غير أكبر من المتاحة
-                        cartViewModel.addToCart(food, quantity, userId,{})
+                        cartViewModel.addToCart(food, quantity, userId, {})
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
                     } else {
-                        Toast.makeText(context, "Not enough quantity available", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Not enough quantity available", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
             ) {

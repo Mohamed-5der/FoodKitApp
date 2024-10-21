@@ -15,10 +15,17 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
     private val _user = MutableStateFlow<User?>(null)
     val user: StateFlow<User?> get() = _user
 
-    fun addUser(name: String, email: String, phoneNumber: String, imageUrl: String,onAddSuccess: (String) -> Unit) {
+    fun addUser(
+        name: String,
+        email: String,
+        phoneNumber: String,
+        imageUrl: String,
+        onAddSuccess: (String) -> Unit,
+    ) {
         viewModelScope.launch {
             try {
-                val newUser = User(name = name, email = email, phoneNumber = phoneNumber, imageUrl = imageUrl)
+                val newUser =
+                    User(name = name, email = email, phoneNumber = phoneNumber, imageUrl = imageUrl)
                 userDao.insert(newUser)
                 onAddSuccess(newUser.id.toString())
                 Log.d("UserAddition", "User added successfully")
@@ -29,14 +36,14 @@ class UserViewModel(private val userDao: UserDao) : ViewModel() {
     }
 
 
-    fun updateUser(id : Int, name: String, email: String, phoneNumber: String, imageUrl: String) {
+    fun updateUser(id: Int, name: String, email: String, phoneNumber: String, imageUrl: String) {
         viewModelScope.launch {
             userDao.updateUserById(id, name, email, phoneNumber, imageUrl)
             // Update the list of users after update
         }
     }
 
-    fun deleteUser(id : Int) {
+    fun deleteUser(id: Int) {
         viewModelScope.launch {
             userDao.deleteUserById(id)
         }

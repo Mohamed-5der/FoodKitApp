@@ -1,4 +1,5 @@
-package com.example.foodkit.presentation.view.navigation
+package com.example.foodkit.presentation.view.userBottomNavigation
+
 import android.annotation.SuppressLint
 import android.net.Uri
 import android.widget.Toast
@@ -31,7 +32,6 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
@@ -39,8 +39,6 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import androidx.navigation.NavController
-import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
 import com.example.foodkit.R
@@ -71,22 +69,24 @@ fun ProfileScreenContent(navController: NavController) {
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(
-                    stringResource(id = R.string.profile), color = Color.Black,
-                    fontWeight = FontWeight.SemiBold, fontSize = 18.sp,
-                    fontFamily = poppins,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 30.dp, end = 16.dp),
-                    textAlign = androidx.compose.ui.text.style.TextAlign.Center)
-                        },
+                title = {
+                    Text(
+                        stringResource(id = R.string.profile), color = Color.Black,
+                        fontWeight = FontWeight.SemiBold, fontSize = 18.sp,
+                        fontFamily = poppins,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(top = 30.dp, end = 16.dp),
+                        textAlign = androidx.compose.ui.text.style.TextAlign.Center
+                    )
+                },
                 backgroundColor = Color.White,
                 elevation = 1.dp,
                 modifier = Modifier.height(70.dp)
             )
 
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -150,19 +150,54 @@ fun ProfileScreenContent(navController: NavController) {
 
             Spacer(modifier = Modifier.height(24.dp))
 
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_unselect), label = stringResource(id = R.string.profile),route = Routes.PROFILE,navController)
-            ProfileOptionItem(icon = Icons.Outlined.ShoppingCart, label = stringResource(id = R.string.orders),route = Routes.ORDERS,navController)
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.gift), label = stringResource(id = R.string.coupons),route = Routes.COUPONS,navController)
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.notification_icon), label = stringResource(id = R.string.notifications),route = Routes.NOTIFICATIONS,navController)
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.setting), label =stringResource(id = R.string.settings),route = Routes.SETTINGS,navController)
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.profile_unselect),
+                label = stringResource(id = R.string.profile),
+                route = Routes.PROFILE,
+                navController
+            )
+            ProfileOptionItem(
+                icon = Icons.Outlined.ShoppingCart,
+                label = stringResource(id = R.string.orders),
+                route = Routes.ORDERS,
+                navController
+            )
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.gift),
+                label = stringResource(id = R.string.coupons),
+                route = Routes.COUPONS,
+                navController
+            )
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.notification_icon),
+                label = stringResource(id = R.string.notifications),
+                route = Routes.NOTIFICATIONS,
+                navController
+            )
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.setting),
+                label = stringResource(id = R.string.settings),
+                route = Routes.SETTINGS,
+                navController
+            )
 
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.logout), label = stringResource(id = R.string.logout),route = Routes.LOGIN,navController)
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.logout),
+                label = stringResource(id = R.string.logout),
+                route = Routes.LOGIN,
+                navController
+            )
         }
     }
 }
 
 @Composable
-fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navController: NavController) {
+fun ProfileOptionItem(
+    icon: ImageVector,
+    label: String,
+    route: String,
+    navController: NavController,
+) {
     val context = LocalContext.current
     val logoutViewModel: LogoutViewModel = koinViewModel()
     Row(
@@ -213,7 +248,7 @@ fun ProfileOptionItem(icon: ImageVector, label: String,route: String,navControll
         )
     }
     Divider(
-        color =Color.LightGray,
+        color = Color.LightGray,
         thickness = 1.dp,
         modifier = Modifier.alpha(0.6f),
     )

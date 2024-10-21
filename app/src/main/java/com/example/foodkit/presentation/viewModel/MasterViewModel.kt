@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.StateFlow
 // ViewModel for Admin Screen
 class MasterViewModel(
     private val foodRepository: FoodRepository,
-    private val cartRepository: CartRepository
+    private val cartRepository: CartRepository,
 ) : ViewModel() {
     var foodName by mutableStateOf(TextFieldValue(""))
     var foodDescription by mutableStateOf(TextFieldValue(""))
@@ -43,9 +43,13 @@ class MasterViewModel(
     private val _updateState = MutableStateFlow<UpdateState>(UpdateState.Idle)
     val updateState: StateFlow<UpdateState> = _updateState
 
-    fun addFoodToCategory(context: Context, onAddSuccess:()->Unit) {
+    fun addFoodToCategory(context: Context, onAddSuccess: () -> Unit) {
         if (foodName.text.isBlank() || foodDescription.text.isBlank() || selectedImageUri == null || foodPrice.text.isBlank() || selectedCategory.isBlank()) {
-            Toast.makeText(context, "Please fill in all fields, select an image, and choose a category", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Please fill in all fields, select an image, and choose a category",
+                Toast.LENGTH_SHORT
+            ).show()
             return
         }
 
@@ -71,20 +75,24 @@ class MasterViewModel(
                 caloriesQuantity,
                 proteinsQuantity,
                 fatsQuantity, {
-                // clear the form fields
-                foodName = TextFieldValue("")
-                foodDescription = TextFieldValue("")
-                selectedImageUri = null
-                foodPrice = TextFieldValue("")
-                selectedCategory = ""
-                availableQuantityNumber = TextFieldValue("")
+                    // clear the form fields
+                    foodName = TextFieldValue("")
+                    foodDescription = TextFieldValue("")
+                    selectedImageUri = null
+                    foodPrice = TextFieldValue("")
+                    selectedCategory = ""
+                    availableQuantityNumber = TextFieldValue("")
                     calories = TextFieldValue("")
                     protein = TextFieldValue("")
                     fats = TextFieldValue("")
-                Toast.makeText(context, "Food added successfully", Toast.LENGTH_SHORT).show()
-            }, { exception ->
-                Toast.makeText(context, "Failed to add food: ${exception.message}", Toast.LENGTH_SHORT).show()
-            })
+                    Toast.makeText(context, "Food added successfully", Toast.LENGTH_SHORT).show()
+                }, { exception ->
+                    Toast.makeText(
+                        context,
+                        "Failed to add food: ${exception.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                })
         }
     }
 
@@ -98,7 +106,7 @@ class MasterViewModel(
         price: Double,
         calories: Int,
         protein: Int,
-        fats: Int
+        fats: Int,
     ) {
         _updateState.value = UpdateState.Loading
 
@@ -121,7 +129,6 @@ class MasterViewModel(
             }
         )
     }
-
 
 
     fun loadOrders() {

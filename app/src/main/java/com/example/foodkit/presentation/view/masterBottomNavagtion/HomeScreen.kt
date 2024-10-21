@@ -120,41 +120,42 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
         }
     }
 
-    Box (){
-        Column (modifier = Modifier.background(Color.White)){
-            TopAppBar(title = { Text("Foodie Master",
-                fontSize =16.sp,
-                fontFamily = poppins,
-                fontWeight = FontWeight.SemiBold,
-                textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier
-                    .fillMaxWidth().padding(top = 30.dp)) },
-                backgroundColor = androidx.compose.ui.graphics.Color.White,
-                modifier = Modifier.height(70.dp),
-
+    Column (modifier = Modifier.background(Color.White)){
+        TopAppBar(title = { Text(stringResource(id = R.string.foodie_master),
+            color = Color.Black,
+            fontSize =16.sp,
+            fontFamily = poppins,
+            fontWeight = FontWeight.SemiBold,
+            textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp)) }, windowInsets = androidx.compose.foundation.layout.WindowInsets(0.dp),
+            backgroundColor = androidx.compose.ui.graphics.Color.White,
+            modifier = Modifier.height(70.dp),
             )
-            Column(
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .verticalScroll(rememberScrollState())
+                .padding(horizontal = 16.dp),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            //Categories
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
                 modifier = Modifier
-                    .fillMaxSize()
-                    .verticalScroll(rememberScrollState())
-                    .padding(horizontal = 16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
             ) {
-                //Categories
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.all_category),
-                        modifier = Modifier,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        fontFamily = poppins
-                    )
+                Text(
+                    text = stringResource(id = R.string.all_category),
+                    modifier = Modifier,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    fontFamily = poppins
+                )
 
                     Text(
                         text = stringResource(id = R.string.add_category),
@@ -177,34 +178,35 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                     items(categories) { category ->
                         CategoryCard(category = category){
 
-                        }
                     }
                 }
-                //Foods
-                Spacer(modifier = Modifier.height(16.dp))
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.all_food),
-                        modifier = Modifier,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        fontFamily = poppins
-                    )
-                    Text(
-                        text = stringResource(id = R.string.add_food),
-                        color = colorResource(id = R.color.appColor),
-                        modifier = Modifier.clickable {
-                            showDialogAddFood.value = true
-                        },
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        fontFamily = poppins
-                    )
+            }
+            //Foods
+            Spacer(modifier = Modifier.height(16.dp))
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(id = R.string.all_food),
+                    modifier = Modifier,
+                    color = Color.Black,
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    fontFamily = poppins
+                )
+                Text(
+                    text = stringResource(id = R.string.add_food),
+                    color = colorResource(id = R.color.appColor),
+                    modifier = Modifier.clickable {
+                        showDialogAddFood.value = true
+                    },
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    fontFamily = poppins
+                )
 
                 }
                 LazyRow(
@@ -220,30 +222,31 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                     }
                 }
 
-                //Orders
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.SpaceBetween
-                ) {
-                    Text(
-                        text = stringResource(id = R.string.orders),
-                        modifier = Modifier,
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        fontFamily = poppins
-                    )
-                    Text(
-                        text = stringResource(id = R.string.all_order),
-                        color = colorResource(id = R.color.appColor),
-                        modifier = Modifier.clickable {
-                            onClickAllOrder()
-                        },
-                        fontWeight = FontWeight.Medium,
-                        fontSize = 16.sp,
-                        fontFamily = poppins
-                    )
+            //Orders
+            Row(
+                modifier = Modifier
+                    .fillMaxWidth(),
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.SpaceBetween
+            ) {
+                Text(
+                    text = stringResource(id = R.string.orders),
+                    modifier = Modifier,
+                    fontWeight = FontWeight.Medium,
+                    color = Color.Black,
+                    fontSize = 16.sp,
+                    fontFamily = poppins
+                )
+                Text(
+                    text = stringResource(id = R.string.all_order),
+                    color = colorResource(id = R.color.appColor),
+                    modifier = Modifier.clickable {
+                        onClickAllOrder()
+                    },
+                    fontWeight = FontWeight.Medium,
+                    fontSize = 16.sp,
+                    fontFamily = poppins
+                )
 
                 }
                 LazyColumn(
@@ -256,238 +259,239 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                     }
                 }
 
-                // add food
-                if (showDialogAddFood.value) {
-                    AlertDialog(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(600.dp),
-                        onDismissRequest = { showDialogAddFood.value = false },
-                        confirmButton = {
-                            Row() {
-                                Button(onClick = { showDialogAddFood.value=false }
-                                    , modifier = Modifier,
-                                    colors = ButtonDefaults.buttonColors(Color.Gray))
-                                {
-                                    Text("Cancel")
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { viewModel.addFoodToCategory(context){
-                                    showDialogAddFood.value=false
-                                } }
-                                    , modifier = Modifier,
-                                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
-                                {
-                                    Text("Add ")
-                                }
-                            }
-                        },
-                        title = { Text("Add Food",fontFamily = poppins,
-                            fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color._black),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center) },
-                        text = {
-                            Column (modifier = Modifier
-                                .fillMaxWidth()
-                                .verticalScroll(rememberScrollState()))
+            // add food
+            if (showDialogAddFood.value) {
+                AlertDialog(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(600.dp),
+                    onDismissRequest = { showDialogAddFood.value = false },
+                    confirmButton = {
+                        Row() {
+                            Button(onClick = { showDialogAddFood.value=false }
+                                , modifier = Modifier,
+                                colors = ButtonDefaults.buttonColors(Color.Gray))
                             {
-                                SelectImageButton ({
+                                Text(stringResource(id = R.string.cancel))
+                            }
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(onClick = { viewModel.addFoodToCategory(context){
+                                showDialogAddFood.value=false
+                            } }
+                                , modifier = Modifier,
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
+                            {
+                                Text(stringResource(id = R.string.add))
+                            }
+                        }
+                    },
+                    title = { Text("Add Food",fontFamily = poppins,
+                        fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color._black),
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center) },
+                    text = {
+                        Column (modifier = Modifier
+                            .fillMaxWidth()
+                            .verticalScroll(rememberScrollState()))
+                        {
+                            SelectImageButton ({
                                     viewModel.selectedImageUri = it
-                                },uri = viewModel.selectedImageUri)
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row (
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ){
-                                    OutlinedTextField(
-                                        value =  viewModel.foodName,
-                                        onValueChange = {viewModel.foodName = it },
-                                        label = { Text("Food Name", color = Color.Black,
-                                            fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp) },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    OutlinedTextField(
-                                        value = viewModel.foodPrice,
-                                        onValueChange = { viewModel.foodPrice = it },
-                                        label = { Text("Price", color = Color.Black
-                                            , fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp)  },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Row (
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ){
-                                    OutlinedTextField(
-                                        value = viewModel.availableQuantityNumber,
-                                        onValueChange = { viewModel.availableQuantityNumber = it },
-                                        label = { Text("Available", color = Color.Black,
-                                            fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp) },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    OutlinedTextField(
-                                        value = viewModel.calories,
-                                        onValueChange = { viewModel.calories = it },
-                                        label = { Text("Calories", color = Color.Black
-                                            , fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp)  },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-
-                                Row (
-                                    horizontalArrangement = Arrangement.SpaceBetween,
-                                    verticalAlignment = Alignment.CenterVertically
-                                ){
-                                    OutlinedTextField(
-                                        value = viewModel.protein,
-                                        onValueChange = { viewModel.protein = it },
-                                        label = { Text("Protein", color = Color.Black,
-                                            fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp) },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    OutlinedTextField(
-                                        value = viewModel.fats,
-                                        onValueChange = { viewModel.fats = it },
-                                        label = { Text("Fats", color = Color.Black
-                                            , fontFamily = poppins, fontWeight = FontWeight.Medium
-                                            , fontSize = 12.sp)  },
-                                        singleLine = true,
-                                        modifier = Modifier.weight(1f),
-                                        shape = RoundedCornerShape(12.dp),
-                                        keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                    )
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-
+                            },uri = viewModel.selectedImageUri)
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Row (
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
                                 OutlinedTextField(
-                                    value = viewModel.foodDescription,
-                                    onValueChange = { viewModel.foodDescription = it },
-                                    label = { Text("Food Description", color = Color.Black,
+                                    value =  viewModel.foodName,
+                                    onValueChange = {viewModel.foodName = it },
+                                    label = { Text(stringResource(id = R.string.food_name), color = Color.Black,
                                         fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp) },
-                                    modifier = Modifier.fillMaxWidth(),
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
                                 )
-                                val  selectedItem = viewModel.selectedCategory?:""
-                                var selectedCategory by remember { mutableStateOf(selectedItem) }
-                                if (selectedCategory==""){
-                                    selectedCategory = categories[0].name
-                                }
-                                Spacer(modifier = Modifier.height(8.dp))
-
+                                Spacer(modifier = Modifier.width(8.dp))
                                 OutlinedTextField(
-                                    value = selectedCategory,
-                                    onValueChange = { },
-                                    label = { Text("Select Category", color = Color.Black,
+                                    value = viewModel.foodPrice,
+                                    onValueChange = { viewModel.foodPrice = it },
+                                    label = { Text(stringResource(id = R.string.price), color = Color.Black
+                                           , fontFamily = poppins, fontWeight = FontWeight.Medium
+                                        , fontSize = 12.sp)  },
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Row (
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                OutlinedTextField(
+                                    value = viewModel.availableQuantityNumber,
+                                    onValueChange = { viewModel.availableQuantityNumber = it },
+                                    label = { Text(stringResource(id = R.string.available), color = Color.Black,
                                         fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp) },
-                                    trailingIcon = {
-                                        Icons.Filled.ArrowDropDown.let {
-                                            androidx.compose.material.Icon(
-                                                imageVector = it,
-                                                contentDescription = "Dropdown arrow",
-                                                modifier = Modifier.clickable {
-                                                    expanded = !expanded
-                                                },
-                                            )
-                                        }
-                                    },
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
-                                    modifier = Modifier.fillMaxWidth()
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 )
-                                DropdownMenu(
-                                    expanded = expanded,
-                                    onDismissRequest = { expanded = false }
-                                ) {
-                                    categories.forEach { category ->
-                                        DropdownMenuItem(
-                                            text = { Text(text = category.name) },
-                                            onClick = {
-                                                viewModel.selectedCategory = category.name
-                                                expanded = false
-                                            }
+                                Spacer(modifier = Modifier.width(8.dp))
+                                OutlinedTextField(
+                                    value = viewModel.calories,
+                                    onValueChange = { viewModel.calories = it },
+                                    label = { Text(stringResource(id = R.string.calories), color = Color.Black
+                                        , fontFamily = poppins, fontWeight = FontWeight.Medium
+                                        , fontSize = 12.sp)  },
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            Row (
+                                horizontalArrangement = Arrangement.SpaceBetween,
+                                verticalAlignment = Alignment.CenterVertically
+                            ){
+                                OutlinedTextField(
+                                    value = viewModel.protein,
+                                    onValueChange = { viewModel.protein = it },
+                                    label = { Text(stringResource(id = R.string.protein), color = Color.Black,
+                                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                                        , fontSize = 12.sp) },
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                )
+                                Spacer(modifier = Modifier.width(8.dp))
+                                OutlinedTextField(
+                                    value = viewModel.fats,
+                                    onValueChange = { viewModel.fats = it },
+                                    label = { Text(stringResource(id = R.string.fats), color = Color.Black
+                                        , fontFamily = poppins, fontWeight = FontWeight.Medium
+                                        , fontSize = 12.sp)  },
+                                    singleLine = true,
+                                    modifier = Modifier.weight(1f),
+                                    shape = RoundedCornerShape(12.dp),
+                                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                )
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            OutlinedTextField(
+                                value = viewModel.foodDescription,
+                                onValueChange = { viewModel.foodDescription = it },
+                                label = { Text(stringResource(id = R.string.food_description), color = Color.Black,
+                                    fontFamily = poppins, fontWeight = FontWeight.Medium
+                                    , fontSize = 12.sp) },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp),
+                            )
+                            val  selectedItem = viewModel.selectedCategory?:""
+                            var selectedCategory by remember { mutableStateOf(selectedItem) }
+                            if (selectedCategory==""){
+                                selectedCategory = categories[0].name
+                            }
+                            Spacer(modifier = Modifier.height(8.dp))
+
+                            OutlinedTextField(
+                                value = selectedCategory,
+                                onValueChange = { },
+                                label = { Text(stringResource(id = R.string.select_category), color = Color.Black,
+                                    fontFamily = poppins, fontWeight = FontWeight.Medium
+                                    , fontSize = 12.sp) },
+                                trailingIcon = {
+                                    Icons.Filled.ArrowDropDown.let {
+                                        androidx.compose.material.Icon(
+                                            imageVector = it,
+                                            contentDescription = "Dropdown arrow",
+                                            modifier = Modifier.clickable {
+                                                expanded = !expanded
+                                            },
                                         )
                                     }
+                                },
+                                shape = RoundedCornerShape(12.dp),
+                                modifier = Modifier.fillMaxWidth()
+                            )
+                            DropdownMenu(
+                                expanded = expanded,
+                                onDismissRequest = { expanded = false }
+                            ) {
+                                categories.forEach { category ->
+                                    DropdownMenuItem(
+                                        text = { Text(text = category.name) },
+                                        onClick = {
+                                            viewModel.selectedCategory = category.name
+                                            expanded = false
+                                        }
+                                    )
                                 }
+                            }
 
 
                             } },
                         containerColor = Color.White
 
-                    )
-                }
-                if (showDialogAddCategory.value) {
-                    AlertDialog(
-                        modifier = Modifier.fillMaxWidth(),
-                        onDismissRequest = { showDialogAddCategory.value = false },
-                        confirmButton = {
-                            Row() {
-                                Button(onClick = { showDialogAddCategory.value=false }
-                                    , modifier = Modifier,
-                                    colors = ButtonDefaults.buttonColors(Color.Gray))
-                                {
-                                    Text("Cancel")
-                                }
-                                Spacer(modifier = Modifier.width(8.dp))
-                                Button(onClick = { categoryViewModel.addCategory(context) }
-                                    , modifier = Modifier,
-                                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
-                                {
-                                    Text("Add ")
-                                }
+                )
+            }
+            if (showDialogAddCategory.value) {
+                AlertDialog(
+                    modifier = Modifier.fillMaxWidth(),
+                    onDismissRequest = { showDialogAddCategory.value = false },
+                    confirmButton = {
+                        Row() {
+                            Button(onClick = { showDialogAddCategory.value=false }
+                                , modifier = Modifier,
+                                colors = ButtonDefaults.buttonColors(Color.Gray))
+                            {
+                                Text(stringResource(id = R.string.cancel))
                             }
-                        },
-                        title = { Text("Add Category",fontFamily = poppins,
-                            fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color._black),
-                            modifier = Modifier.fillMaxWidth(),
-                            textAlign = TextAlign.Center)  },
-                        text = {
-                            Column(modifier = Modifier
-                                .fillMaxWidth(),
-                                verticalArrangement = Arrangement.Center,
-                                horizontalAlignment = Alignment.CenterHorizontally
-                            ) {
+                            Spacer(modifier = Modifier.width(8.dp))
+                            Button(onClick = { categoryViewModel.addCategory(context) }
+                                , modifier = Modifier,
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
+                            {
+                                Text(stringResource(id = R.string.add))
+                            }
+                        }
+                    },
+                    title = { Text(
+                        stringResource(id = R.string.add_category),fontFamily = poppins,
+                        fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color._black),
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center)  },
+                    text = {
+                        Column(modifier = Modifier
+                            .fillMaxWidth(),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
 
                                 SelectImageButton ({
                                     categoryViewModel.selectedImageUri = it
                                 },uri = categoryViewModel.selectedImageUri)
 
-                                OutlinedTextField(
-                                    value = categoryViewModel.categoryName,
-                                    onValueChange = { categoryViewModel.categoryName = it },
-                                    label = { Text("Category Name",color = Color.Black,
-                                        fontFamily = poppins, fontWeight = FontWeight.Medium
-                                        , fontSize = 12.sp) },
-                                    modifier = Modifier.fillMaxWidth(),
-                                    shape = RoundedCornerShape(12.dp)
-                                )
-                            }
+                            OutlinedTextField(
+                                value = categoryViewModel.categoryName,
+                                onValueChange = { categoryViewModel.categoryName = it },
+                                label = { Text(stringResource(id = R.string.category_name),color = Color.Black,
+                                    fontFamily = poppins, fontWeight = FontWeight.Medium
+                                    , fontSize = 12.sp) },
+                                modifier = Modifier.fillMaxWidth(),
+                                shape = RoundedCornerShape(12.dp)
+                            )
+                        }
                         },
                         containerColor = Color.White
                     )
@@ -678,7 +682,7 @@ fun OrderCard(order: Order, context: Context) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "ID Order : ",
+                        text = stringResource(id = R.string.id_order),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -696,7 +700,7 @@ fun OrderCard(order: Order, context: Context) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Total Price : $",
+                        text = stringResource(id = R.string.total_price),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -714,7 +718,7 @@ fun OrderCard(order: Order, context: Context) {
                 Column(
                 ) {
                     Text(
-                        text = "Items :",
+                        text = stringResource(id = R.string.items),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -759,7 +763,7 @@ fun OrderCard(order: Order, context: Context) {
                         colors = ButtonDefaults.buttonColors(Color.Gray),
                         shape = RoundedCornerShape(12.dp))
                     {
-                        Text("Cancel Order",
+                        Text(stringResource(id = R.string.cancel_order),
                             fontWeight = FontWeight.Normal,
                             color = colorResource(id = R.color.white),
                             fontSize = 12.sp,
@@ -773,7 +777,7 @@ fun OrderCard(order: Order, context: Context) {
                         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                         ,shape = RoundedCornerShape(12.dp))
                     {
-                        Text("Confirm Order ")
+                        Text(stringResource(id = R.string.confirm_order))
                     }
                 }
 

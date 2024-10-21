@@ -30,6 +30,10 @@ fun LegendItem(color: Color, label: String) {
                 .clip(RoundedCornerShape(50))
                 .background(color)
         )
-        Text(text = label, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+        Text(
+            text = label,
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.onSurface
+        )
     }
 }

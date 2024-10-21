@@ -20,10 +20,12 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
+import com.example.foodkit.R
 import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.MasterViewModel
 import org.koin.androidx.compose.koinViewModel
@@ -44,7 +46,8 @@ fun OrdersScreen(navController: NavController) {
         TopAppBar(
             title = {
                 Text(
-                    "Orders Master",
+                    stringResource(id = R.string.orders_master),
+                    color = Color.Black,
                     fontSize = 16.sp,
                     fontFamily = poppins,
                     fontWeight = FontWeight.SemiBold,

@@ -1,4 +1,4 @@
-package com.example.foodkit.presentation.view.navigation
+package com.example.foodkit.presentation.view.userBottomNavigation
 
 import android.net.Uri
 import android.widget.Toast
@@ -57,9 +57,10 @@ import org.koin.core.parameter.parametersOf
 fun EditScreen(
     navController: NavController,
     foodId: String,
-    userId: String
+    userId: String,
 ) {
-    val foodDetailViewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
+    val foodDetailViewModel: FoodDetailViewModel =
+        koinViewModel(parameters = { parametersOf(userId) })
     val masterViewModel: MasterViewModel = koinViewModel(parameters = { parametersOf(userId) })
 
     foodDetailViewModel.food?.let { food ->
@@ -107,13 +108,13 @@ fun EditScreen(
                     )
                 )
 
-                SelectImageButton(onImageSelected = {Uri ->
+                SelectImageButton(onImageSelected = { Uri ->
                     imageUrl = Uri
 
                 })
 
 
-                if(imageUrl != null) {
+                if (imageUrl != null) {
                     imageUrl?.let { uri ->
                         Image(
                             painter = rememberAsyncImagePainter(uri),
@@ -222,7 +223,7 @@ fun EditScreen(
 
                 Spacer(modifier = Modifier.height(20.dp))
 
-                when(updateState) {
+                when (updateState) {
                     is UpdateState.Idle -> {}
 
                     is UpdateState.Loading -> {
@@ -232,11 +233,18 @@ fun EditScreen(
                             )
                         )
                     }
+
                     is UpdateState.Error -> {
-                        Toast.makeText(context, (updateState as UpdateState.Error).message, Toast.LENGTH_SHORT).show()
+                        Toast.makeText(
+                            context,
+                            (updateState as UpdateState.Error).message,
+                            Toast.LENGTH_SHORT
+                        ).show()
                     }
+
                     is UpdateState.Success -> {
-                        Toast.makeText(context, "Food updated successfully", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(context, "Food updated successfully", Toast.LENGTH_SHORT)
+                            .show()
                     }
                 }
 
