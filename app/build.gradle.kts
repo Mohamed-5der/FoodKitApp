@@ -96,7 +96,8 @@ dependencies {
     implementation (libs.ycharts)
     // bytebeats type
     implementation(libs.bytebeats.compose.charts)
-
+    // lottie
+    implementation ("com.airbnb.android:lottie-compose:6.1.0")
     //Compose navigation
     implementation(libs.navigation.compose)
     implementation(libs.identity.jvm)

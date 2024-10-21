@@ -130,7 +130,7 @@ fun HomeScreenContent(
 
                 ) {
                     if (!isSearchMode) {
-                        BannerSection()
+                        BannerSection(navController)
                     }
 
                     Spacer(modifier = Modifier.height(16.dp))

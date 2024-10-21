@@ -41,6 +41,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -92,7 +93,7 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
         )
         {
-            Text("Select Image")
+            Text(stringResource(id = R.string.select_image))
         }
     } else {
         Box(contentAlignment = Alignment.BottomEnd) {
@@ -139,42 +140,6 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
 
 
 @SuppressLint("DefaultLocale")
-/*
-@Composable
-fun FoodCard(
-    food: Food,
-    onClick: () -> Unit,
-    onClickFavorite: () -> Unit,
-    isFavorite: MutableState<Boolean>
-) {
-fun BannerCard(food: Food, onClick: () -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(4.dp)
-            .clickable(onClick = { onClick() }),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
-        shape = RoundedCornerShape(12.dp),
-    ) {
-        Column(
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Card(
-                colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
-                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
-            ) {
-                AsyncImage(
-                    model = food.imageUrl,
-                    contentDescription = "Food img",
-                    modifier = Modifier
-                        .clip(RoundedCornerShape(12.dp)),
-                    contentScale = ContentScale.Crop
-                )
-            }
-        }
-    }
-}
-
- */
 @Composable
 fun BannerCard(food: Food, onClick: () -> Unit) {
     Card(

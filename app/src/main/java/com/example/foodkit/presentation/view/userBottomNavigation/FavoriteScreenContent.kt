@@ -91,7 +91,7 @@ fun FavoriteScreenContent(navController: NavController) {
                 scrollBehavior = null,
             )
 
-                )
+
 
             Spacer(modifier = Modifier.height(8.dp))
 
