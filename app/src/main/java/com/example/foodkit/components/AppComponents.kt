@@ -71,22 +71,14 @@ import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
-import com.airbnb.lottie.compose.LottieCompositionSpec.*
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.foodkit.R
-import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
-import org.koin.androidx.compose.koinViewModel
-import java.io.ByteArrayOutputStream
-import java.io.File
-import java.io.FileOutputStream
-import java.io.IOException
-import java.io.InputStream
-import java.io.OutputStream
+
 
 @Composable
 fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
@@ -526,7 +518,7 @@ val poppins = FontFamily(
 
 @Composable
 fun LottieAnimationLoading(loading: Boolean = true) {
-    val composition by rememberLottieComposition(RawRes(R.raw.animation_loading))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_loading))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever,
@@ -550,7 +542,7 @@ fun LottieAnimationLoading(loading: Boolean = true) {
 
 @Composable
 fun LottieAnimationEmpty(loading: Boolean = true) {
-    val composition by rememberLottieComposition(RawRes(R.raw.animation_empty_cart))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_empty_cart))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever,

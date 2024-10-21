@@ -127,7 +127,8 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                 fontFamily = poppins,
                 fontWeight = FontWeight.SemiBold,
                 textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier
-                    .fillMaxWidth().padding(top = 30.dp)) },
+                    .fillMaxWidth()
+                    .padding(top = 30.dp)) },
                 backgroundColor = androidx.compose.ui.graphics.Color.White,
                 modifier = Modifier.height(70.dp),
 
@@ -394,8 +395,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.fillMaxWidth(),
                                     shape = RoundedCornerShape(12.dp),
                                 )
-                                val  selectedItem = viewModel.selectedCategory?:""
-                                var selectedCategory by remember { mutableStateOf(selectedItem) }
+                                var selectedCategory by remember { mutableStateOf("") }
                                 if (selectedCategory==""){
                                     selectedCategory = categories[0].name
                                 }
@@ -430,6 +430,8 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                             text = { Text(text = category.name) },
                                             onClick = {
                                                 viewModel.selectedCategory = category.name
+                                                viewModel.categoryName = category.name
+                                                selectedCategory =category.name
                                                 expanded = false
                                             }
                                         )

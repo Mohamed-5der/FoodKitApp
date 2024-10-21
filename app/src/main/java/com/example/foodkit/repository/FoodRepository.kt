@@ -237,21 +237,25 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
         foodDocRef.delete()
             .addOnSuccessListener {
                 val imageRef = storage.getReferenceFromUrl(imageUrl)
-                imageRef.delete()
-                    .addOnSuccessListener {
-                        val categoryFoodRef = db.collection("categories").document(categoryId)
-                            .collection("foods").document(foodId)
-                        categoryFoodRef.delete()
-                            .addOnSuccessListener {
-                                onSuccess()
-                            }
-                            .addOnFailureListener { exception ->
-                                onFailure(exception)
-                            }
-                    }
-                    .addOnFailureListener { exception ->
-                        onFailure(exception)
-                    }
+                if (imageRef != null){
+                    imageRef.delete()
+                        .addOnSuccessListener {
+                            val categoryFoodRef = db.collection("categories").document(categoryId)
+                                .collection("foods").document(foodId)
+                            categoryFoodRef.delete()
+                                .addOnSuccessListener {
+                                    onSuccess()
+                                }
+                                .addOnFailureListener { exception ->
+                                    onFailure(exception)
+                                }
+                        }
+                        .addOnFailureListener { exception ->
+                            onFailure(exception)
+                        }
+                }else{
+                    onFailure(Exception("Network Error Connection "))
+                }
             }
             .addOnFailureListener { exception ->
                 onFailure(exception)
