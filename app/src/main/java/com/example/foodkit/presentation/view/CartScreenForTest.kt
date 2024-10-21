@@ -31,7 +31,8 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember import androidx.compose.runtime.setValue
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -47,10 +48,10 @@ import org.koin.androidx.compose.koinViewModel
 fun CartScreenForTest(
     navController: NavController,
 ) {
-    val  viewModel: CartForTestViewModel = koinViewModel()
+    val viewModel: CartForTestViewModel = koinViewModel()
     val cartItems = viewModel.cartItems.collectAsState(initial = emptyList())
     val totalPrice by viewModel.totalPriceState.collectAsState(initial = 0.0)
-    val userId =FirebaseAuth.getInstance().currentUser?.uid ?: ""
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     val context = LocalContext.current
 
     // تحميل العناصر عند تشغيل الشاشة
@@ -151,15 +152,19 @@ fun CartItemRow(item: CartItem, onQuantityChange: (Int) -> Unit, onRemove: () ->
             Column {
                 Text(item.foodName, style = MaterialTheme.typography.bodyLarge)
                 Spacer(modifier = Modifier.height(4.dp))
-                Text("$${item.foodPrice}", style = MaterialTheme.typography.bodyMedium, color = Color.Gray)
+                Text(
+                    "$${item.foodPrice}",
+                    style = MaterialTheme.typography.bodyMedium,
+                    color = Color.Gray
+                )
             }
 
             Row(verticalAlignment = Alignment.CenterVertically) {
-                IconButton(onClick = { onQuantityChange(-1) }  ) {
+                IconButton(onClick = { onQuantityChange(-1) }) {
                     Icon(Icons.Default.ArrowDropDown, contentDescription = "Decrease Quantity")
                 }
                 Text(item.quantity.toString(), Modifier.padding(horizontal = 8.dp))
-                IconButton(onClick = { onQuantityChange(1) }  ) {
+                IconButton(onClick = { onQuantityChange(1) }) {
                     Icon(Icons.Default.Add, contentDescription = "Increase Quantity")
                 }
                 IconButton(onClick = onRemove) {

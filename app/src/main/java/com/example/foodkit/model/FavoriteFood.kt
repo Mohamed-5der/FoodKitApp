@@ -15,5 +15,5 @@ data class FavoriteFood(
     val rating: Double, // Rating of the food item
     val isFavorite: Boolean = false, // Default value set to false
     val numberRating: Double = 0.0, // Default value for ratings
-    val idFood: String // Unique identifier for the food item
+    val idFood: String, // Unique identifier for the food item
 )

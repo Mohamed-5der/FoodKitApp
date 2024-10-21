@@ -19,7 +19,7 @@ class LoginViewModel(private val firebaseAuth: FirebaseAuth) : ViewModel() {
             try {
                 val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
 
-                if (result.user?.email == "admin@gmail.com"|| result.user?.email == "khedrkhedr370@gmail.com") {
+                if (result.user?.email == "admin@gmail.com" || result.user?.email == "khedrkhedr370@gmail.com") {
                     // إذا كان المستخدم هو admin
                     _loginState.value = LoginState.AdminSuccess(result.user)
                 } else {

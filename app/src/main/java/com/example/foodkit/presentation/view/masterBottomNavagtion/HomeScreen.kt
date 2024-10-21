@@ -118,7 +118,8 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
     }
 
     Column (modifier = Modifier.background(Color.White)){
-        TopAppBar(title = { Text("Foodie Master",
+        TopAppBar(title = { Text(stringResource(id = R.string.foodie_master),
+            color = Color.Black,
             fontSize =16.sp,
             fontFamily = poppins,
             fontWeight = FontWeight.SemiBold,
@@ -148,6 +149,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                     text = stringResource(id = R.string.all_category),
                     modifier = Modifier,
                     fontWeight = FontWeight.Medium,
+                    color = Color.Black,
                     fontSize = 16.sp,
                     fontFamily = poppins
                 )
@@ -187,6 +189,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                 Text(
                     text = stringResource(id = R.string.all_food),
                     modifier = Modifier,
+                    color = Color.Black,
                     fontWeight = FontWeight.Medium,
                     fontSize = 16.sp,
                     fontFamily = poppins
@@ -227,6 +230,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                     text = stringResource(id = R.string.orders),
                     modifier = Modifier,
                     fontWeight = FontWeight.Medium,
+                    color = Color.Black,
                     fontSize = 16.sp,
                     fontFamily = poppins
                 )
@@ -265,7 +269,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(Color.Gray))
                             {
-                                Text("Cancel")
+                                Text(stringResource(id = R.string.cancel))
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(onClick = { viewModel.addFoodToCategory(context){
@@ -274,7 +278,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
                             {
-                                Text("Add ")
+                                Text(stringResource(id = R.string.add))
                             }
                         }
                     },
@@ -298,7 +302,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value =  viewModel.foodName,
                                     onValueChange = {viewModel.foodName = it },
-                                    label = { Text("Food Name", color = Color.Black,
+                                    label = { Text(stringResource(id = R.string.food_name), color = Color.Black,
                                         fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp) },
                                     singleLine = true,
@@ -310,7 +314,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value = viewModel.foodPrice,
                                     onValueChange = { viewModel.foodPrice = it },
-                                    label = { Text("Price", color = Color.Black
+                                    label = { Text(stringResource(id = R.string.price), color = Color.Black
                                            , fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp)  },
                                     singleLine = true,
@@ -328,7 +332,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value = viewModel.availableQuantityNumber,
                                     onValueChange = { viewModel.availableQuantityNumber = it },
-                                    label = { Text("Available", color = Color.Black,
+                                    label = { Text(stringResource(id = R.string.available), color = Color.Black,
                                         fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp) },
                                     singleLine = true,
@@ -340,7 +344,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value = viewModel.calories,
                                     onValueChange = { viewModel.calories = it },
-                                    label = { Text("Calories", color = Color.Black
+                                    label = { Text(stringResource(id = R.string.calories), color = Color.Black
                                         , fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp)  },
                                     singleLine = true,
@@ -358,7 +362,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value = viewModel.protein,
                                     onValueChange = { viewModel.protein = it },
-                                    label = { Text("Protein", color = Color.Black,
+                                    label = { Text(stringResource(id = R.string.protein), color = Color.Black,
                                         fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp) },
                                     singleLine = true,
@@ -370,7 +374,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 OutlinedTextField(
                                     value = viewModel.fats,
                                     onValueChange = { viewModel.fats = it },
-                                    label = { Text("Fats", color = Color.Black
+                                    label = { Text(stringResource(id = R.string.fats), color = Color.Black
                                         , fontFamily = poppins, fontWeight = FontWeight.Medium
                                         , fontSize = 12.sp)  },
                                     singleLine = true,
@@ -384,7 +388,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                             OutlinedTextField(
                                 value = viewModel.foodDescription,
                                 onValueChange = { viewModel.foodDescription = it },
-                                label = { Text("Food Description", color = Color.Black,
+                                label = { Text(stringResource(id = R.string.food_description), color = Color.Black,
                                     fontFamily = poppins, fontWeight = FontWeight.Medium
                                     , fontSize = 12.sp) },
                                 modifier = Modifier.fillMaxWidth(),
@@ -400,7 +404,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                             OutlinedTextField(
                                 value = selectedCategory,
                                 onValueChange = { },
-                                label = { Text("Select Category", color = Color.Black,
+                                label = { Text(stringResource(id = R.string.select_category), color = Color.Black,
                                     fontFamily = poppins, fontWeight = FontWeight.Medium
                                     , fontSize = 12.sp) },
                                 trailingIcon = {
@@ -448,18 +452,19 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(Color.Gray))
                             {
-                                Text("Cancel")
+                                Text(stringResource(id = R.string.cancel))
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(onClick = { categoryViewModel.addCategory(context) }
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
                             {
-                                Text("Add ")
+                                Text(stringResource(id = R.string.add))
                             }
                         }
                     },
-                    title = { Text("Add Category",fontFamily = poppins,
+                    title = { Text(
+                        stringResource(id = R.string.add_category),fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold, color = colorResource(id = R.color._black),
                         modifier = Modifier.fillMaxWidth(),
                         textAlign = TextAlign.Center)  },
@@ -477,7 +482,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                             OutlinedTextField(
                                 value = categoryViewModel.categoryName,
                                 onValueChange = { categoryViewModel.categoryName = it },
-                                label = { Text("Category Name",color = Color.Black,
+                                label = { Text(stringResource(id = R.string.category_name),color = Color.Black,
                                     fontFamily = poppins, fontWeight = FontWeight.Medium
                                     , fontSize = 12.sp) },
                                 modifier = Modifier.fillMaxWidth(),
@@ -670,7 +675,7 @@ fun OrderCard(order: Order, context: Context) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "ID Order : ",
+                        text = stringResource(id = R.string.id_order),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -688,7 +693,7 @@ fun OrderCard(order: Order, context: Context) {
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     Text(
-                        text = "Total Price : $",
+                        text = stringResource(id = R.string.total_price),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -706,7 +711,7 @@ fun OrderCard(order: Order, context: Context) {
                 Column(
                 ) {
                     Text(
-                        text = "Items :",
+                        text = stringResource(id = R.string.items),
                         fontWeight = FontWeight.SemiBold,
                         color = colorResource(id = R.color._black),
                         fontSize = 14.sp,
@@ -740,7 +745,9 @@ fun OrderCard(order: Order, context: Context) {
                         }
                     }
                 }
-                Row(modifier = Modifier.align(Alignment.CenterHorizontally).fillMaxWidth(),
+                Row(modifier = Modifier
+                    .align(Alignment.CenterHorizontally)
+                    .fillMaxWidth(),
                     horizontalArrangement = Arrangement.SpaceBetween) {
                     Button(onClick = {
                         Toast.makeText(context,"Order Cancelled",Toast.LENGTH_SHORT).show()
@@ -749,7 +756,7 @@ fun OrderCard(order: Order, context: Context) {
                         colors = ButtonDefaults.buttonColors(Color.Gray),
                         shape = RoundedCornerShape(12.dp))
                     {
-                        Text("Cancel Order",
+                        Text(stringResource(id = R.string.cancel_order),
                             fontWeight = FontWeight.Normal,
                             color = colorResource(id = R.color.white),
                             fontSize = 12.sp,
@@ -763,7 +770,7 @@ fun OrderCard(order: Order, context: Context) {
                         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                         ,shape = RoundedCornerShape(12.dp))
                     {
-                        Text("Confirm Order ")
+                        Text(stringResource(id = R.string.confirm_order))
                     }
                 }
 

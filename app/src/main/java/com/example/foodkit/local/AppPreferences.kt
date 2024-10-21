@@ -4,11 +4,11 @@ import android.content.Context
 import android.content.SharedPreferences
 
 
-class AppPreferences (val context: Context){
-    private  val PREF_NAME = "app_preferences"
+class AppPreferences(val context: Context) {
+    private val PREF_NAME = "app_preferences"
     private lateinit var sharedPreferences: SharedPreferences
 
-    fun init (){
+    fun init() {
         sharedPreferences = context.getSharedPreferences(PREF_NAME, Context.MODE_PRIVATE)
     }
 

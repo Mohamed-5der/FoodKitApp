@@ -1,13 +1,5 @@
-package com.example.foodkit.presentation.view.navigation
+package com.example.foodkit.presentation.view.userBottomNavigation
 
-import android.content.Context
-import android.content.pm.PackageManager
-import android.location.Geocoder
-import android.os.Build
-import androidx.activity.compose.rememberLauncherForActivityResult
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.annotation.RequiresApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -31,10 +23,8 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
 import androidx.compose.material.OutlinedTextField
 import androidx.compose.material.TextFieldDefaults
-import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -54,37 +44,30 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.intl.Locale
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.core.content.ContextCompat
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
-import android.Manifest
 import android.widget.Toast
 import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.lazy.grid.items
 import com.example.foodkit.R
+import com.example.foodkit.components.BannerCard
 import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
-import com.example.foodkit.navigation.Routes
-import com.example.foodkit.presentation.view.ProductDetailsScreen
+import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
+import com.google.accompanist.pager.HorizontalPager
+import com.google.accompanist.pager.rememberPagerState
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 
@@ -97,7 +80,7 @@ fun HomeScreenContent(
     categoryViewModel: CategoryViewModel = koinViewModel(),
 ) {
     val userViewModel: UserViewModel = koinViewModel()
-    val email = FirebaseAuth.getInstance().currentUser?.email?:""
+    val email = FirebaseAuth.getInstance().currentUser?.email ?: ""
     userViewModel.getUserByEmail(email)
     val user = userViewModel.user.collectAsState().value
     var isSearchMode by remember { mutableStateOf(false) }
@@ -114,7 +97,7 @@ fun HomeScreenContent(
                 .background(Color.White)
 
         ) {
-            HomeTopAppBar(user?.name?:"User Name")
+            HomeTopAppBar(user?.name ?: "User Name")
 
             SearchBar(onSearch = { query ->
                 isSearchMode = query.isNotEmpty()
@@ -124,7 +107,12 @@ fun HomeScreenContent(
                     emptyList()
                 }
                 filteredCategories = if (query.isNotEmpty()) {
-                    categoryViewModel.categories.value.filter { it.name.contains(query, ignoreCase = true) }
+                    categoryViewModel.categories.value.filter {
+                        it.name.contains(
+                            query,
+                            ignoreCase = true
+                        )
+                    }
                 } else {
                     emptyList()
                 }
@@ -137,7 +125,7 @@ fun HomeScreenContent(
             ) {
                 // Only show the banner and DotsIndicator if not in search mode
                 if (!isSearchMode) {
-                    BannerSection()
+                    BannerSection(navController)
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -162,11 +150,7 @@ fun HomeScreenContent(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeTopAppBar(name :String) {
-    val context = LocalContext.current
-    lateinit var fusedLocationClient: FusedLocationProviderClient
-
-
+fun HomeTopAppBar(name: String) {
 
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
@@ -179,7 +163,8 @@ fun HomeTopAppBar(name :String) {
 
             Column {
                 Text(
-                    text = "Hi $name",
+                    text = stringResource(id = R.string.hi) + " " + name,
+//                  text = "Hi $name",
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
@@ -196,11 +181,7 @@ fun HomeTopAppBar(name :String) {
                     Icon(
                         modifier = Modifier
                             .size(20.dp)
-                            .clickable {
-//                                fusedLocationClient = LocationServices.getFusedLocationProviderClient(context)
-//                                LocationApp(fusedLocationClient)
-
-                            },
+                            .clickable {},
                         painter = painterResource(id = R.drawable.location_icon),
                         contentDescription = "Location Icon",
                         tint = Color.Black
@@ -227,20 +208,6 @@ fun HomeTopAppBar(name :String) {
                 )
             }
         },
-
-
-        /*
-        navigationIcon = {
-            IconButton(onClick = { /* Handle drawer click */ }) {
-                Icon(
-//                    tint: Color = LocalContentColor.current,
-                    painter = painterResource(id = R.drawable.dropdown_icon),
-                    contentDescription = "Menu Icon",
-                    tint = Color.Black
-                )
-            }
-        }
-        */
     )
 }
 
@@ -267,7 +234,11 @@ fun SearchBar(onSearch: (String) -> Unit) {
                 search = it
                 onSearch(search)
             },
-            placeholder = { Text("Search", color = Color.Black) },
+            placeholder = {
+                Text(
+                    stringResource(id = R.string.search), color = Color.Black, fontFamily = poppins,
+                )
+            },
             leadingIcon = {
                 Icon(
                     painter = painterResource(id = R.drawable.search_un),
@@ -294,56 +265,93 @@ fun SearchBar(onSearch: (String) -> Unit) {
 
 }
 
+/*
+Column(
+    modifier = Modifier
+        .padding(12.dp),
+    horizontalAlignment = Alignment.CenterHorizontally
+) {
+    Text(
+        text = stringResource(id = R.string.top_foods),
+        fontSize = 18.sp,
+        fontWeight = FontWeight.Medium,
+        fontFamily = poppins,
+        modifier = Modifier
+            .align(Alignment.Start),
 
-@Composable
-fun BannerSection() {
-    val pagerState = com.google.accompanist.pager.rememberPagerState()
-    val banners = listOf(
-        R.drawable.banner_photo,
-        R.drawable.onboarding_photo2,
-        R.drawable.onboarding_photo3,
-        R.drawable.onboarding_photo4,
 
         )
 
+    if (topFiveFoods.isNotEmpty()) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth(),
+        ) {
+            items(topFiveFoods) { food ->
+                BannerCard(food, onClick = {
+                    navController.navigate("food_details/${food.id}")
+                })
+            }
+        }
+    }
+}
+
+ */
+
+@Composable
+fun BannerSection(
+    navController: NavController,
+    viewModel: FoodListScreenViewModel = koinViewModel(),
+) {
+    val topFiveFoods by viewModel.topFiveFoods.collectAsState(initial = emptyList())
+
+    val pagerState = rememberPagerState()
+
+    LaunchedEffect(Unit) {
+        viewModel.fetchTopFiveFoods()
+    }
+
+
     Column(
         modifier = Modifier
-            .fillMaxWidth()
             .padding(12.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        if (banners.isNotEmpty()) {
-            com.google.accompanist.pager.HorizontalPager(
-                count = banners.size,
+        Text(
+            text = stringResource(id = R.string.top_foods),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            fontFamily = poppins,
+            modifier = Modifier
+                .align(Alignment.Start),
+            )
+
+
+        if (topFiveFoods.isNotEmpty()) {
+            HorizontalPager(
+                count = topFiveFoods.size,
                 state = pagerState,
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(150.dp)
+                    .height(200.dp)
             ) { page ->
-                Card(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .clip(RoundedCornerShape(12.dp))
-                        .background(Color.White),
-
-                    ) {
-                    Image(
-                        painter = painterResource(id = banners[page]),
-                        contentDescription = "Banner Image",
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .clip(RoundedCornerShape(12.dp))
-                            .fillMaxSize()
-                    )
-                }
+                val food = topFiveFoods[page]
+                BannerCard(
+                    food = food,
+                    onClick = {
+                        navController.navigate("food_details/${food.id}")
+                    }
+                )
             }
+
             Spacer(modifier = Modifier.height(8.dp))
+
             DotsIndicator(
-                totalDots = banners.size,
+                totalDots = topFiveFoods.size,
                 selectedIndex = pagerState.currentPage
             )
         } else {
-            Text("No banners available")
+            Text("Loading top foods...")
         }
     }
 }
@@ -380,7 +388,6 @@ fun CategoriesSection(
     categories: List<Category> = emptyList(),
     viewModel: CategoryViewModel = koinViewModel(),
 ) {
-    val navController = rememberNavController()
 
     // Load categories only if categories list is empty
     if (categories.isEmpty()) {
@@ -402,17 +409,20 @@ fun CategoriesSection(
         ) {
             Text(
                 text = stringResource(id = R.string.findByCategory),
-                modifier = Modifier,
-                fontWeight = FontWeight.Bold
+                fontSize = 18.sp,
+                fontWeight = FontWeight.Medium,
+                fontFamily = poppins,
 
-            )
+                )
 
             Text(
                 text = stringResource(id = R.string.viewAll),
                 color = colorResource(id = R.color.appColor),
                 modifier = Modifier,
-                fontWeight = FontWeight.Medium
-            )
+                fontWeight = FontWeight.Medium,
+                fontFamily = poppins,
+
+                )
 
         }
         LazyRow(
@@ -433,10 +443,8 @@ fun CategoriesSection(
 fun ProductSection(
     navController: NavController,
     foods: List<Food> = emptyList(),
-//    categoryViewModel: CategoryViewModel = koinViewModel()
     foodViewModel: FoodListScreenViewModel = koinViewModel(),
 ) {
-//    val foodsInCategory by categoryViewModel.foodsInCategory.collectAsState()
 
 
     val foodList =
@@ -456,11 +464,13 @@ fun ProductSection(
     Column(modifier = Modifier.height(1000.dp)) {
 
         Text(
-            text = stringResource(id = R.string.product),
+            text = stringResource(id = R.string.foods),
+            fontSize = 18.sp,
+            fontWeight = FontWeight.Medium,
+            fontFamily = poppins,
             modifier = Modifier
                 .padding(8.dp)
                 .align(Alignment.Start),
-            fontWeight = FontWeight.Bold
         )
 
         Box(modifier = Modifier.fillMaxHeight()) {
@@ -470,13 +480,14 @@ fun ProductSection(
                 modifier = Modifier.fillMaxSize()
             ) {
                 items(foodList) { food ->
-                    val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(food.id ?: "")) }
-                    FoodCard(food, isFavorite=isFavorite,onClick = {
+                    val isFavorite =
+                        remember { mutableStateOf(favoriteIds.value.contains(food.id ?: "")) }
+                    FoodCard(food, isFavorite = isFavorite, onClick = {
                         navController.navigate("food_details/${food.id}")
                     }, onClickFavorite = {
                         if (isFavorite.value) {
                             isFavorite.value = !isFavorite.value
-                            favoriteViewModel.deleteFavoriteFood(food.id){
+                            favoriteViewModel.deleteFavoriteFood(food.id) {
                                 Toast
                                     .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
                                     .show()
@@ -504,100 +515,6 @@ fun ProductSection(
         }
     }
 }
-
-
-/*
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-@Composable
-fun LocationApp(fusedLocationClient: FusedLocationProviderClient) {
-    var permissionGranted by remember { mutableStateOf(false) }
-    var locationText by remember { mutableStateOf("Location, Cairo, Egypt") }
-    val context = LocalContext.current
-    val geocoder = Geocoder(context)
-
-    // Request location permission
-    val requestPermissionLauncher = rememberLauncherForActivityResult(
-        ActivityResultContracts.RequestPermission()
-    ) { isGranted: Boolean ->
-        permissionGranted = isGranted
-    }
-
-    // Check if permission is already granted
-    if (ContextCompat.checkSelfPermission(
-            context,
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-    ) {
-        permissionGranted = true
-    }
-
-    // UI for displaying location information
-    Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        if (!permissionGranted) {
-            Button(
-                onClick = {
-                    requestPermissionLauncher.launch(Manifest.permission.ACCESS_FINE_LOCATION)
-                }
-            ) {
-                Text(text = "Request Location Permission")
-            }
-        } else {
-            // Fetch the location when button is clicked
-            Button(onClick = {
-                fusedLocationClient.lastLocation.addOnSuccessListener { loc ->
-                    loc?.let {
-                        val latitude = it.latitude
-                        val longitude = it.longitude
-
-                        // Fetch and update location in English and Arabic
-                        locationText = getAddressFromLocation(
-                            geocoder,
-                            latitude,
-                            longitude,
-                            context
-                        )
-                    }
-                }
-            }) {
-                Text(text = "Get Location")
-            }
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Text(text = locationText, fontSize = 20.sp)
-        }
-    }
-}
-
-
-
-// Function to get location in both English and Arabic
-@RequiresApi(Build.VERSION_CODES.TIRAMISU)
-fun getAddressFromLocation(
-    geocoder: Geocoder,
-    latitude: Double,
-    longitude: Double,
-    context: Context
-): String {
-    val localeEn = Locale("en")
-    val localeAr = Locale("ar")
-
-    // English Address
-    val addressEn = geocoder.getFromLocation(latitude, longitude, 1, localeEn)?.firstOrNull()
-    val addressInEnglish = addressEn?.getAddressLine(0) ?: "Unknown location"
-
-    // Arabic Address
-    val addressAr = geocoder.getFromLocation(latitude, longitude, 1, localeAr)?.firstOrNull()
-    val addressInArabic = addressAr?.getAddressLine(0) ?: "موقع غير معروف"
-
-    return "English: $addressInEnglish\nArabic: $addressInArabic"
-}
-
- */
 
 
 /*

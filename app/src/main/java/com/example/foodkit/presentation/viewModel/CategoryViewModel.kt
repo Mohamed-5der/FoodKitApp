@@ -22,16 +22,19 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
     var selectedImageUri by mutableStateOf<Uri?>(null)
     var selectedCategory by mutableStateOf<Category?>(null)
     private val _categories = MutableStateFlow<List<Category>>(emptyList())
-    val categories : StateFlow<List<Category>> = _categories.asStateFlow()
+    val categories: StateFlow<List<Category>> = _categories.asStateFlow()
 
     private val _foodsInCategory = MutableStateFlow<List<Food>>(emptyList())
-    val foodsInCategory : StateFlow<List<Food>> = _foodsInCategory.asStateFlow()
-
+    val foodsInCategory: StateFlow<List<Food>> = _foodsInCategory.asStateFlow()
 
 
     fun addCategory(context: Context) {
         if (categoryName.text.isBlank() || selectedImageUri == null) {
-            Toast.makeText(context, "Please fill in all fields and select an image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(
+                context,
+                "Please fill in all fields and select an image",
+                Toast.LENGTH_SHORT
+            ).show()
             return
 
         }
@@ -47,7 +50,11 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
                 selectedImageUri = null
                 Toast.makeText(context, "Category added successfully", Toast.LENGTH_SHORT).show()
             }, { exception ->
-                Toast.makeText(context, "Failed to add category: ${exception.message}", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    "Failed to add category: ${exception.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
             })
         }
     }
@@ -77,6 +84,7 @@ class CategoryViewModel(private val repository: CategoryRepository) : ViewModel(
             }
         )
     }
+
     // New function to select a category
     fun selectCategory(category: Category) {
         selectedCategory = category

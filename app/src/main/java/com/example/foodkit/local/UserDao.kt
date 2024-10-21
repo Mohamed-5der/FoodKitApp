@@ -19,7 +19,13 @@ interface UserDao {
     suspend fun getUserByEmail(email: String): User?
 
     @Query("UPDATE user_table SET name = :name, email = :email ,imageUrl = :imageUrl, phoneNumber = :phoneNumber WHERE id = :id")
-    suspend fun updateUserById(id: Int, name: String, email: String, imageUrl: String, phoneNumber: String)
+    suspend fun updateUserById(
+        id: Int,
+        name: String,
+        email: String,
+        imageUrl: String,
+        phoneNumber: String,
+    )
 
     @Query("DELETE FROM user_table WHERE id = :id")
     suspend fun deleteUserById(id: Int)

@@ -17,7 +17,7 @@ import org.koin.androidx.compose.koinViewModel
 @Composable
 fun CategoryListScreen(
     navController: NavController,
-    viewModel: CategoryViewModel = koinViewModel()
+    viewModel: CategoryViewModel = koinViewModel(),
 ) {
     val categories = viewModel.categories.collectAsState(initial = emptyList())
     // تحميل التصنيفات عند بدء تشغيل الشاشة
@@ -33,7 +33,9 @@ fun CategoryListScreen(
             .padding(16.dp)
     ) {
         items(categories.value) { category ->
-            CategoryCard(category , onClick = {navController.navigate("categoryDetail/${category.name}")} )
+            CategoryCard(
+                category,
+                onClick = { navController.navigate("categoryDetail/${category.name}") })
         }
     }
 }

@@ -56,7 +56,7 @@ fun MasterScreen(navController: NavController) {
     Surface(
         color = Color.White,
     ) {
-        Scaffold (
+        Scaffold(
             bottomBar = {
                 BottomNavigation(
                     modifier = Modifier
@@ -169,9 +169,9 @@ fun MasterScreen(navController: NavController) {
                 }
 
             }
-        ){
+        ) {
             when (selectedIndex.value) {
-                0 -> HomeScreen(navController){selectedIndex.value=1}
+                0 -> HomeScreen(navController) { selectedIndex.value = 1 }
                 1 -> OrdersScreen(navController)
                 2 -> FoodsScreen(navController)
                 3 -> StaffScreen(navController)

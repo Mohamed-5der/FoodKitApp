@@ -18,16 +18,16 @@ class FavoriteFoodViewModel(private val favoriteFoodDao: FavoriteFoodDao) : View
 
     private val _favoriteIds = MutableStateFlow<List<String>>(emptyList())
     val favoriteIds: StateFlow<List<String>> get() = _favoriteIds
-    val userId = FirebaseAuth.getInstance().currentUser?.uid ?:""
+    val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
 
     fun getFavoriteFoods() {
         viewModelScope.launch {
-            try{
+            try {
                 _favoriteFoods.value = favoriteFoodDao.getFavoriteFoodsForUser(userId)
                 val ids = _favoriteFoods.value.map { it.idFood.orEmpty() }
                 _favoriteIds.value = ids
 
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 _favoriteIds.value = emptyList()
                 _favoriteFoods.value = emptyList()
                 Log.e("FavoriteFoodViewModel", "Error fetching favorite foods", e)
@@ -44,7 +44,7 @@ class FavoriteFoodViewModel(private val favoriteFoodDao: FavoriteFoodDao) : View
         rating: Float,
         idFood: String,
         numberRating: Double,
-        onAdded: () -> Unit
+        onAdded: () -> Unit,
     ) {
         viewModelScope.launch {
             val newFood = FavoriteFood(
@@ -64,21 +64,21 @@ class FavoriteFoodViewModel(private val favoriteFoodDao: FavoriteFoodDao) : View
                 _favoriteFoods.value = favoriteFoodDao.getFavoriteFoodsForUser(userId)
                 getFavoriteFoods()
                 onAdded()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("FavoriteFoodViewModel", "Error adding favorite food", e)
             }
 
         }
     }
 
-    fun deleteFavoriteFood(idFood: String,onDeleted: () -> Unit) {
+    fun deleteFavoriteFood(idFood: String, onDeleted: () -> Unit) {
         viewModelScope.launch {
             try {
                 favoriteFoodDao.delete(idFood)
                 _favoriteFoods.value = favoriteFoodDao.getFavoriteFoodsForUser(userId)
                 getFavoriteFoods()
                 onDeleted()
-            }catch (e: Exception){
+            } catch (e: Exception) {
                 Log.e("FavoriteFoodViewModel", "Error deleting favorite food", e)
             }
 

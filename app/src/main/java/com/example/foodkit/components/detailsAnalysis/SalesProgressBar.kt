@@ -21,9 +21,11 @@ import androidx.compose.ui.unit.dp
 fun SalesProgressBar(sales: Int, available: Int) {
     val percentage = if (available != 0) (sales.toFloat() / available.toFloat()) * 100 else 0f
 
-    Column(modifier = Modifier
-        .fillMaxWidth()
-        .padding(16.dp)) {
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
         LinearProgressIndicator(
             progress = percentage / 100f,
             modifier = Modifier

@@ -52,6 +52,42 @@
     <string name="all_order">All order</string>
     <string name="all_category">Categories</string>
     <string name="add_category">Add Category</string>
+    <string name="top_foods">Top Foods</string>
+    <string name="foods_master">Foods Master</string>
+    <string name="foodie_master">Foodie Master</string>
+    <string name="orders_master">Orders Master</string>
+    <string name="staff_master">Staff Master</string>
+    <string name="view_user">View User</string>
+    <string name="user_name">User Name</string>
+    <string name="hi">Hi</string>
+    <string name="submit_your_rating">Submit Your Rating : </string>
+    <string name="your_rating">Your Rating : </string>
+    <string name="select_image">Select Image</string>
+    <string name="category_name">Category Name</string>
+    <string name="add">Add</string>
+    <string name="cancel">Cancel</string>
+    <string name="food_name">Food Name</string>
+    <string name="price">Price</string>
+    <string name="available">Available</string>
+    <string name="calories">Calories</string>
+    <string name="protein">Protein</string>
+    <string name="fats">Fats</string>
+    <string name="id_order">Order ID : </string>
+    <string name="total_price">Total Price : £</string>
+    <string name="items">Items : </string>
+    <string name="cancel_order">Cancel Order</string>
+    <string name="confirm_order">Confirm Order</string>
+    <string name="connect">Connect</string>
+    <string name="food_description">Food Description</string>
+    <string name="select_category">Select Category</string>
+    <string name="subtotal">Subtotal</string>
+    <string name="delivery_charge">Delivery Charge</string>
+    <string name="total">Total</string>
+    <string name="proceed_to_checkout">Proceed To Checkout</string>
+    <string name="kcal">kcal</string>
+
+
+
 
     <string name="myCart">My Cart</string>
 

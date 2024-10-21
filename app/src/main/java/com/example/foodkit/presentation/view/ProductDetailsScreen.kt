@@ -72,16 +72,16 @@ import kotlin.random.Random
 
 
 @Composable
-fun ProductDetailsScreen( foodId: String,navController: NavController) {
-    val userId=FirebaseAuth.getInstance().currentUser?.uid.toString()
-    val viewModel: FoodDetailViewModel = koinViewModel( parameters = { parametersOf(userId) } )
-    val cartViewModel :CartForTestViewModel =koinViewModel()
+fun ProductDetailsScreen(foodId: String, navController: NavController) {
+    val userId = FirebaseAuth.getInstance().currentUser?.uid.toString()
+    val viewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
+    val cartViewModel: CartForTestViewModel = koinViewModel()
     val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
     favoriteViewModel.getFavoriteFoods()
     val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
 
     val context = LocalContext.current
-    val numberItem= remember { mutableStateOf(1) }
+    val numberItem = remember { mutableStateOf(1) }
 
     LaunchedEffect(Unit) {
         viewModel.loadFood(foodId)
@@ -101,33 +101,36 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                         .background(colorResource(id = R.color.white))
                         .verticalScroll(rememberScrollState()),
                 ) {
-                    Box(modifier = Modifier.height(450.dp)){
+                    Box(modifier = Modifier.height(450.dp)) {
                         AsyncImage(
-                                model = food.imageUrl,
-                                contentDescription = "Food Image",
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .height(400.dp)
-                                    .clip(RoundedCornerShape(0.dp)),
-                                contentScale = ContentScale.Crop
-                            )
+                            model = food.imageUrl,
+                            contentDescription = "Food Image",
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(400.dp)
+                                .clip(RoundedCornerShape(0.dp)),
+                            contentScale = ContentScale.Crop
+                        )
                         Spacer(modifier = Modifier.height(16.dp))
                         Column(
                             modifier = Modifier.align(Alignment.BottomCenter)
                         ) {
-                            Card(modifier = Modifier
-                                .padding(horizontal = 12.dp, vertical = 10.dp)
-                                .height(92.dp),
+                            Card(
+                                modifier = Modifier
+                                    .padding(horizontal = 12.dp, vertical = 10.dp)
+                                    .height(92.dp),
                                 shape = RoundedCornerShape(10.dp),
                                 elevation = CardDefaults.cardElevation(2.dp),
-                            ){
+                            ) {
 
-                                Column(modifier = Modifier
-                                    .background(Color.White)
-                                    .fillMaxSize()
-                                    .padding(horizontal = 24.dp),
+                                Column(
+                                    modifier = Modifier
+                                        .background(Color.White)
+                                        .fillMaxSize()
+                                        .padding(horizontal = 24.dp),
                                     horizontalAlignment = Alignment.CenterHorizontally,
-                                    verticalArrangement = Arrangement.Center) {
+                                    verticalArrangement = Arrangement.Center
+                                ) {
                                     Row(
                                         verticalAlignment = Alignment.CenterVertically,
                                         horizontalArrangement = Arrangement.SpaceBetween,
@@ -144,7 +147,7 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                                         )
 
                                         Text(
-                                            text = food.price.toString()+"£",
+                                            text = food.price.toString() + "£",
                                             fontSize = 20.sp,
                                             fontFamily = poppins,
                                             fontWeight = FontWeight.Bold,
@@ -166,7 +169,8 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                                                 tint = Color(0xFFFFD700)
                                             )
 
-                                            val averageRating = if (food.ratingCount > 0) food.rating / food.ratingCount else 0f
+                                            val averageRating =
+                                                if (food.ratingCount > 0) food.rating / food.ratingCount else 0f
                                             Text(
                                                 text = "$averageRating (${food.ratingCount} reviews)",
                                                 color = Color.Black,
@@ -202,7 +206,7 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     // Description Section
-                    Column (modifier = Modifier.padding(horizontal = 16.dp)){
+                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                         Text(
                             text = stringResource(id = R.string.description),
                             color = Color.Black,
@@ -221,17 +225,21 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
 
                         // عرض التقييم الحالي للمستخدم إذا كان موجودًا
                         if (viewModel.userRating != null) {
-                            Text(text = "Your Rating: ${viewModel.userRating}",
+                            Text(
+                                text = stringResource(id = R.string.your_rating)+" "+viewModel.userRating,
                                 color = colorResource(id = R.color._black),
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = poppins,
-                                fontSize = 16.sp)
+                                fontSize = 16.sp
+                            )
                         } else {
-                            Text(text = "Submit Your Rating:",
+                            Text(
+                                text = stringResource(id = R.string.submit_your_rating),
                                 color = colorResource(id = R.color._black),
                                 fontWeight = FontWeight.Bold,
                                 fontFamily = poppins,
-                                fontSize = 16.sp)
+                                fontSize = 16.sp
+                            )
                         }
                         AnimatedRatingBar(
                             currentRating = ratingState.value,
@@ -239,12 +247,21 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                                 if (viewModel.userRating == null) { // Check if the user has already rated
                                     ratingState.value = rating
                                     viewModel.submitRating(food.id, rating, userId)
-                                    Toast.makeText(context, "Rating Submitted", Toast.LENGTH_SHORT).show()
+                                    Toast.makeText(context, "Rating Submitted", Toast.LENGTH_SHORT)
+                                        .show()
                                 } else {
                                     // بدلًا من ذلك، تحديث التقييم القديم
                                     ratingState.value = rating // تحديث القيمة الجديدة
-                                    viewModel.submitRating(food.id, rating, userId) // إرسال التقييم الجديد
-                                    Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT)
+                                    viewModel.submitRating(
+                                        food.id,
+                                        rating,
+                                        userId
+                                    ) // إرسال التقييم الجديد
+                                    Toast.makeText(
+                                        context,
+                                        "Your rating has been updated",
+                                        Toast.LENGTH_SHORT
+                                    )
                                         .show()
                                 }
                             }
@@ -260,13 +277,13 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                     modifier = Modifier
                         .fillMaxWidth()
                         .padding(horizontal = 20.dp, vertical = 50.dp)
-                ){
-                    Card (
+                ) {
+                    Card(
                         modifier = Modifier
                             .size(34.dp),
                         colors = CardDefaults.cardColors(Color.White),
                         shape = RoundedCornerShape(10.dp)
-                    ){
+                    ) {
                         Icon(
                             painterResource(id = R.drawable.arrow_left),
                             contentDescription = "Back",
@@ -280,12 +297,14 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                         )
                     }
                     Spacer(modifier = Modifier.weight(1f))
-                    Card( modifier = Modifier
-                        .size(34.dp),
+                    Card(
+                        modifier = Modifier
+                            .size(34.dp),
                         colors = CardDefaults.cardColors(Color.White),
                         shape = RoundedCornerShape(10.dp)
                     ) {
-                        val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(foodId ?: ""))}
+                        val isFavorite =
+                            remember { mutableStateOf(favoriteIds.value.contains(foodId ?: "")) }
                         Icon(
                             painterResource(
                                 id = if (isFavorite.value) R.drawable.favorite_se else R.drawable.favorite_un
@@ -297,9 +316,13 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                                 .clickable {
                                     if (isFavorite.value) {
                                         isFavorite.value = !isFavorite.value
-                                        favoriteViewModel.deleteFavoriteFood(food.id){
+                                        favoriteViewModel.deleteFavoriteFood(food.id) {
                                             Toast
-                                                .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                                .makeText(
+                                                    context,
+                                                    "Removed from favorites",
+                                                    Toast.LENGTH_SHORT
+                                                )
                                                 .show()
                                         }
                                     } else {
@@ -314,7 +337,11 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                                             idFood = food.id
                                         ) {
                                             Toast
-                                                .makeText(context, "Added to favorites", Toast.LENGTH_SHORT)
+                                                .makeText(
+                                                    context,
+                                                    "Added to favorites",
+                                                    Toast.LENGTH_SHORT
+                                                )
                                                 .show()
                                         }
                                     }
@@ -325,13 +352,15 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                     }
                 }
                 //add to cart
-                Card(modifier = Modifier
-                    .align(Alignment.BottomCenter)
-                    .height(92.dp)
-                    .fillMaxWidth(),
+                Card(
+                    modifier = Modifier
+                        .align(Alignment.BottomCenter)
+                        .height(92.dp)
+                        .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     elevation = CardDefaults.cardElevation(8.dp),
-                    colors = CardDefaults.cardColors(Color.White),) {
+                    colors = CardDefaults.cardColors(Color.White),
+                ) {
                     Row(
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically,
@@ -365,7 +394,7 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
                             }
 
                             Text(
-                                text =numberItem.value.toString(),
+                                text = numberItem.value.toString(),
                                 color = Color.Black,
                                 fontSize = 16.sp,
                                 fontWeight = FontWeight.Medium,
@@ -397,8 +426,9 @@ fun ProductDetailsScreen( foodId: String,navController: NavController) {
 
                         androidx.compose.material3.Button(
                             onClick = {
-                                cartViewModel.addToCart(food=food,numberItem.value,userId){
-                                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT).show()
+                                cartViewModel.addToCart(food = food, numberItem.value, userId) {
+                                    Toast.makeText(context, "Added to cart", Toast.LENGTH_SHORT)
+                                        .show()
                                 }
                             },
                             modifier = Modifier
@@ -474,6 +504,7 @@ fun AnimatedRatingBar(
         }
     }
 }
+
 @Composable
 fun NutritionInfoRow() {
     val numberKcal = remember { mutableStateOf(Random.nextInt(80, 150)) }
@@ -493,7 +524,7 @@ fun NutritionInfoRow() {
         )
         Spacer(modifier = Modifier.width(20.dp))
         NutritionInfoItem(
-            icon = ImageVector.vectorResource(id =R.drawable.protien),
+            icon = ImageVector.vectorResource(id = R.drawable.protien),
             contentDescription = "Protein",
             value = "${numberProtein.value}g Protein"
         )

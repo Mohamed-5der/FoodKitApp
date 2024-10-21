@@ -1,4 +1,5 @@
 package com.example.foodkit.presentation.view
+
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -9,7 +10,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.DateRange
-import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,7 +19,6 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
@@ -34,7 +33,7 @@ import com.example.foodkit.components.detailsAnalysis.AnimatedBorderCard
 import com.example.foodkit.components.detailsAnalysis.DetailsRow
 import com.example.foodkit.components.detailsAnalysis.LegendItem
 import com.example.foodkit.components.detailsAnalysis.SalesProgressBar
-import com.example.foodkit.presentation.view.navigation.EditScreen
+import com.example.foodkit.presentation.view.userBottomNavigation.EditScreen
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
 import com.example.foodkit.presentation.viewModel.MasterViewModel
@@ -50,7 +49,7 @@ import org.koin.core.parameter.parametersOf
 fun MainDetailsAnalysis(
     navController: NavController,
     foodId: String,
-    userId: String
+    userId: String,
 ) {
     var selectedTab by remember { mutableStateOf(0) }
 
@@ -98,14 +97,14 @@ fun MainDetailsAnalysis(
 }
 
 
-
 @SuppressLint("DefaultLocale")
 @Composable
 fun DetailsAnalysisForMaster(
     foodId: String,
-    userId: String
+    userId: String,
 ) {
-    val foodDetailViewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
+    val foodDetailViewModel: FoodDetailViewModel =
+        koinViewModel(parameters = { parametersOf(userId) })
     val cartViewModel: CartForTestViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val masterViewModel: MasterViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val context = LocalContext.current
@@ -117,7 +116,6 @@ fun DetailsAnalysisForMaster(
     }
 
     foodDetailViewModel.food?.let { food ->
-
 
 
         Column(

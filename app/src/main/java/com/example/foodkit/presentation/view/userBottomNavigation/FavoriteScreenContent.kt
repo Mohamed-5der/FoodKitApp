@@ -1,4 +1,4 @@
-package com.example.foodkit.presentation.view.navigation
+package com.example.foodkit.presentation.view.userBottomNavigation
 
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -16,23 +16,17 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.wrapContentHeight
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
-import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
@@ -57,13 +51,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foodkit.R
-import com.example.foodkit.components.CartFoodCard
-import com.example.foodkit.components.FoodCard
 import com.example.foodkit.components.poppins
 import com.example.foodkit.model.FavoriteFood
-import com.example.foodkit.navigation.Routes
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
-import com.example.foodkit.repository.Food
 import org.koin.androidx.compose.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,9 +74,22 @@ fun FavoriteScreenContent(navController: NavController) {
 
         ) {
             TopAppBar(
-                modifier = Modifier.fillMaxWidth().height(60.dp)
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(60.dp)
                     .background(colorResource(id = R.color.white)),
-                title = { Text(text = stringResource(id = R.string.wish_list), modifier = Modifier.fillMaxWidth().padding(end = 16.dp), textAlign = TextAlign.Center)},
+                title = {
+                    Text(
+                        text = stringResource(id = R.string.wish_list),
+                        fontWeight = FontWeight.SemiBold,
+                        fontSize = 18.sp,
+                        fontFamily = poppins,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(end = 16.dp),
+                        textAlign = TextAlign.Center
+                    )
+                },
                 colors = androidx.compose.material3.TopAppBarDefaults.topAppBarColors(
                     containerColor = colorResource(id = R.color.white),
                     titleContentColor = colorResource(id = R.color._black),
@@ -94,16 +97,18 @@ fun FavoriteScreenContent(navController: NavController) {
                 ),
                 scrollBehavior = null,
 
-            )
+                )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Box(modifier = Modifier.fillMaxHeight()) {
                 LazyVerticalGrid(
                     columns = GridCells.Fixed(2),
-                    modifier = Modifier.fillMaxSize().padding(horizontal = 8.dp),
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(horizontal = 8.dp),
                 ) {
-                    items(favoriteFoods.value?: emptyList()) { food ->
+                    items(favoriteFoods.value ?: emptyList()) { food ->
 
                         FoodCardFav(food = food, onClick = {
                             navController.navigate("food_details/${food.idFood}")
@@ -139,8 +144,10 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box {
-                Card (colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),){
+                Card(
+                    colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                ) {
                     AsyncImage(
                         model = food.imageUrl,
                         contentDescription = "",
@@ -169,7 +176,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                             fontWeight = FontWeight.Medium,
                             fontSize = 12.sp,
                             color = colorResource(id = R.color.white),
-                          fontFamily = poppins,
+                            fontFamily = poppins,
                             textAlign = TextAlign.Center,
                             modifier = Modifier.align(Alignment.Center)
                         )
@@ -219,7 +226,8 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                         )
                     }
                 }
-                val isFavorite = remember { mutableStateOf(favoriteIds.value.contains(food.id ?: "")) }
+                val isFavorite =
+                    remember { mutableStateOf(favoriteIds.value.contains(food.id ?: "")) }
 
                 Icon(
                     painterResource(
@@ -230,12 +238,12 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                         .align(Alignment.TopEnd)
                         .size(24.dp)
                         .clickable {
-                                isFavorite.value = !isFavorite.value
-                                favoriteViewModel.deleteFavoriteFood(food.idFood){
-                                    Toast
-                                        .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
-                                        .show()
-                                }
+                            isFavorite.value = !isFavorite.value
+                            favoriteViewModel.deleteFavoriteFood(food.idFood) {
+                                Toast
+                                    .makeText(context, "Removed from favorites", Toast.LENGTH_SHORT)
+                                    .show()
+                            }
 
                         },
                     tint = colorResource(id = R.color.appColor)
@@ -294,7 +302,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                     Text(
                         text = food.rating.toString(),
                         fontSize = 14.sp,
-                       fontFamily = poppins,
+                        fontFamily = poppins,
                         fontWeight = FontWeight.SemiBold,
                         color = Color.Gray,
                         maxLines = 1,

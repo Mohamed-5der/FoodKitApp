@@ -1,16 +1,10 @@
 package com.example.foodkit.components
 
-import android.content.ContentResolver
 import android.content.Context
-import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
 import android.util.Base64
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -36,7 +30,6 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -46,8 +39,6 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -55,11 +46,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
@@ -69,20 +60,16 @@ import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import coil.compose.rememberImagePainter
 import com.example.foodkit.R
-import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
-import org.koin.androidx.compose.koinViewModel
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.FileOutputStream
-import java.io.IOException
 import java.io.InputStream
 import java.io.OutputStream
 
 @Composable
-fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
+fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
     val launcher =
         rememberLauncherForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
             uri?.let { onImageSelected(it) }
@@ -90,14 +77,16 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
 
     if (uri == null) {
 
-        Button(onClick = { launcher.launch("image/*") },
+        Button(
+            onClick = { launcher.launch("image/*") },
             modifier = Modifier
                 .fillMaxWidth(),
-            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
-            {
-            Text("Select Image")
-           }
-    }else{
+            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+        )
+        {
+            Text(stringResource(id = R.string.select_image))
+        }
+    } else {
         Box(contentAlignment = Alignment.BottomEnd) {
             Image(
                 painter = rememberImagePainter(
@@ -108,7 +97,9 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
                 ),
                 contentDescription = "Profile Image",
                 modifier = Modifier
-                    .height(120.dp).fillMaxWidth().padding(4.dp)
+                    .height(120.dp)
+                    .fillMaxWidth()
+                    .padding(4.dp)
                     .clip(RoundedCornerShape(8.dp)),
                 contentScale = ContentScale.Crop
             )
@@ -137,17 +128,92 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit,uri: Uri ?= null) {
     }
 
 }
+/*
+@Composable
+fun BannerCard(food: Food, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .clickable(onClick = { onClick() }),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp),
+    ) {
+        Column(
+            horizontalAlignment = Alignment.CenterHorizontally,
+        ) {
+            Card(
+                colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+            ) {
+                AsyncImage(
+                    model = food.imageUrl,
+                    contentDescription = "Food img",
+                    modifier = Modifier
+                        .clip(RoundedCornerShape(12.dp)),
+                    contentScale = ContentScale.Crop
+                )
+            }
+        }
+    }
+}
 
+ */
+@Composable
+fun BannerCard(food: Food, onClick: () -> Unit) {
+    Card(
+        modifier = Modifier
+            .padding(4.dp)
+            .clickable(onClick = { onClick() }),
+        colors = CardDefaults.cardColors(Color.White),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+        shape = RoundedCornerShape(12.dp),
+    ) {
+        Box(
+            modifier = Modifier
+                .fillMaxSize()
+        ) {
+            AsyncImage(
+                model = food.imageUrl,
+                contentDescription = "Food image",
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(RoundedCornerShape(12.dp)),
+                contentScale = ContentScale.Crop
+            )
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .align(Alignment.BottomCenter)
+                    .background(Color.Black.copy(alpha = 0.5f))
+                    .padding(8.dp)
+            ) {
+                Text(
+                    text = food.name,
+                    color = Color.White,
+                    fontWeight = FontWeight.Bold,
+                    fontSize = 16.sp,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
+        }
+    }
+}
 
 
 @Composable
-fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFavorite: MutableState<Boolean>) {
+fun FoodCard(
+    food: Food,
+    onClick: () -> Unit,
+    onClickFavorite: () -> Unit,
+    isFavorite: MutableState<Boolean>,
+) {
 
 
     Card(
         modifier = Modifier
             .width(200.dp)
-            .padding(top = 4.dp, start = 4.dp, end = 4.dp, bottom = 4.dp)
+            .padding(4.dp)
             .wrapContentHeight()
             .clickable(onClick = { onClick() }),
         colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
@@ -159,8 +225,10 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Box {
-                Card (colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),){
+                Card(
+                    colors = CardDefaults.cardColors(colorResource(id = R.color.white)),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 1.dp),
+                ) {
                     AsyncImage(
                         model = food.imageUrl,
                         contentDescription = "",
@@ -319,8 +387,7 @@ fun FoodCard(food: Food, onClick: () -> Unit, onClickFavorite : () -> Unit, isFa
             }
         }
     }
-    }
-
+}
 
 
 @Composable
@@ -378,7 +445,12 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
 }
 
 @Composable
-fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: () -> Unit, onClick: () -> Unit){
+fun CartFoodCard(
+    food: CartItem,
+    onIncreaseOrDecrease: (Int) -> Unit,
+    onRemove: () -> Unit,
+    onClick: () -> Unit,
+) {
     var numberCart = remember { mutableStateOf(food.quantity) }
     Card(
         modifier = Modifier
@@ -402,7 +474,7 @@ fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: 
                 shape = RoundedCornerShape(8.dp)
             ) {
                 AsyncImage(
-                    model =food.imageUrl,
+                    model = food.imageUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .size(100.dp)
@@ -458,7 +530,7 @@ fun CartFoodCard(food: CartItem, onIncreaseOrDecrease: (Int) -> Unit, onRemove: 
                 )
             }
             Text(
-                text =numberCart.value.toString(),
+                text = numberCart.value.toString(),
                 color = Color.Black,
                 fontSize = 16.sp,
                 fontWeight = FontWeight.Medium,

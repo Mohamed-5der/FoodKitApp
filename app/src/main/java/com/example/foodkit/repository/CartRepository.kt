@@ -14,24 +14,25 @@ data class CartItem(
     val foodPrice: Double = 0.0,
     var quantity: Int = 1,
     val userId: String = "",
-    val imageUrl: String = ""
+    val imageUrl: String = "",
 )
 
 
 data class Order(
     val id: String = "",
     val items: List<CartItem> = emptyList(),
-    val totalPrice: Double = 0.0
+    val totalPrice: Double = 0.0,
 )
 
-class CartRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :KoinComponent {
+class CartRepository(private val db: FirebaseFirestore, private val storage: FirebaseStorage) :
+    KoinComponent {
 
     fun addToCart(
         food: Food,
         userId: String,
         newQuantity: Int,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ) {
         val cartDocRef = FirebaseFirestore.getInstance()
             .collection("carts")
@@ -89,12 +90,17 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
     }
 
 
-    fun getCartItems(userId: String, onSuccess: (List<CartItem>) -> Unit, onFailure: (Exception) -> Unit) {
+    fun getCartItems(
+        userId: String,
+        onSuccess: (List<CartItem>) -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         db.collection("carts").document(userId).get()
             .addOnSuccessListener { document ->
                 if (document.exists()) {
                     // get the items field as a Map<String, Map<String, Any>>
-                    val items = document.get("items") as? Map<String, Map<String, Any>> ?: emptyMap()
+                    val items =
+                        document.get("items") as? Map<String, Map<String, Any>> ?: emptyMap()
 
                     // تحويل العناصر إلى قائمة من CartItem
                     val cartItems = items.map { (foodId, item) ->
@@ -127,7 +133,7 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
         foodPrice: Double,
         foodImageUrl: String,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ) {
         val cartDocRef = FirebaseFirestore.getInstance()
             .collection("carts")
@@ -164,12 +170,14 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
             } else {
                 // إذا لم تكن الوثيقة موجودة، قم بإنشاء سلة جديدة
                 val newCart = hashMapOf(
-                    "items" to hashMapOf(foodId to hashMapOf(
-                        "quantity" to newQuantity,
-                        "foodName" to foodName,
-                        "foodPrice" to foodPrice,
-                        "imageUrl" to foodImageUrl
-                    ))
+                    "items" to hashMapOf(
+                        foodId to hashMapOf(
+                            "quantity" to newQuantity,
+                            "foodName" to foodName,
+                            "foodPrice" to foodPrice,
+                            "imageUrl" to foodImageUrl
+                        )
+                    )
                 )
                 cartDocRef.set(newCart)
                     .addOnSuccessListener { onSuccess() }
@@ -185,7 +193,12 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
         return cartItems.sumOf { it.foodPrice * it.quantity }
     }
 
-    fun removeFromCart(foodId: String, userId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun removeFromCart(
+        foodId: String,
+        userId: String,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         val cartDocRef = FirebaseFirestore.getInstance()
             .collection("carts")
             .document(userId)
@@ -213,7 +226,13 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
             .addOnFailureListener(onFailure)
     }
 
-    fun updateQuantityInCartScreen(foodId: String, userId: String, increment: Int, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+    fun updateQuantityInCartScreen(
+        foodId: String,
+        userId: String,
+        increment: Int,
+        onSuccess: () -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         val cartDocRef = FirebaseFirestore.getInstance()
             .collection("carts")
             .document(userId)
@@ -226,11 +245,15 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
             .addOnFailureListener { exception ->
                 Log.e("CartRepository", "Failed to update quantity: ${exception.message}")
                 onFailure(exception)
-                }
-        }
+            }
+    }
 
 
-    fun calculateLastWeekRevenue(foodId: String, onSuccess: (Double) -> Unit, onFailure: (Exception) -> Unit) {
+    fun calculateLastWeekRevenue(
+        foodId: String,
+        onSuccess: (Double) -> Unit,
+        onFailure: (Exception) -> Unit,
+    ) {
         // الحصول على توقيت الأسبوع الماضي
         val lastWeekTimestamp = Timestamp.now().seconds - 7 * 24 * 60 * 60
 
@@ -274,12 +297,11 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
     }
 
 
-
     fun submitOrder(
         cartItems: List<CartItem>,
         userId: String,
         onSuccess: () -> Unit,
-        onFailure: (Exception) -> Unit
+        onFailure: (Exception) -> Unit,
     ) {
         val totalPrice = calculateTotalPrice(cartItems)
 
@@ -317,20 +339,29 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
 
                                         val newQuantity = currentQuantity - quantity
 
-                                        Log.d("CartRepository", "Total sales updated for food ID: $foodId")
+                                        Log.d(
+                                            "CartRepository",
+                                            "Total sales updated for food ID: $foodId"
+                                        )
 
                                         db.collection("foods").document(foodId)
-                                            .update("availableQuantity", newQuantity )
+                                            .update("availableQuantity", newQuantity)
 
                                         // Calculate and update total revenue
                                         val newTotalRevenue = (totalSales + quantity) * foodPrice
                                         db.collection("foods").document(foodId)
                                             .update("totalRevenue", newTotalRevenue)
                                             .addOnSuccessListener {
-                                                Log.d("CartRepository", "Total revenue updated for food ID: $foodId")
+                                                Log.d(
+                                                    "CartRepository",
+                                                    "Total revenue updated for food ID: $foodId"
+                                                )
                                             }
                                             .addOnFailureListener { exception ->
-                                                Log.e("CartRepository", "Failed to update total revenue: ${exception.message}")
+                                                Log.e(
+                                                    "CartRepository",
+                                                    "Failed to update total revenue: ${exception.message}"
+                                                )
                                             }
 
                                         // Update last week's revenue
@@ -338,25 +369,40 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                                             db.collection("foods").document(foodId)
                                                 .update("lastWeekRevenue", lastWeekRevenue)
                                                 .addOnSuccessListener {
-                                                    Log.d("CartRepository", "Last week revenue updated for food ID: $foodId")
+                                                    Log.d(
+                                                        "CartRepository",
+                                                        "Last week revenue updated for food ID: $foodId"
+                                                    )
                                                 }
                                                 .addOnFailureListener { exception ->
-                                                    Log.e("CartRepository", "Failed to update last week revenue: ${exception.message}")
+                                                    Log.e(
+                                                        "CartRepository",
+                                                        "Failed to update last week revenue: ${exception.message}"
+                                                    )
                                                 }
                                         }, { exception ->
-                                            Log.e("CartRepository", "Failed to calculate last week revenue: ${exception.message}")
+                                            Log.e(
+                                                "CartRepository",
+                                                "Failed to calculate last week revenue: ${exception.message}"
+                                            )
                                         })
 
                                     }
                                     .addOnFailureListener { exception ->
-                                        Log.e("CartRepository", "Failed to update total sales: ${exception.message}")
+                                        Log.e(
+                                            "CartRepository",
+                                            "Failed to update total sales: ${exception.message}"
+                                        )
                                     }
                             } else {
                                 Log.e("CartRepository", "Food item not found: $foodId")
                             }
                         }
                         .addOnFailureListener { exception ->
-                            Log.e("CartRepository", "Failed to fetch food item: ${exception.message}")
+                            Log.e(
+                                "CartRepository",
+                                "Failed to fetch food item: ${exception.message}"
+                            )
                         }
                 }
 
@@ -366,8 +412,6 @@ class CartRepository(private val db: FirebaseFirestore, private val storage: Fir
                 onFailure(exception)
             }
     }
-
-
 
 
     fun getOrders(onSuccess: (List<Order>) -> Unit, onFailure: (Exception) -> Unit) {

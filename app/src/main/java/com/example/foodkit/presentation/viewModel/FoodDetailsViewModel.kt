@@ -9,7 +9,8 @@ import com.example.foodkit.repository.Food
 import com.example.foodkit.repository.FoodRepository
 
 
-class FoodDetailViewModel(private val repository: FoodRepository, private val userId: String) : ViewModel() {
+class FoodDetailViewModel(private val repository: FoodRepository, private val userId: String) :
+    ViewModel() {
 
     var food by mutableStateOf<Food?>(null)
     var userRating by mutableStateOf<Float?>(null) // لتخزين تقييم المستخدم
@@ -31,7 +32,7 @@ class FoodDetailViewModel(private val repository: FoodRepository, private val us
     }
 
     fun submitRating(foodId: String, userRating: Float, userId: String) {
-        repository.submitRating(foodId, userId, userRating )
+        repository.submitRating(foodId, userId, userRating)
         // تحديث القيمة بعد الحفظ
         this.userRating = userRating
     }

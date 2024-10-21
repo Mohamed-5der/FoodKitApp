@@ -72,11 +72,11 @@ import java.io.File
 
 
 @Composable
-fun ProfileScreen(navController: NavController){
+fun ProfileScreen(navController: NavController) {
     val userViewModel: UserViewModel = koinViewModel()
     val appPreferences = AppPreferences(LocalContext.current)
     appPreferences.init()
-    val email = FirebaseAuth.getInstance().currentUser?.email?:""
+    val email = FirebaseAuth.getInstance().currentUser?.email ?: ""
     userViewModel.getUserByEmail(email)
     val user = userViewModel.user.collectAsState().value
     val userImagePath = user?.imageUrl
@@ -85,27 +85,32 @@ fun ProfileScreen(navController: NavController){
         topBar = {
             TopAppBar(
                 navigationIcon = {
-                    Icon(painter = painterResource(id = R.drawable.arrow_left),contentDescription =null,
-                        modifier = Modifier.clickable {
-                            navController.popBackStack()
-                        }.padding(start = 16.dp,top = 30.dp))
+                    Icon(painter = painterResource(id = R.drawable.arrow_left),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clickable {
+                                navController.popBackStack()
+                            }
+                            .padding(start = 16.dp, top = 30.dp)
+                    )
                 },
 
-                title = { Text(
-                    stringResource(id = R.string.your_profile), color = Color.Black,
-                    fontWeight = FontWeight.SemiBold, fontSize = 18.sp,
-                    fontFamily = poppins,
-                    modifier = Modifier
-                        .padding(top = 30.dp),
-                    textAlign = TextAlign.Start
-                   )
+                title = {
+                    Text(
+                        stringResource(id = R.string.your_profile), color = Color.Black,
+                        fontWeight = FontWeight.SemiBold, fontSize = 18.sp,
+                        fontFamily = poppins,
+                        modifier = Modifier
+                            .padding(top = 30.dp),
+                        textAlign = TextAlign.Start
+                    )
                 },
                 backgroundColor = Color.White,
                 elevation = 1.dp,
                 modifier = Modifier.height(70.dp)
             )
         }
-    ) {innerPadding ->
+    ) { innerPadding ->
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -124,7 +129,7 @@ fun ProfileScreen(navController: NavController){
 
                 Image(
                     painter = rememberImagePainter(
-                        data =  R.drawable.profile_image,
+                        data = R.drawable.profile_image,
                         builder = {
                             crossfade(true)
                         }
@@ -138,9 +143,18 @@ fun ProfileScreen(navController: NavController){
             }
 
             Spacer(modifier = Modifier.height(24.dp))
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_unselect), label =user?.name.toString()?:"User Name")
-            ProfileOptionItem(icon = Icons.Outlined.Email, label =user?.email.toString()?:"Email@gmail.com")
-            ProfileOptionItem(icon = Icons.Outlined.Phone, label =user?.phoneNumber.toString()?:"01203498410")
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.profile_unselect),
+                label = user?.name.toString() ?: "User Name"
+            )
+            ProfileOptionItem(
+                icon = Icons.Outlined.Email,
+                label = user?.email.toString() ?: "Email@gmail.com"
+            )
+            ProfileOptionItem(
+                icon = Icons.Outlined.Phone,
+                label = user?.phoneNumber.toString() ?: "01203498410"
+            )
 
         }
     }

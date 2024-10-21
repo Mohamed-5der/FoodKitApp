@@ -58,10 +58,10 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun SignUpScreen(
-    navController: NavController
+    navController: NavController,
 ) {
     val viewModel: SignUpViewModel = koinViewModel()
-    val viewModelDb : UserViewModel = koinViewModel()
+    val viewModelDb: UserViewModel = koinViewModel()
 
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
@@ -268,13 +268,18 @@ fun SignUpScreen(
                         onClick = {
                             viewModel.signUp(email, password,
                                 onSignUpSuccess = {
-                                    Log.d("signUP","Sign Up Successful")
+                                    Log.d("signUP", "Sign Up Successful")
                                     Toast.makeText(
                                         context,
                                         "Sign Up Successful",
                                         Toast.LENGTH_SHORT
                                     ).show()
-                                    viewModelDb.addUser(name = userName, email = email, phoneNumber = phoneNumber, imageUrl = ""){
+                                    viewModelDb.addUser(
+                                        name = userName,
+                                        email = email,
+                                        phoneNumber = phoneNumber,
+                                        imageUrl = ""
+                                    ) {
                                         appPreferences.putString("email", email)
                                         appPreferences.putString("userId", it)
                                         navController.navigate(Routes.MAIN)

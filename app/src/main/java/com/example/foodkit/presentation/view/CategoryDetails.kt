@@ -33,9 +33,9 @@ import org.koin.androidx.compose.koinViewModel
 fun CategoryDetailScreen(
     navController: NavController,
     categoryId: String,
-    viewModel: CategoryViewModel = koinViewModel()
+    viewModel: CategoryViewModel = koinViewModel(),
 
-) {
+    ) {
     val foodsInCategory = viewModel.foodsInCategory.collectAsState(initial = emptyList())
 
     Log.d("Compose", "Navigated to CategoryDetailScreen with ID: $categoryId")
@@ -64,7 +64,7 @@ fun CategoryDetailScreen(
                 .padding(16.dp)
         ) {
             items(foodsInCategory.value) { food ->
-                FoodCard(food,{},{}, isFavorite = remember {
+                FoodCard(food, {}, {}, isFavorite = remember {
                     mutableStateOf(false)
                 })
             }

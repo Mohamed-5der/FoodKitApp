@@ -37,15 +37,15 @@ val appModule = module {
     single { FirebaseAuth.getInstance() }
     single { FirebaseFirestore.getInstance() }
     single { FirebaseStorage.getInstance() }
-    single { FoodRepository(get(),get()) }
-    single { CategoryRepository(get(),get())}
+    single { FoodRepository(get(), get()) }
+    single { CategoryRepository(get(), get()) }
     single { AppPreferences(get()) }
     single { AppPreferences(get()).init() }
-    single { CartRepository(get(),get()) }
+    single { CartRepository(get(), get()) }
 
     viewModel { LoginViewModel(get()) }
     viewModel { SignUpViewModel(get()) }
-    viewModel { MasterViewModel(get(),get()) }
+    viewModel { MasterViewModel(get(), get()) }
     viewModel { FoodListScreenViewModel(get()) }
     viewModel { FoodDetailViewModel(get(), get()) }
     viewModel { CategoryViewModel(get()) }

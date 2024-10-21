@@ -34,7 +34,7 @@ fun AnimatedBorderCard(
     gradient: Brush = Brush.sweepGradient(listOf(Color.Gray, Color.White)),
     animationDuration: Int = 10000,
     onCardClick: () -> Unit = {},
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val infiniteTransition = rememberInfiniteTransition(label = "Infinite Color Animation")
     val degrees by infiniteTransition.animateFloat(
