@@ -134,6 +134,26 @@ class MasterViewModel(
             }
         )
     }
+
+    fun deleteFromFoods(
+        foodId: String,
+        imageUrl : String,
+        categoryId : String,
+        onSuccess : ()  -> Unit,
+        onFailure : (Exception) -> Unit
+    ){
+        foodRepository.removeFromFoods(
+            foodId = foodId,
+            imageUrl = imageUrl,
+            categoryId = categoryId,{
+                onSuccess()
+                Log.d("MasterViewModel" , "Food Deleted Successfully")
+            },{ exception ->
+                onFailure(exception)
+                Log.d("MasterViewModel" , "Error on Food Deleted ")
+            }
+        )
+    }
 }
 
 sealed class UpdateState {

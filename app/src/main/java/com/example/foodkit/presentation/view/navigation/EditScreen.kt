@@ -17,6 +17,8 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Surface
@@ -77,11 +79,8 @@ fun EditScreen(
         Surface(
             modifier = Modifier
                 .background(Color.White)
-                .fillMaxSize()
-                .background(
-                    brush = Brush.verticalGradient(listOf(Color(0xFFff0000), Color(0xFFff9a00)))
-                ),
-            color = Color.White,
+                .fillMaxSize(),
+            color = Color.Black,
             shadowElevation = 8.dp
         ) {
             Column(
@@ -240,9 +239,41 @@ fun EditScreen(
                         )
                         navController.popBackStack()
                     },
-                    modifier = Modifier.fillMaxWidth()
+                    colors = ButtonDefaults.buttonColors(
+                        Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color(0xFFff9a00))
                 ) {
                     Text(text = "Save Changes")
+                }
+
+                Button(onClick = {
+                    masterViewModel.deleteFromFoods(
+                        foodId = foodId,
+                        imageUrl =food.imageUrl,
+                        categoryId = food.category, {
+                            Toast.makeText( context, "Food Deleted SuccessFully", Toast.LENGTH_SHORT).show()
+                        },{
+                            Toast.makeText( context, "Exception in Food Delete ", Toast.LENGTH_SHORT).show()
+                        }
+
+                        )
+                    navController.popBackStack()
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color(0xFFff9a00))
+                ) {
+                    Text(text = "Delete The Food")
                 }
             }
         }

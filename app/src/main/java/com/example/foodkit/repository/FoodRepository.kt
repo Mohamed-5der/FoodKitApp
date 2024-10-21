@@ -57,13 +57,11 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
                     protein = protein,
                     fats = fats
                 )
-                // أضف الطعام إلى Collection العامة foods
                 db.collection("foods").add(foodWithImage)
                     .addOnSuccessListener { documentReference ->
                         val foodWithId = foodWithImage.copy(id = documentReference.id)
                         db.collection("foods").document(documentReference.id).set(foodWithId)
                             .addOnSuccessListener {
-                                // بعد إضافة الطعام إلى Collection العامة, أضف فقط مرجع (ID الطعام) إلى التصنيف المحدد
                                 val foodReference = mapOf("foodId" to foodWithId.id)
                                 db.collection("categories").document(categoryId).collection("foods").document(foodWithId.id).set(foodReference)
                                     .addOnSuccessListener {
@@ -165,23 +163,19 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
             val currentRating = foodSnapshot.getDouble("rating")?.toFloat() ?: 0f
             val ratingCount = foodSnapshot.getLong("ratingCount")?.toInt() ?: 0
 
-            // تحقق مما إذا كان المستخدم قد قدم تقييمًا سابقًا
             val userRatingSnapshot = transaction.get(userRatingDocRef)
 
             if (userRatingSnapshot.exists()) {
-                // إذا كان المستخدم قد قدم تقييمًا مسبقًا، احسب المتوسط الجديد
                 val oldRating = userRatingSnapshot.getDouble("rating")?.toFloat() ?: 0f
                 val newAverageRating = (currentRating * ratingCount - oldRating + newRating) / ratingCount
 
-                // تحديث متوسط التقييم
                 transaction.update(foodDocRef, "rating", newAverageRating)
-                transaction.update(userRatingDocRef, "rating", newRating) // تحديث تقييم المستخدم
+                transaction.update(userRatingDocRef, "rating", newRating)
             } else {
-                // إذا كان هذا هو التقييم الأول لهذا المستخدم، قم بزيادة عدد التقييمات
                 val newAverageRating = (currentRating * ratingCount + newRating) / (ratingCount + 1)
                 transaction.update(foodDocRef, "rating", newAverageRating)
-                transaction.update(foodDocRef, "ratingCount", ratingCount + 1) // زيادة عدد التقييمات
-                transaction.set(userRatingDocRef, ratingData) // تخزين تقييم المستخدم
+                transaction.update(foodDocRef, "ratingCount", ratingCount + 1)
+                transaction.set(userRatingDocRef, ratingData)
             }
         }.addOnSuccessListener {
             Log.d("Firestore", "Rating submitted successfully")
@@ -216,41 +210,55 @@ class FoodRepository(private val db: FirebaseFirestore, private val storage: Fir
 
 
     fun getTopFiveFoods(onSuccess: (List<Food>) -> Unit, onFailure: (Exception) -> Unit) {
-        // استعلام لجلب الأكلات وترتيبها حسب عدد الطلبات
         db.collection("foods")
             .orderBy("totalSales", Query.Direction.DESCENDING) // ترتيب حسب totalSales
-            .limit(5) // تحديد العدد إلى 5
+            .limit(5)
             .get()
             .addOnSuccessListener { querySnapshot ->
                 val topFoods = mutableListOf<Food>()
 
                 for (document in querySnapshot.documents) {
-                    // تحويل البيانات إلى كائن Food
                     val food = document.toObject(Food::class.java)
-                    food?.let { topFoods.add(it) } // إضافة الأكلة إلى القائمة
+                    food?.let { topFoods.add(it) }
                 }
 
-                onSuccess(topFoods) // إرجاع القائمة عند النجاح
+                onSuccess(topFoods)
             }
             .addOnFailureListener { exception ->
-                onFailure(exception) // إرجاع الخطأ في حالة الفشل
-            }
-    }
-
-    fun RemoveFromFoods(foodId : String, onSuccess: () -> Unit , onFailure: (Exception) -> Unit ){
-
-        val foodDocRef = FirebaseFirestore.getInstance()
-            .collection("foods")
-            .document(foodId)
-
-        foodDocRef.update("foods.$foodId" , FieldValue.delete())
-            .addOnSuccessListener {
-                onSuccess()
-            }
-            .addOnFailureListener{ exception ->
                 onFailure(exception)
             }
     }
+
+    fun removeFromFoods(foodId: String, imageUrl: String, categoryId: String, onSuccess: () -> Unit, onFailure: (Exception) -> Unit) {
+        val db = FirebaseFirestore.getInstance()
+        val storage = FirebaseStorage.getInstance()
+
+        val foodDocRef = db.collection("foods").document(foodId)
+        foodDocRef.delete()
+            .addOnSuccessListener {
+                val imageRef = storage.getReferenceFromUrl(imageUrl)
+                imageRef.delete()
+                    .addOnSuccessListener {
+                        val categoryFoodRef = db.collection("categories").document(categoryId)
+                            .collection("foods").document(foodId)
+                        categoryFoodRef.delete()
+                            .addOnSuccessListener {
+                                onSuccess()
+                            }
+                            .addOnFailureListener { exception ->
+                                onFailure(exception)
+                            }
+                    }
+                    .addOnFailureListener { exception ->
+                        onFailure(exception)
+                    }
+            }
+            .addOnFailureListener { exception ->
+                onFailure(exception)
+            }
+    }
+
+
 
 }
 
