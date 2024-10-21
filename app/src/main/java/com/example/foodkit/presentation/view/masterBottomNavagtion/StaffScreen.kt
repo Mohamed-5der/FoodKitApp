@@ -51,9 +51,6 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun StaffScreen(navController: NavController) {
-    val logoutViewModel: LogoutViewModel = koinViewModel()
-    val context = LocalContext.current
-
     Column (
         modifier = Modifier.background(Color.White)
     ){
@@ -87,14 +84,11 @@ fun StaffScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             AddStaff(name = "Ahmed Emad", phone = "+201029550695", email ="ahmed.emad.23112003@gmail.com" , imageVector =R.drawable.emad ,"https://www.linkedin.com/in/ahmed-emad-%F0%9F%87%B5%F0%9F%87%B8-010a52262/")
             Spacer(modifier = Modifier.height(16.dp))
+            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = "View user",route = Routes.MAIN,navController)
 
             ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = stringResource(id = R.string.view_user),route = Routes.MAIN,navController)
             ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.logout), label = stringResource(id = R.string.logout),route = Routes.LOGIN,navController)
-
-
         }
-
-
     }
 
 }

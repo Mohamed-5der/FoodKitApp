@@ -3,10 +3,15 @@ package com.example.foodkit.components
 import android.annotation.SuppressLint
 import android.content.ContentResolver
 import android.content.Context
+import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
+import android.graphics.ImageDecoder
 import android.net.Uri
+import android.os.Build
+import android.provider.MediaStore
 import android.util.Base64
+import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -32,6 +37,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -41,6 +47,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -49,6 +56,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.res.colorResource
@@ -69,6 +77,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.foodkit.R
+import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
@@ -559,7 +568,7 @@ val poppins = FontFamily(
 
 @Composable
 fun LottieAnimationLoading(loading: Boolean = true) {
-    val composition by rememberLottieComposition(RawRes(R.raw.animation_loading))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_loading))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever,
@@ -583,7 +592,7 @@ fun LottieAnimationLoading(loading: Boolean = true) {
 
 @Composable
 fun LottieAnimationEmpty(loading: Boolean = true) {
-    val composition by rememberLottieComposition(RawRes(R.raw.animation_empty_cart))
+    val composition by rememberLottieComposition(LottieCompositionSpec.RawRes(R.raw.animation_empty_cart))
     val progress by animateLottieCompositionAsState(
         composition = composition,
         iterations = LottieConstants.IterateForever,

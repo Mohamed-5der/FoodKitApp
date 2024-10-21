@@ -280,7 +280,6 @@ fun EditScreen(
                 ) {
                     Text(text = "Save Changes")
                 }
-
                 Button(onClick = {
                     masterViewModel.deleteFromFoods(
                         foodId = foodId,
@@ -290,18 +289,11 @@ fun EditScreen(
                         },{
                             Toast.makeText( context, "Exception in Food Delete ", Toast.LENGTH_SHORT).show()
                         }
-
                         )
                     navController.popBackStack()
                 },
-                    colors = ButtonDefaults.buttonColors(
-                        Color.Transparent
-                    ),
-                    modifier = Modifier
-                        .padding(8.dp)
-                        .fillMaxWidth()
-                        .clip(RoundedCornerShape(32.dp))
-                        .background(Color(0xFFff9a00))
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
                     Text(text = "Delete The Food")
                 }

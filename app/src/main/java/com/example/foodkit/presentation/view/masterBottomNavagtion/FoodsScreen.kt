@@ -59,7 +59,7 @@ fun FoodsScreen(navController: NavController) {
                 )
             },
             windowInsets = androidx.compose.foundation.layout.WindowInsets(0.dp),
-            backgroundColor = androidx.compose.ui.graphics.Color.White,
+            backgroundColor = Color.White,
             modifier = Modifier.height(70.dp)
         )
         Column(
@@ -74,8 +74,9 @@ fun FoodsScreen(navController: NavController) {
 
                 modifier = Modifier.fillMaxSize()
             ) {
-                items(foodList?: emptyList()) { food ->
+                items(foodList) { food ->
                     FoodCardMaster(food = food, onClick = {
+                        navController.navigate( "details_analysis/${food.id}")
                     }, onClickEdit = {
 
                     })

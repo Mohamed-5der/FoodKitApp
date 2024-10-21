@@ -397,47 +397,48 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
                             )
-                            val  selectedItem = viewModel.selectedCategory?:""
-                            var selectedCategory by remember { mutableStateOf(selectedItem) }
-                            if (selectedCategory==""){
-                                selectedCategory = categories[0].name
-                            }
-                            Spacer(modifier = Modifier.height(8.dp))
+                                var selectedCategory by remember { mutableStateOf("") }
+                                if (selectedCategory==""){
+                                    selectedCategory = categories[0].name
+                                }
+                                Spacer(modifier = Modifier.height(8.dp))
 
-                            OutlinedTextField(
-                                value = selectedCategory,
-                                onValueChange = { },
-                                label = { Text(stringResource(id = R.string.select_category), color = Color.Black,
-                                    fontFamily = poppins, fontWeight = FontWeight.Medium
-                                    , fontSize = 12.sp) },
-                                trailingIcon = {
-                                    Icons.Filled.ArrowDropDown.let {
-                                        androidx.compose.material.Icon(
-                                            imageVector = it,
-                                            contentDescription = "Dropdown arrow",
-                                            modifier = Modifier.clickable {
-                                                expanded = !expanded
-                                            },
+                                OutlinedTextField(
+                                    value = selectedCategory,
+                                    onValueChange = { },
+                                    label = { Text(stringResource(id = R.string.select_category), color = Color.Black,
+                                        fontFamily = poppins, fontWeight = FontWeight.Medium
+                                        , fontSize = 12.sp) },
+                                    trailingIcon = {
+                                        Icons.Filled.ArrowDropDown.let {
+                                            androidx.compose.material.Icon(
+                                                imageVector = it,
+                                                contentDescription = "Dropdown arrow",
+                                                modifier = Modifier.clickable {
+                                                    expanded = !expanded
+                                                },
+                                            )
+                                        }
+                                    },
+                                    shape = RoundedCornerShape(12.dp),
+                                    modifier = Modifier.fillMaxWidth()
+                                )
+                                DropdownMenu(
+                                    expanded = expanded,
+                                    onDismissRequest = { expanded = false }
+                                ) {
+                                    categories.forEach { category ->
+                                        DropdownMenuItem(
+                                            text = { Text(text = category.name) },
+                                            onClick = {
+                                                viewModel.selectedCategory = category.name
+                                                viewModel.categoryName = category.name
+                                                selectedCategory =category.name
+                                                expanded = false
+                                            }
                                         )
                                     }
-                                },
-                                shape = RoundedCornerShape(12.dp),
-                                modifier = Modifier.fillMaxWidth()
-                            )
-                            DropdownMenu(
-                                expanded = expanded,
-                                onDismissRequest = { expanded = false }
-                            ) {
-                                categories.forEach { category ->
-                                    DropdownMenuItem(
-                                        text = { Text(text = category.name) },
-                                        onClick = {
-                                            viewModel.selectedCategory = category.name
-                                            expanded = false
-                                        }
-                                    )
                                 }
-                            }
 
 
                             } },
