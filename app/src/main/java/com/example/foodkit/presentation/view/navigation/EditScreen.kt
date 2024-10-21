@@ -17,6 +17,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
@@ -204,6 +205,7 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    textStyle = TextStyle(fontSize = 18.sp)
                 )
 
                 OutlinedTextField(
@@ -269,6 +271,31 @@ fun EditScreen(
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
                     Text(text = "Save Changes")
+                }
+
+                Button(onClick = {
+                    masterViewModel.deleteFromFoods(
+                        foodId = foodId,
+                        imageUrl =food.imageUrl,
+                        categoryId = food.category, {
+                            Toast.makeText( context, "Food Deleted SuccessFully", Toast.LENGTH_SHORT).show()
+                        },{
+                            Toast.makeText( context, "Exception in Food Delete ", Toast.LENGTH_SHORT).show()
+                        }
+
+                        )
+                    navController.popBackStack()
+                },
+                    colors = ButtonDefaults.buttonColors(
+                        Color.Transparent
+                    ),
+                    modifier = Modifier
+                        .padding(8.dp)
+                        .fillMaxWidth()
+                        .clip(RoundedCornerShape(32.dp))
+                        .background(Color(0xFFff9a00))
+                ) {
+                    Text(text = "Delete The Food")
                 }
             }
         }
