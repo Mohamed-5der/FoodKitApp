@@ -206,12 +206,17 @@ fun ProfileOptionItem(
             .padding(vertical = 12.dp)
             .clickable {
                 if (route == Routes.LOGIN) {
-                    logoutViewModel.logout() {
+                logoutViewModel.logout {
+                    navController.navigate(Routes.LOGIN) {
+                        popUpTo(navController.graph.startDestinationId) {
+                            inclusive = true // delete all previous screens
+                        }
+                        launchSingleTop = true // prevent multiple instances of the same screen
                         Toast
                             .makeText(context, "Logout Successfully", Toast.LENGTH_SHORT)
                             .show()
-                        navController.navigate(Routes.LOGIN)
                     }
+                }
                 } else if (route == Routes.PROFILE) {
                     navController.navigate(Routes.PROFILE)
                 } else if (route == Routes.MAIN) {

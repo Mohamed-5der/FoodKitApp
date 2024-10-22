@@ -33,7 +33,7 @@ fun LegendItem(color: Color, label: String) {
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
-            color = MaterialTheme.colorScheme.onSurface
+            color = Color.DarkGray
         )
     }
 }

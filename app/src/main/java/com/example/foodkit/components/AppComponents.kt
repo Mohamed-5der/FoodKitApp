@@ -1,17 +1,7 @@
 package com.example.foodkit.components
 
 import android.annotation.SuppressLint
-import android.content.ContentResolver
-import android.content.Context
-import android.database.Cursor
-import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.graphics.ImageDecoder
 import android.net.Uri
-import android.os.Build
-import android.provider.MediaStore
-import android.util.Base64
-import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.BorderStroke
@@ -37,17 +27,16 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Edit
 import androidx.compose.material.icons.filled.Star
-import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -56,7 +45,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.res.colorResource
@@ -77,14 +65,9 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.example.foodkit.R
-import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.repository.CartItem
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
-import java.io.File
-import java.io.FileOutputStream
-import java.io.InputStream
-import java.io.OutputStream
 
 @Composable
 fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
@@ -102,7 +85,7 @@ fun SelectImageButton(onImageSelected: (Uri) -> Unit, uri: Uri? = null) {
             colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
         )
         {
-            Text(stringResource(id = R.string.select_image))
+            Text(stringResource(id = R.string.select_image),color = Color.White)
         }
     } else {
         Box(contentAlignment = Alignment.BottomEnd) {
@@ -437,6 +420,42 @@ fun CategoryCard(category: Category, onClick: () -> Unit) {
     }
 
 }
+
+@Composable
+fun CircleCardForDetails(dessert: Food, onClick: () -> Unit) {
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally,
+        verticalArrangement = Arrangement.Center,
+    ) {
+        Card(
+            shape = CircleShape,
+            modifier = Modifier
+                .size(80.dp)
+                .clickable(onClick = onClick),
+            elevation = CardDefaults.cardElevation(8.dp)
+        ) {
+            AsyncImage(
+                model = dessert.imageUrl,
+                contentDescription = dessert.name,
+                modifier = Modifier
+                    .fillMaxSize(),
+                contentScale = ContentScale.Crop
+            )
+        }
+
+        Text(
+            modifier = Modifier
+                .padding(top = 8.dp),
+            text = dessert.name,
+            color = Color.Black,
+            textAlign = TextAlign.Center,
+            style = MaterialTheme.typography.bodyMedium,
+            maxLines = 1,
+            overflow = TextOverflow.Clip
+        )
+    }
+}
+
 
 @Composable
 fun CartFoodCard(
