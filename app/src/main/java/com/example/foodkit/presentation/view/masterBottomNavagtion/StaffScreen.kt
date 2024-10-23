@@ -13,7 +13,9 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.Button
 import androidx.compose.material.Divider
 import androidx.compose.material.Icon
@@ -51,9 +53,12 @@ import org.koin.androidx.compose.koinViewModel
 
 @Composable
 fun StaffScreen(navController: NavController) {
-    Column (
-        modifier = Modifier.background(Color.White)
-    ){
+    Column(
+        modifier = Modifier
+            .background(Color.White)
+            .verticalScroll(rememberScrollState())
+
+    ) {
         TopAppBar(
             title = {
                 Text(
@@ -63,7 +68,8 @@ fun StaffScreen(navController: NavController) {
                     fontFamily = poppins,
                     fontWeight = FontWeight.SemiBold,
                     textAlign = androidx.compose.ui.text.style.TextAlign.Center, modifier = Modifier
-                        .fillMaxWidth().padding(top = 30.dp)
+                        .fillMaxWidth()
+                        .padding(top = 30.dp)
                 )
             },
             windowInsets = androidx.compose.foundation.layout.WindowInsets(0.dp),
@@ -74,31 +80,66 @@ fun StaffScreen(navController: NavController) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .padding(top = 16.dp).padding(horizontal = 16.dp)
+                .padding(top = 16.dp)
+                .padding(horizontal = 16.dp)
                 .background(Color.White),
             verticalArrangement = androidx.compose.foundation.layout.Arrangement.Top
         ) {
-            AddStaff(name = "Mohamed Khedr", phone = "+201203898109", email ="khedrkhedr370@gmail.com" , imageVector =R.drawable.mohamed,"https://www.linkedin.com/in/mohamed-khedr-186861244/" )
+            AddStaff(
+                name = "Mohamed Khedr",
+                phone = "+201203898109",
+                email = "khedrkhedr370@gmail.com",
+                imageVector = R.drawable.mohamed,
+                "https://www.linkedin.com/in/mohamed-khedr-186861244/"
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            AddStaff(name = "Abdelmalek mukhtar", phone = "+201099672981", email ="abdelmalekmokhtar83@gmail.com" , imageVector =R.drawable.abdelmalek,"https://www.linkedin.com/in/abdelmalek-mokhtar-476033287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app")
+            AddStaff(
+                name = "Abdelmalek mukhtar",
+                phone = "+201099672981",
+                email = "abdelmalekmokhtar83@gmail.com",
+                imageVector = R.drawable.abdelmalek,
+                "https://www.linkedin.com/in/abdelmalek-mokhtar-476033287?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app"
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            AddStaff(name = "Ahmed Emad", phone = "+201029550695", email ="ahmed.emad.23112003@gmail.com" , imageVector =R.drawable.emad ,"https://www.linkedin.com/in/ahmed-emad-%F0%9F%87%B5%F0%9F%87%B8-010a52262/")
+            AddStaff(
+                name = "Ahmed Emad",
+                phone = "+201029550695",
+                email = "ahmed.emad.23112003@gmail.com",
+                imageVector = R.drawable.emad,
+                "https://www.linkedin.com/in/ahmed-emad-%F0%9F%87%B5%F0%9F%87%B8-010a52262/"
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            AddStaff(name = "Ahmad Moemen", phone = "+201004131195", email ="ahmadxmoemendjz11@gmail.com" , imageVector =R.drawable.ahmed_moeamen ,"https://www.linkedin.com/in/ahmad-moemen")
+            AddStaff(
+                name = "Ahmad Moemen",
+                phone = "+201004131195",
+                email = "ahmadxmoemendjz11@gmail.com",
+                imageVector = R.drawable.ahmed_moeamen,
+                "https://www.linkedin.com/in/ahmad-moemen"
+            )
             Spacer(modifier = Modifier.height(16.dp))
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = stringResource(id =R.string.view_user),route = Routes.MAIN,navController)
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.logout), label = stringResource(id = R.string.logout),route = Routes.LOGIN,navController)
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.profile_un),
+                label = stringResource(id = R.string.view_user),
+                route = Routes.MAIN,
+                navController
+            )
+            ProfileOptionItem(
+                icon = ImageVector.vectorResource(id = R.drawable.logout),
+                label = stringResource(id = R.string.logout),
+                route = Routes.LOGIN,
+                navController
+            )
         }
     }
 
 }
+
 @Composable
-fun AddStaff(name:String, phone:String, email:String, imageVector: Int, link:String){
+fun AddStaff(name: String, phone: String, email: String, imageVector: Int, link: String) {
     val context = LocalContext.current
     Row(
         modifier = Modifier
-            .fillMaxWidth()
-        ,
+            .fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically,
         horizontalArrangement = androidx.compose.foundation.layout.Arrangement.SpaceBetween
     ) {
@@ -118,7 +159,8 @@ fun AddStaff(name:String, phone:String, email:String, imageVector: Int, link:Str
         Spacer(modifier = Modifier.width(8.dp))
         Column(
             modifier = Modifier
-                .fillMaxWidth().weight(1f)
+                .fillMaxWidth()
+                .weight(1f)
                 .padding(vertical = 12.dp),
         ) {
 
@@ -167,16 +209,25 @@ fun AddStaff(name:String, phone:String, email:String, imageVector: Int, link:Str
                     fontWeight = FontWeight.Medium,
 
                     )
-                Button(onClick = {
-                    val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
-                    startActivity(context, intent, null) },
+                Button(
+                    onClick = {
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(link))
+                        startActivity(context, intent, null)
+                    },
                     modifier = Modifier.padding(end = 16.dp),
-                    colors = androidx.compose.material.ButtonDefaults.buttonColors(backgroundColor = colorResource(id = R.color.appColor))) {
-                    Text(text = stringResource(id = R.string.connect),
+                    colors = androidx.compose.material.ButtonDefaults.buttonColors(
+                        backgroundColor = colorResource(
+                            id = R.color.appColor
+                        )
+                    )
+                ) {
+                    Text(
+                        text = stringResource(id = R.string.connect),
                         fontSize = 12.sp,
                         color = colorResource(id = R.color.white),
                         fontFamily = poppins,
-                        fontWeight = FontWeight.Normal,)
+                        fontWeight = FontWeight.Normal,
+                    )
 
                 }
 
@@ -210,7 +261,7 @@ fun AddStaff(name:String, phone:String, email:String, imageVector: Int, link:Str
 
     }
     Divider(
-        color =Color.LightGray,
+        color = Color.LightGray,
         thickness = 1.dp,
         modifier = Modifier.alpha(0.6f),
     )

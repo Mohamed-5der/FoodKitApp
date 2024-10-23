@@ -38,6 +38,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
@@ -102,7 +103,7 @@ fun EditScreen(
                     .fillMaxSize()
             ) {
                 Text(
-                    text = "Edit Food Details",
+                    text = stringResource(id = R.string.edit_food_details),
                     style = TextStyle(
                         fontSize = 24.sp,
                         fontWeight = FontWeight.Bold,
@@ -145,7 +146,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = foodName,
                     onValueChange = { foodName = it },
-                    label = { Text("Food Name", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.food_name), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -165,7 +166,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = foodDescription,
                     onValueChange = { foodDescription = it },
-                    label = { Text("Description", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.description), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -185,7 +186,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = price,
                     onValueChange = { price = it },
-                    label = { Text("Price", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.price), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -206,7 +207,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = availableQuantity,
                     onValueChange = { availableQuantity = it },
-                    label = { Text("Available Quantity", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.available_quantity), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -227,7 +228,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = calories,
                     onValueChange = { calories = it },
-                    label = { Text("Calories", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.calories), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -248,7 +249,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = proteins,
                     onValueChange = { proteins = it },
-                    label = { Text("Proteins (g)", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.protein), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -270,7 +271,7 @@ fun EditScreen(
                 OutlinedTextField(
                     value = fats,
                     onValueChange = { fats = it },
-                    label = { Text("Fats (g)", color = Color.Black,
+                    label = { Text(stringResource(id = R.string.fats), color = Color.Black,
                         fontFamily = poppins, fontWeight = FontWeight.Medium
                         , fontSize = 12.sp)},
                     singleLine = true,
@@ -345,7 +346,7 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
-                    Text(text = "Save Changes" ,color = Color.White)
+                    Text(text = stringResource(id = R.string.save_changes) ,color = Color.White)
                 }
                 Button(onClick = {
                     masterViewModel.deleteFromFoods(
@@ -362,7 +363,7 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
-                    Text(text = "Delete The Food" , color = Color.White)
+                    Text(text = stringResource(id = R.string.delete_the_food) , color = Color.White)
                 }
             }
         }
