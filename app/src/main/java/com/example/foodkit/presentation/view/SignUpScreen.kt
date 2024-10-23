@@ -23,6 +23,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -124,7 +125,15 @@ fun SignUpScreen(
                         contentDescription = "Name Icon",
                         tint = Color.Black
                     )
-                }
+                }, colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    focusedBorderColor = colorResource(id = R.color.appColor),
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = colorResource(id = R.color.appColor),
+                    focusedLabelColor = colorResource(id = R.color.appColor),
+                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -144,7 +153,15 @@ fun SignUpScreen(
                         contentDescription = "Email Icon",
                         tint = Color.Black
                     )
-                }
+                }, colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    focusedBorderColor = colorResource(id = R.color.appColor),
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = colorResource(id = R.color.appColor),
+                    focusedLabelColor = colorResource(id = R.color.appColor),
+                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                )
             )
             Spacer(modifier = Modifier.height(16.dp))
 
@@ -162,7 +179,15 @@ fun SignUpScreen(
                         contentDescription = "Name Icon",
                         tint = Color.Black
                     )
-                }
+                }, colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    focusedBorderColor = colorResource(id = R.color.appColor),
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = colorResource(id = R.color.appColor),
+                    focusedLabelColor = colorResource(id = R.color.appColor),
+                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                )
             )
 
 
@@ -201,7 +226,15 @@ fun SignUpScreen(
                             tint = Color.Black
                         )
                     }
-                }
+                }, colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    focusedBorderColor = colorResource(id = R.color.appColor),
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = colorResource(id = R.color.appColor),
+                    focusedLabelColor = colorResource(id = R.color.appColor),
+                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                )
             )
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -243,7 +276,15 @@ fun SignUpScreen(
                             tint = Color.Black
                         )
                     }
-                }
+                }, colors = OutlinedTextFieldDefaults.colors(
+                    focusedTextColor = Color.DarkGray,
+                    unfocusedTextColor = Color.DarkGray,
+                    focusedBorderColor = colorResource(id = R.color.appColor),
+                    unfocusedBorderColor = Color.Black,
+                    cursorColor = colorResource(id = R.color.appColor),
+                    focusedLabelColor = colorResource(id = R.color.appColor),
+                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                )
             )
 
             Spacer(modifier = Modifier.height(32.dp))

@@ -12,6 +12,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.navigation.compose.rememberNavController
 import com.example.foodkit.navigation.AppNavigation
@@ -23,7 +24,10 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             FoodKitTheme {
-                Surface( /*color = MaterialTheme.colorScheme.background */) {
+                Surface(
+                    modifier = Modifier.fillMaxSize(),
+                    color = Color.White,
+                ) {
                     val navController = rememberNavController()
                     AppNavigation(navController)
                 }
