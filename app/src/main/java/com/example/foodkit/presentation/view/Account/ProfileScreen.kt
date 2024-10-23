@@ -128,7 +128,7 @@ fun ProfileScreen(navController: NavController) {
                 Image(
                     painter = rememberAsyncImagePainter(
                         model = ImageRequest.Builder(LocalContext.current)
-                            .data(userImagePath)
+                            .data(R.drawable.mohamed)
                             .placeholder(R.drawable.profile_unselect)
                             .error(R.drawable.profile_un)
                             .crossfade(true)

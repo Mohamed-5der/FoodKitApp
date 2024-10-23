@@ -3,15 +3,19 @@ package com.example.foodkit.presentation.view
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.ime
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
@@ -79,16 +83,21 @@ fun SignUpScreen(
     Surface(
         modifier = Modifier
             .background(Color.White)
-            .fillMaxSize()
+            .fillMaxSize(),
+        color = Color.White
     ) {
         Column(
             modifier = Modifier
                 .verticalScroll(rememberScrollState())
                 .fillMaxSize()
-                .padding(16.dp)
-                .background(Color.White),
-            verticalArrangement = Arrangement.Center
+                .padding(16.dp).padding(top = 30.dp)
+                .background(Color.White).
+                windowInsetsPadding(WindowInsets.ime),
         ) {
+            Icon(painter = painterResource(id =R.drawable.arrow_left ) , contentDescription =null,
+                modifier = Modifier.clickable {
+                    navController.popBackStack()
+                })
             Spacer(modifier = Modifier.height(40.dp))
 
             Text(
