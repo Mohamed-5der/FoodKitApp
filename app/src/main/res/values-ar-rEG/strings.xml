@@ -95,4 +95,8 @@
 
 
     <string name="myCart">ةالسل</string>
+
+    <string name="you_can_also_buy_desserts"> يمكنك الشراء أيضاً الحلويات </string>
+    <string name="popular_on_app">الأكلات الأكثر تفضيلاً </string>
+
 </resources>

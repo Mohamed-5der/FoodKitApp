@@ -309,6 +309,7 @@ fun BannerSection(
         Text(
             text = stringResource(id = R.string.top_foods),
             fontSize = 18.sp,
+            color = Color.DarkGray,
             fontWeight = FontWeight.Medium,
             fontFamily = poppins,
             modifier = Modifier
@@ -399,6 +400,7 @@ fun CategoriesSection(
             Text(
                 text = stringResource(id = R.string.findByCategory),
                 fontSize = 18.sp,
+                color = Color.DarkGray,
                 fontWeight = FontWeight.Medium,
                 fontFamily = poppins,
 
@@ -455,6 +457,7 @@ fun ProductSection(
         Text(
             text = stringResource(id = R.string.foods),
             fontSize = 18.sp,
+            color = Color.DarkGray,
             fontWeight = FontWeight.Medium,
             fontFamily = poppins,
             modifier = Modifier
@@ -505,93 +508,3 @@ fun ProductSection(
     }
 }
 
-
-/*
-//Khedr Categories
-@Composable
-fun GetCategories(onCategorySelected: (String) -> Unit) {
-
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Box(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text(
-                text = stringResource(id = R.string.findByCategory),
-                modifier = Modifier.align(Alignment.TopStart),
-                style = TextStyle(
-                    fontSize = 16.sp,
-                    fontWeight = FontWeight.SemiBold,
-
-                )
-            )
-            Text(
-                text = stringResource(id = R.string.viewAll),
-                modifier = Modifier.align(Alignment.TopEnd),
-                style = TextStyle(
-                    fontSize = 13.sp,
-                    fontWeight = FontWeight.Medium,
-                )
-            )
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        LazyRow(modifier = Modifier) {
-            items(categories?.data?.categories ?: emptyList()) {
-                CategoryCard(it, onCategorySelected)
-            }
-        }
-    }
-}
-
-@Composable
-fun CategoryCard(category: Category, onCategorySelected: (String) -> Unit) {
-    Column(
-        horizontalAlignment = Alignment.CenterHorizontally,
-        verticalArrangement = Arrangement.Center,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 15.dp)
-    ) {
-        Card(
-            shape = CircleShape,
-            border = if (id.value == category.id) BorderStroke(
-                1.dp,
-                colorResource(id = R.color.appColor)
-            ) else BorderStroke(0.dp, colorResource(id = R.color.black)),
-            modifier = Modifier
-                .size(80.dp)
-
-        ) {
-            Card(
-                shape = CircleShape,
-                border = if (id.value == category.id) BorderStroke(
-                    3.dp,
-                    colorResource(id = R.color.black)
-                )
-                else BorderStroke(3.dp, Color.LightGray),
-                modifier = Modifier
-                    .size(80.dp)
-                    .clickable {
-                        onCategorySelected(category.id.toString())
-                    }
-            ) {
-                AsyncImage(
-                    model = category.image,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .fillMaxSize(),
-                    contentScale = ContentScale.Crop,
-                )
-            }
-        }
-        Text(
-            text = category.name ?: "",
-            modifier = Modifier.padding(top = 8.dp)
-        )
-    }
-
-}
-
-
- */

@@ -17,10 +17,11 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonColors
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -34,6 +35,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.text.TextStyle
@@ -130,8 +132,10 @@ fun EditScreen(
                             painter = rememberAsyncImagePainter(uri),
                             contentDescription = "Selected Image",
                             modifier = Modifier
-                                .clip(RoundedCornerShape(50.dp))
+                                .clip(RoundedCornerShape(35.dp))
                                 .size(300.dp)
+                                .fillMaxWidth(),
+                            contentScale = ContentScale.Crop
                         )
                     }
                 }
@@ -147,6 +151,15 @@ fun EditScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -158,6 +171,15 @@ fun EditScreen(
                     singleLine = true,
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -170,6 +192,15 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
                     shape = RoundedCornerShape(12.dp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -182,6 +213,15 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -194,6 +234,15 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -206,7 +255,16 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
-                    textStyle = TextStyle(fontSize = 18.sp)
+                    textStyle = TextStyle(fontSize = 18.sp),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 OutlinedTextField(
@@ -219,6 +277,15 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     shape = RoundedCornerShape(12.dp),
                     keyboardOptions = KeyboardOptions.Default.copy(keyboardType = KeyboardType.Number),
+                    colors = OutlinedTextFieldDefaults.colors(
+                        focusedTextColor = Color.DarkGray,
+                        unfocusedTextColor = Color.DarkGray,
+                        focusedBorderColor = colorResource(id = R.color.appColor),
+                        unfocusedBorderColor = Color.Black,
+                        cursorColor = colorResource(id = R.color.appColor),
+                        focusedLabelColor = colorResource(id = R.color.appColor),
+                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                    )
                 )
 
                 Spacer(modifier = Modifier.height(20.dp))
@@ -278,7 +345,7 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
-                    Text(text = "Save Changes")
+                    Text(text = "Save Changes" ,color = Color.White)
                 }
                 Button(onClick = {
                     masterViewModel.deleteFromFoods(
@@ -295,7 +362,7 @@ fun EditScreen(
                     modifier = Modifier.fillMaxWidth(),
                     colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                 ) {
-                    Text(text = "Delete The Food")
+                    Text(text = "Delete The Food" , color = Color.White)
                 }
             }
         }

@@ -46,6 +46,7 @@ import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.OutlinedTextFieldDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -275,7 +276,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(Color.Gray))
                             {
-                                Text(stringResource(id = R.string.cancel))
+                                Text(stringResource(id = R.string.cancel),color = Color.White)
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(onClick = { viewModel.addFoodToCategory(context){
@@ -284,7 +285,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
                             {
-                                Text(stringResource(id = R.string.add))
+                                Text(stringResource(id = R.string.add),color = Color.White)
                             }
                         }
                     },
@@ -315,6 +316,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 OutlinedTextField(
@@ -327,6 +337,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))
@@ -345,6 +364,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 OutlinedTextField(
@@ -357,6 +385,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))
@@ -375,6 +412,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                                 Spacer(modifier = Modifier.width(8.dp))
                                 OutlinedTextField(
@@ -387,6 +433,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     modifier = Modifier.weight(1f),
                                     shape = RoundedCornerShape(12.dp),
                                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                                    colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                             }
                             Spacer(modifier = Modifier.height(8.dp))
@@ -399,6 +454,15 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     , fontSize = 12.sp) },
                                 modifier = Modifier.fillMaxWidth(),
                                 shape = RoundedCornerShape(12.dp),
+                                colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = Color.DarkGray,
+                                    unfocusedTextColor = Color.DarkGray,
+                                    focusedBorderColor = colorResource(id = R.color.appColor),
+                                    unfocusedBorderColor = Color.Black,
+                                    cursorColor = colorResource(id = R.color.appColor),
+                                    focusedLabelColor = colorResource(id = R.color.appColor),
+                                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                )
                             )
                                 var selectedCategory by remember { mutableStateOf("") }
                                 if (selectedCategory==""){
@@ -424,7 +488,16 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                         }
                                     },
                                     shape = RoundedCornerShape(12.dp),
-                                    modifier = Modifier.fillMaxWidth()
+                                    modifier = Modifier.fillMaxWidth(),
+                                            colors = OutlinedTextFieldDefaults.colors(
+                                        focusedTextColor = Color.DarkGray,
+                                        unfocusedTextColor = Color.DarkGray,
+                                        focusedBorderColor = colorResource(id = R.color.appColor),
+                                        unfocusedBorderColor = Color.Black,
+                                        cursorColor = colorResource(id = R.color.appColor),
+                                        focusedLabelColor = colorResource(id = R.color.appColor),
+                                        unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                    )
                                 )
                                 DropdownMenu(
                                     expanded = expanded,
@@ -436,7 +509,7 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                             onClick = {
                                                 viewModel.selectedCategory = category.name
                                                 viewModel.categoryName = category.name
-                                                selectedCategory =category.name
+                                                selectedCategory = category.name
                                                 expanded = false
                                             }
                                         )
@@ -459,14 +532,14 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(Color.Gray))
                             {
-                                Text(stringResource(id = R.string.cancel))
+                                Text(stringResource(id = R.string.cancel),color = Color.White)
                             }
                             Spacer(modifier = Modifier.width(8.dp))
                             Button(onClick = { categoryViewModel.addCategory(context) }
                                 , modifier = Modifier,
                                 colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor)))
                             {
-                                Text(stringResource(id = R.string.add))
+                                Text(stringResource(id = R.string.add),color = Color.White)
                             }
                         }
                     },
@@ -493,7 +566,16 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                                     fontFamily = poppins, fontWeight = FontWeight.Medium
                                     , fontSize = 12.sp) },
                                 modifier = Modifier.fillMaxWidth(),
-                                shape = RoundedCornerShape(12.dp)
+                                shape = RoundedCornerShape(12.dp),
+                                        colors = OutlinedTextFieldDefaults.colors(
+                                    focusedTextColor = Color.DarkGray,
+                                    unfocusedTextColor = Color.DarkGray,
+                                    focusedBorderColor = colorResource(id = R.color.appColor),
+                                    unfocusedBorderColor = Color.Black,
+                                    cursorColor = colorResource(id = R.color.appColor),
+                                    focusedLabelColor = colorResource(id = R.color.appColor),
+                                    unfocusedPrefixColor = colorResource(id = R.color.appColor),
+                                )
                             )
                         }
                         },
@@ -781,7 +863,7 @@ fun OrderCard(order: Order, context: Context) {
                         colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
                         ,shape = RoundedCornerShape(12.dp))
                     {
-                        Text(stringResource(id = R.string.confirm_order))
+                        Text(stringResource(id = R.string.confirm_order),color = Color.White)
                     }
                 }
 

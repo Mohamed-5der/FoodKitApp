@@ -22,7 +22,7 @@ class FoodListScreenViewModel(private val repository: FoodRepository) : ViewMode
         _isLoading.value = true
         repository.getAllFoods(
             onSuccess = { foods ->
-                _foods.value = foods // تحديث الحالة هنا
+                _foods.value = foods
                 _isLoading.value = false
             },
             onFailure = { exception ->

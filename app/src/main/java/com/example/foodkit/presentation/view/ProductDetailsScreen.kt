@@ -4,7 +4,6 @@ import android.widget.Toast
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -19,21 +18,18 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonDefaults
+import androidx.compose.material.TabRowDefaults.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material.icons.filled.ArrowForward
-import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -55,16 +51,18 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.example.foodkit.R
+import com.example.foodkit.components.CircleCardForDetails
 import com.example.foodkit.components.poppins
 import com.example.foodkit.presentation.viewModel.CartForTestViewModel
+import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodDetailViewModel
+import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
@@ -77,8 +75,13 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
     val viewModel: FoodDetailViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val cartViewModel: CartForTestViewModel = koinViewModel()
     val favoriteViewModel: FavoriteFoodViewModel = koinViewModel()
+    val categoryViewModel: CategoryViewModel = koinViewModel()
+    val foodViewModel : FoodListScreenViewModel = koinViewModel()
+
     favoriteViewModel.getFavoriteFoods()
     val favoriteIds = favoriteViewModel.favoriteIds.collectAsState()
+    val dessertCategory = categoryViewModel.foodsInCategory.collectAsState(initial = emptyList())
+    val topFiveFoods by foodViewModel.topFiveFoods.collectAsState(initial = emptyList())
 
     val context = LocalContext.current
     val numberItem = remember { mutableStateOf(1) }
@@ -86,6 +89,9 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
     LaunchedEffect(Unit) {
         viewModel.loadFood(foodId)
         viewModel.loadUserRating(foodId, userId)
+        categoryViewModel.loadFoodsByCategory("Desserts")
+        foodViewModel.fetchTopFiveFoods()
+
     }
     val rating = viewModel.userRating
 
@@ -100,7 +106,6 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                     modifier = Modifier
                         .fillMaxSize()
                         .background(colorResource(id = R.color.white))
-                        .verticalScroll(rememberScrollState()),
                 ) {
                     Box(modifier = Modifier.height(450.dp)) {
                         AsyncImage(
@@ -121,7 +126,7 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                                     .padding(horizontal = 12.dp, vertical = 10.dp)
                                     .height(92.dp),
                                 shape = RoundedCornerShape(10.dp),
-                                elevation = CardDefaults.cardElevation(2.dp),
+                                elevation = CardDefaults.cardElevation(4.dp),
                             ) {
 
                                 Column(
@@ -201,13 +206,16 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                             }
                         }
                     }
-                    Spacer(modifier = Modifier.height(16.dp))
-                    NutritionInfoRow()
+                    // details Section
+                    Column(
+                        modifier = Modifier
+                            .verticalScroll(rememberScrollState())
+                            .padding(horizontal = 16.dp)
+                    ) {
 
-                    Spacer(modifier = Modifier.height(16.dp))
+                        NutritionInfoRow()
+                        Spacer(modifier = Modifier.height(16.dp))
 
-                    // Description Section
-                    Column(modifier = Modifier.padding(horizontal = 16.dp)) {
                         Text(
                             text = stringResource(id = R.string.description),
                             color = Color.Black,
@@ -262,12 +270,58 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                                         context,
                                         "Your rating has been updated",
                                         Toast.LENGTH_SHORT
-                                    )
-                                        .show()
+                                    ).show()
                                 }
                             }
                         )
-                        Spacer(modifier = Modifier.height(92.dp))
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = stringResource(id = R.string.you_can_also_buy_desserts),
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = poppins,
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ){
+                            items(dessertCategory.value){foodInDessertCategory ->
+                                CircleCardForDetails(
+                                    dessert = foodInDessertCategory
+                                ) {
+                                    navController.navigate("food_details/${foodInDessertCategory.id}")
+                                }
+                            }
+                        }
+
+                        Spacer(modifier = Modifier.height(16.dp))
+                        Divider()
+                        Spacer(modifier = Modifier.height(8.dp))
+
+                        Text(
+                            text = stringResource(id = R.string.popular_on_app),
+                            color = Color.Black,
+                            fontWeight = FontWeight.Bold,
+                            fontFamily = poppins,
+                        )
+
+                        Spacer(modifier = Modifier.height(16.dp))
+
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                        ){
+                            items(topFiveFoods){foodMostPopular ->
+                                CircleCardForDetails(dessert = foodMostPopular){
+                                    navController.navigate("food_details/${foodMostPopular.id}")
+                                }
+                            }
+                        }
+                        Spacer(modifier = Modifier.height(140.dp))
                     }
 
 
@@ -357,7 +411,7 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                 Card(
                     modifier = Modifier
                         .align(Alignment.BottomCenter)
-                        .height(92.dp)
+                        .height(80.dp)
                         .fillMaxWidth(),
                     shape = RoundedCornerShape(10.dp),
                     elevation = CardDefaults.cardElevation(8.dp),
@@ -516,7 +570,7 @@ fun NutritionInfoRow() {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(horizontal = 16.dp),
+            .padding(horizontal = 8.dp),
         horizontalArrangement = Arrangement.SpaceBetween
     ) {
         NutritionInfoItem(
@@ -567,6 +621,7 @@ fun NutritionInfoItem(
         Spacer(modifier = Modifier.width(8.dp))
         Text(
             text = value,
+            color = Color.DarkGray,
             fontWeight = FontWeight.SemiBold,
             fontSize = 12.sp,
             fontFamily = poppins
