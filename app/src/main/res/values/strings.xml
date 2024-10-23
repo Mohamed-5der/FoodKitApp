@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Flavour Hoven</string>
+    <string name="app_name">Flavour Haven</string>
     <string name="thankYouForChoosingUs">Thank you for choosing us!</string>
     <string name="createAnAccount">Create an account to Start looking for the food you like</string>
 
@@ -54,7 +54,7 @@
     <string name="add_category">Add Category</string>
     <string name="top_foods">Top Foods</string>
     <string name="foods_master">Foods Master</string>
-    <string name="foodie_master">Foodie Master</string>
+    <string name="foodie_master">Flavour Haven</string>
     <string name="orders_master">Orders Master</string>
     <string name="staff_master">Staff Master</string>
     <string name="view_user">View User</string>
@@ -85,6 +85,24 @@
     <string name="total">Total</string>
     <string name="proceed_to_checkout">Proceed To Checkout</string>
     <string name="kcal">kcal</string>
+    <string name="main_details_analysis">Main Details Analysis</string>
+    <string name="details">Details</string>
+    <string name="edit">Edit</string>
+    <string name="edit_food_details">Edit Food Details</string>
+    <string name="save_changes">Save Changes</string>
+    <string name="delete_the_food">Delete The Food</string>
+    <string name="name">Name</string>
+    <string name="category">Category</string>
+    <string name="available_quantity">Available Quantity</string>
+    <string name="dual_dynamics">Dual Dynamics</string>
+    <string name="total_sales">Total Sales</string>
+    <string name="nutrition_breakdown">Nutrition Breakdown</string>
+    <string name="rating">Rating</string>
+    <string name="reviews">Reviews</string>
+    <string name="revenue">Revenue</string>
+    <string name="last_week">Last Week : $</string>
+    <string name="total_revenue">Total Revenue: $</string>
+
 
 
 

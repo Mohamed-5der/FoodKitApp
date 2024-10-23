@@ -58,8 +58,8 @@
 
     <string name="add_category">اضافة فئة</string>
     <string name="top_foods">أفضل الأطعمة</string>
-    <string name="foods_master">رئيس الأطعمة</string>
-    <string name="foodie_master">رئيس عشاق الطعام</string>
+    <string name="foods_master">قائمة الطعام</string>
+    <string name="foodie_master">ملاذ النكهات</string>
     <string name="orders_master">رئيس الطلبات</string>
     <string name="staff_master">رئيس الموظفين</string>
     <string name="view_user">عرض المستخدم</string>
@@ -90,6 +90,23 @@
     <string name="total">الإجمالي</string>
     <string name="proceed_to_checkout">انتقل إلى الدفع</string>
     <string name="kcal">سعرة حرارية</string>
+    <string name="main_details_analysis">تحليل التفاصيل الرئيسية</string>
+    <string name="details">التفاصيل</string>
+    <string name="edit">تعديل</string>
+    <string name="edit_food_details">تعديل تفاصيل الطعام</string>
+    <string name="save_changes">حفظ التغييرات</string>
+    <string name="delete_the_food">حذف الطعام</string>
+    <string name="name">الاسم</string>
+    <string name="category">الفئة</string>
+    <string name="available_quantity">الكمية المتاحة</string>
+    <string name="dual_dynamics">ديناميكيات مزدوجة</string>
+    <string name="total_sales">إجمالي المبيعات</string>
+    <string name="nutrition_breakdown">التفاصيل الغذائية</string>
+    <string name="rating">التقييم</string>
+    <string name="reviews">المراجعات</string>
+    <string name="revenue">الإيرادات</string>
+    <string name="last_week">الأسبوع الماضي: </string>
+    <string name="total_revenue">إجمالي الإيرادات: </string>
 
 
 

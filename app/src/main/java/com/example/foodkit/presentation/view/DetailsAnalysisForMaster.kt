@@ -26,6 +26,7 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -46,7 +47,6 @@ import org.koin.androidx.compose.koinViewModel
 import org.koin.core.parameter.parametersOf
 
 
-
 @OptIn(ExperimentalMaterial3Api::class)
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
@@ -57,12 +57,12 @@ fun MainDetailsAnalysis(
 ) {
     var selectedTab by remember { mutableStateOf(0) }
 
-    val tabs = listOf("Details", "Edit")
+    val tabs = listOf(stringResource(id = R.string.details), stringResource(id = R.string.edit))
 
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Main Details Analysis") },
+                title = { Text(stringResource(id = R.string.main_details_analysis)) },
                 navigationIcon = {
                     IconButton(onClick = { navController.popBackStack() }) {
                         Icon(
@@ -184,9 +184,9 @@ fun DetailsAnalysisForMaster(
                         animationDuration = 10000,
                         onCardClick = {}
                     ) {
-                        Column (
+                        Column(
                             modifier = Modifier
-                                .background( Color.White )
+                                .background(Color.White)
                                 .fillMaxSize(),
                         ) {
                             Column(
@@ -196,13 +196,13 @@ fun DetailsAnalysisForMaster(
                                     .fillMaxSize(),
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                DetailsRow("Name", food.name)
+                                DetailsRow(stringResource(id = R.string.name), food.name)
                                 Divider(color = Color.DarkGray)
-                                DetailsRow("Category", food.category)
+                                DetailsRow(stringResource(id = R.string.category), food.category)
                                 Divider(color = Color.DarkGray)
-                                DetailsRow("Price", "\$${food.price}")
+                                DetailsRow(stringResource(id = R.string.price), "\$${food.price}")
                                 Divider(color = Color.DarkGray)
-                                DetailsRow("Available Quantity", food.availableQuantity.toString())
+                                DetailsRow(stringResource(id = R.string.available_quantity), food.availableQuantity.toString())
                             }
                         }
                     }
@@ -210,7 +210,7 @@ fun DetailsAnalysisForMaster(
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         shape = RoundedCornerShape(24.dp),
-                        colors = CardDefaults.cardColors(containerColor =  Color.White  ),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
                         elevation = CardDefaults.cardElevation(8.dp)
                     ) {
                         Column(
@@ -221,7 +221,7 @@ fun DetailsAnalysisForMaster(
                             horizontalAlignment = Alignment.CenterHorizontally
                         ) {
                             Text(
-                                text = "Dual Dynamics",
+                                text = stringResource(id = R.string.dual_dynamics),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black
@@ -234,7 +234,10 @@ fun DetailsAnalysisForMaster(
                                     .fillMaxWidth(),
                                 horizontalArrangement = Arrangement.SpaceBetween
                             ) {
-                                LegendItem(color = colorResource(id = R.color.appColor), label = "Total Sales")
+                                LegendItem(
+                                    color = colorResource(id = R.color.appColor),
+                                    label = stringResource(id = R.string.total_sales)
+                                )
                             }
                         }
                     }
@@ -255,53 +258,53 @@ fun DetailsAnalysisForMaster(
                                 .fillMaxWidth(),
                         ) {
 
-                        Column(
-                            modifier = Modifier
-                                .padding(16.dp)
-                                .fillMaxSize(),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text(
-                                text = "Nutrition Breakdown",
-                                style = MaterialTheme.typography.titleLarge,
-                                fontWeight = FontWeight.Bold,
-                                color = Color.DarkGray
-                            )
+                            Column(
+                                modifier = Modifier
+                                    .padding(16.dp)
+                                    .fillMaxSize(),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                Text(
+                                    text = stringResource(id = R.string.nutrition_breakdown),
+                                    style = MaterialTheme.typography.titleLarge,
+                                    fontWeight = FontWeight.Bold,
+                                    color = Color.DarkGray
+                                )
 
-                            val piechartData = PieChartData(
-                                listOf(
-                                    PieChartData.Slice(
-                                        value = food.calories.toFloat(),
-                                        color = Color(0xFF7fd8be)
-                                    ),
-                                    PieChartData.Slice(
-                                        value = food.protein.toFloat(),
-                                        color = Color(0xFF994c30)
-                                    ),
-                                    PieChartData.Slice(
-                                        value = food.fats.toFloat(),
-                                        color = Color(0xFFff7f50)
+                                val piechartData = PieChartData(
+                                    listOf(
+                                        PieChartData.Slice(
+                                            value = food.calories.toFloat(),
+                                            color = Color(0xFF7fd8be)
+                                        ),
+                                        PieChartData.Slice(
+                                            value = food.protein.toFloat(),
+                                            color = Color(0xFF994c30)
+                                        ),
+                                        PieChartData.Slice(
+                                            value = food.fats.toFloat(),
+                                            color = Color(0xFFff7f50)
+                                        )
                                     )
                                 )
-                            )
-                            PieChart(
-                                pieChartData = piechartData,
-                                modifier = Modifier.size(200.dp)
-                            )
+                                PieChart(
+                                    pieChartData = piechartData,
+                                    modifier = Modifier.size(200.dp)
+                                )
 
-                            Row(
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                                    .padding(top = 16.dp),
-                                horizontalArrangement = Arrangement.SpaceBetween
-                            ) {
-                                LegendItem(color = Color(0xFF7fd8be), label = "Calories")
-                                LegendItem(color = Color(0xFF994c30), label = "Protein")
-                                LegendItem(color = Color(0xFFff7f50), label = "Fats")
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(top = 16.dp),
+                                    horizontalArrangement = Arrangement.SpaceBetween
+                                ) {
+                                    LegendItem(color = Color(0xFF7fd8be), label = stringResource(id = R.string.calories))
+                                    LegendItem(color = Color(0xFF994c30), label = stringResource(id = R.string.protein))
+                                    LegendItem(color = Color(0xFFff7f50), label = stringResource(id = R.string.fats))
+                                }
                             }
                         }
-                    }
                     }
 
                     Card(
@@ -309,7 +312,7 @@ fun DetailsAnalysisForMaster(
                             .fillMaxWidth()
                             .padding(8.dp),
                         shape = RoundedCornerShape(24.dp),
-                        colors = CardDefaults.cardColors(containerColor = Color.White ),
+                        colors = CardDefaults.cardColors(containerColor = Color.White),
                         elevation = CardDefaults.cardElevation(8.dp)
                     ) {
                         Row(
@@ -325,9 +328,9 @@ fun DetailsAnalysisForMaster(
                             Column(
                                 verticalArrangement = Arrangement.spacedBy(8.dp)
                             ) {
-                                DetailsRow("Rating", averageRating.toString())
+                                DetailsRow(stringResource(id = R.string.rating), averageRating.toString())
                                 Divider(color = Color.Black)
-                                DetailsRow("Reviews", "${food.ratingCount}")
+                                DetailsRow(stringResource(id = R.string.reviews), "${food.ratingCount}")
                             }
                         }
                     }
@@ -347,7 +350,7 @@ fun DetailsAnalysisForMaster(
                             verticalArrangement = Arrangement.spacedBy(12.dp)
                         ) {
                             Text(
-                                text = "Revenue",
+                                text = stringResource(id = R.string.revenue),
                                 style = MaterialTheme.typography.titleLarge,
                                 fontWeight = FontWeight.Bold,
                                 color = Color.Black,
@@ -355,7 +358,7 @@ fun DetailsAnalysisForMaster(
                             )
                             Spacer(modifier = Modifier.height(4.dp))
                             Text(
-                                text = "Last Week: \$${String.format("%.2f", food.lastWeekRevenue)}",
+                                text = "Last Week: \$ ${String.format("%.2f", food.lastWeekRevenue)}",
                                 style = MaterialTheme.typography.bodyMedium.copy(fontSize = 16.sp),
                                 color = Color.DarkGray
                             )
