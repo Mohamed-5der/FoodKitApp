@@ -86,7 +86,7 @@ fun StaffScreen(navController: NavController) {
             Spacer(modifier = Modifier.height(16.dp))
             AddStaff(name = "Ahmad Moemen", phone = "+201004131195", email ="ahmadxmoemendjz11@gmail.com" , imageVector =R.drawable.ahmed_moeamen ,"https://www.linkedin.com/in/ahmad-moemen")
             Spacer(modifier = Modifier.height(16.dp))
-            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = "View user",route = Routes.MAIN,navController)
+            ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.profile_un), label = stringResource(id =R.string.view_user),route = Routes.MAIN,navController)
             ProfileOptionItem(icon = ImageVector.vectorResource(id = R.drawable.logout), label = stringResource(id = R.string.logout),route = Routes.LOGIN,navController)
         }
     }

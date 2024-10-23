@@ -1,6 +1,7 @@
 package com.example.foodkit.presentation.view.userBottomNavigation
 
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -21,6 +22,7 @@ import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.Divider
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Star
 import androidx.compose.material3.Card
@@ -91,13 +93,20 @@ fun FavoriteScreenContent(navController: NavController) {
                 scrollBehavior = null,
             )
 
-
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Box(modifier = Modifier.fillMaxHeight()) {
                 if (favoriteFoods.value==emptyList<FavoriteFood>()) {
-                    LottieAnimationEmpty()
+                    Image(
+                        painter = painterResource(id = R.drawable.no_faouritee),
+                        contentDescription = "Empty Cart",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.Center)
+                    )
                 }else{
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),

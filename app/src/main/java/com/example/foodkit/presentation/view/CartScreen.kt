@@ -45,7 +45,7 @@ import com.google.firebase.auth.FirebaseAuth
 import org.koin.androidx.compose.koinViewModel
 
 @Composable
-fun CartScreenForTest(
+fun CartScreen(
     navController: NavController,
 ) {
     val viewModel: CartForTestViewModel = koinViewModel()
@@ -54,14 +54,12 @@ fun CartScreenForTest(
     val userId = FirebaseAuth.getInstance().currentUser?.uid ?: ""
     val context = LocalContext.current
 
-    // تحميل العناصر عند تشغيل الشاشة
     LaunchedEffect(Unit) {
         viewModel.loadCartItems(userId)
     }
 
     var isBottomSheetVisible by remember { mutableStateOf(false) }
 
-    // عرض نافذة التأكيد إذا كان الـ BottomSheet مرئي
     if (isBottomSheetVisible) {
         AlertDialog(
             onDismissRequest = { isBottomSheetVisible = false },

@@ -1,20 +1,12 @@
 package com.example.foodkit.navigation
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.Constraints
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
-import com.example.foodkit.Constants
 import com.example.foodkit.presentation.view.Account.MyOrderScreen
-import com.example.foodkit.presentation.view.CartScreenForTest
 import com.example.foodkit.presentation.view.CategoryDetailScreen
 import com.example.foodkit.presentation.view.CategoryListScreen
-import com.example.foodkit.presentation.view.DetailsAnalysisForMaster
-import com.example.foodkit.presentation.view.FoodDetailScreen
 import com.example.foodkit.presentation.view.Account.ProfileScreen
 import com.example.foodkit.presentation.view.CompleteSignUpScreen
 import com.example.foodkit.presentation.view.LoginScreen
@@ -24,7 +16,6 @@ import com.example.foodkit.presentation.view.MasterScreen
 import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.view.SignUpScreen
 import com.example.foodkit.presentation.view.SplashScreen
-import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.google.firebase.auth.FirebaseAuth
 
 @Composable

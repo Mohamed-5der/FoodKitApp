@@ -109,12 +109,21 @@ fun MyOrderScreen(navController: NavController,userId:String){
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.Top
         ) {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxWidth()
-            ) {
-                items(filteredOrders?: emptyList()) { order ->
-                    OrderCardUser(order = order,context)
+            if (orders.isEmpty()) {
+                Image(
+                    painter = painterResource(id = R.drawable.no_order),
+                    contentDescription = "Empty Cart",
+                    modifier = Modifier
+                        .fillMaxSize()
+                )
+            }else{
+                LazyColumn(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                ) {
+                    items(filteredOrders) { order ->
+                        OrderCardUser(order = order, context)
+                    }
                 }
             }
         }

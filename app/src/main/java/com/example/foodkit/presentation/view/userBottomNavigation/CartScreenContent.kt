@@ -1,8 +1,10 @@
 package com.example.foodkit.presentation.view.userBottomNavigation
 
 import android.annotation.SuppressLint
+import android.media.Image
 import android.util.Log
 import android.widget.Toast
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -115,49 +117,66 @@ fun CartScreenContent(navController: NavController) {
                 ),
                 scrollBehavior = null,
             )
+            Spacer(modifier = Modifier.height(8.dp))
+            Divider()
 
             Spacer(modifier = Modifier.height(8.dp))
 
             Column(modifier = Modifier.fillMaxWidth()) {
-                LazyColumn(
-                    modifier = Modifier
-                        .padding(bottom = 16.dp)
-                ) {
-                    items(cartItems.value) {
-                        SwipeToDeleteContainer(
-                            item = it,
-                            cartItem = it,
-                            onDelete = { deletedItem ->
-                                viewModel.removeFromCart(it.foodId, userId)
-                            }
-                        ) { item ->
-                            CartFoodCard(item, onIncreaseOrDecrease = {increment ->
-                                viewModel.updateQuantityInCartScreen(it.foodId, userId, increment)
-                            }, onRemove = {
-                                viewModel.removeFromCart(it.foodId, userId)
-                            }, onClick = {
-                                navController.navigate("food_details/${it.foodId}")
-                            }
-                            )
-                        }
 
-                    }
-                    item {
-                        Button(
-                            onClick = { showDialog.value = true },
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(16.dp),
-                            shape = RoundedCornerShape(16.dp),
-                            colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
-                        ) {
-                            Text(
-                                stringResource(id = R.string.checkout),
-                                color = Color.White,
-                                fontSize = 18.sp
-                            )
+                if(cartItems.value.isNotEmpty()) {
+                    LazyColumn(
+                        modifier = Modifier
+                            .padding(bottom = 16.dp)
+                    ) {
+                        items(cartItems.value) {
+                            SwipeToDeleteContainer(
+                                item = it,
+                                cartItem = it,
+                                onDelete = { deletedItem ->
+                                    viewModel.removeFromCart(it.foodId, userId)
+                                }
+                            ) { item ->
+                                CartFoodCard(item, onIncreaseOrDecrease = { increment ->
+                                    viewModel.updateQuantityInCartScreen(
+                                        it.foodId,
+                                        userId,
+                                        increment
+                                    )
+                                }, onRemove = {
+                                    viewModel.removeFromCart(it.foodId, userId)
+                                }, onClick = {
+                                    navController.navigate("food_details/${it.foodId}")
+                                }
+                                )
+                            }
+
+                        }
+                        item {
+                            Button(
+                                onClick = { showDialog.value = true },
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(16.dp),
+                                shape = RoundedCornerShape(16.dp),
+                                colors = ButtonDefaults.buttonColors(colorResource(id = R.color.appColor))
+                            ) {
+                                Text(
+                                    stringResource(id = R.string.checkout),
+                                    color = Color.White,
+                                    fontSize = 18.sp
+                                )
+                            }
                         }
                     }
+                }else{
+                    Image(
+                        painter = painterResource(id = R.drawable.cart_empty),
+                        contentDescription = "Empty Cart",
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .align(Alignment.CenterHorizontally)
+                    )
 
                 }
             }

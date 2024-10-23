@@ -52,10 +52,9 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
     val masterViewModel: MasterViewModel = koinViewModel(parameters = { parametersOf(userId) })
     val context = LocalContext.current
 
-    // Load food details and user rating when the screen is launched
     LaunchedEffect(Unit) {
         foodDetailViewModel.loadFood(foodId)
-        foodDetailViewModel.loadUserRating(foodId, userId) // Load user-specific rating
+        foodDetailViewModel.loadUserRating(foodId, userId)
     }
 
     foodDetailViewModel.food?.let { food ->
@@ -88,7 +87,6 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // Display total revenue for the food
             Text(text = "Total Revenue: \$${food.totalRevenue}")
 
             Spacer(modifier = Modifier.height(16.dp))
@@ -96,7 +94,6 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
             // State for user's rating
             val ratingState = remember { mutableStateOf(foodDetailViewModel.userRating ?: 0f) }
 
-            // عرض التقييم الحالي للمستخدم إذا كان موجودًا
             if (foodDetailViewModel.userRating != null) {
                 Text(text = "Your Rating: ${foodDetailViewModel.userRating}")
             } else {
@@ -111,13 +108,12 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                         foodDetailViewModel.submitRating(food.id, rating, userId)
                         Toast.makeText(context, "Rating Submitted", Toast.LENGTH_SHORT).show()
                     } else {
-                        // بدلًا من ذلك، تحديث التقييم القديم
-                        ratingState.value = rating // تحديث القيمة الجديدة
+                        ratingState.value = rating
                         foodDetailViewModel.submitRating(
                             food.id,
                             rating,
                             userId
-                        ) // إرسال التقييم الجديد
+                        )
                         Toast.makeText(context, "Your rating has been updated", Toast.LENGTH_SHORT)
                             .show()
                     }
@@ -126,7 +122,6 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             Spacer(modifier = Modifier.height(16.dp))
 
-            // التحكم في كمية المنتج
             var quantity by remember { mutableStateOf(1) }
 
             Row(
@@ -134,7 +129,7 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                 horizontalArrangement = Arrangement.Center
             ) {
                 IconButton(onClick = {
-                    if (quantity > 1) quantity-- // تقليل الكمية
+                    if (quantity > 1) quantity--
                 }) {
                     Icon(Icons.Default.Delete, contentDescription = "Decrease Quantity")
                 }
@@ -142,7 +137,7 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
                 Text(text = quantity.toString(), style = MaterialTheme.typography.bodyLarge)
 
                 IconButton(onClick = {
-                    if (quantity < food.availableQuantity) quantity++ // زيادة الكمية بشرط ألا تتجاوز المتاحة
+                    if (quantity < food.availableQuantity) quantity++
                 }) {
                     Icon(Icons.Default.Add, contentDescription = "Increase Quantity")
                 }
@@ -152,7 +147,7 @@ fun FoodDetailScreen(navController: NavController, foodId: String, userId: Strin
 
             Button(
                 onClick = {
-                    if (quantity <= food.availableQuantity) { // تحقق من أن الكمية المطلوبة غير أكبر من المتاحة
+                    if (quantity <= food.availableQuantity) {
                         cartViewModel.addToCart(food, quantity, userId, {})
                         Toast.makeText(context, "Added to Cart", Toast.LENGTH_SHORT).show()
                     } else {
