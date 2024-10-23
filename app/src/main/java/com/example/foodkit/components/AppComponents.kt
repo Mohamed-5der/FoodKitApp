@@ -227,7 +227,7 @@ fun FoodCard(
                             .fillMaxWidth()
                             .height(120.dp)
                             .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Fit,
+                        contentScale = ContentScale.Crop,
                         placeholder = painterResource(id = R.drawable.food_photo),
                         error = painterResource(id = R.drawable.food_photo)
                     )
@@ -321,7 +321,7 @@ fun FoodCard(
                 text = food.name ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
 //                fontFamily = poppins,
@@ -613,3 +613,4 @@ fun LottieAnimationEmpty(loading: Boolean = true) {
         }
     }
 }
+

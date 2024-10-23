@@ -267,6 +267,7 @@ fun ProductDetailsScreen(foodId: String, navController: NavController) {
                                 }
                             }
                         )
+                        Spacer(modifier = Modifier.height(92.dp))
                     }
 
 

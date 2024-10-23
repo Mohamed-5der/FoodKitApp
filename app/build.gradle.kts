@@ -98,6 +98,10 @@ dependencies {
     implementation(libs.bytebeats.compose.charts)
     // lottie
     implementation ("com.airbnb.android:lottie-compose:6.1.0")
+    //location
+    implementation ("com.google.android.gms:play-services-location:21.0.1")
+    implementation ("com.google.accompanist:accompanist-permissions:0.28.0")
+
     //Compose navigation
     implementation(libs.navigation.compose)
     implementation(libs.identity.jvm)

@@ -154,7 +154,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                             .fillMaxWidth()
                             .height(120.dp)
                             .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Fit,
+                        contentScale = ContentScale.Crop,
                         placeholder = painterResource(id = R.drawable.food_photo),
                         error = painterResource(id = R.drawable.food_photo)
                     )
@@ -255,7 +255,7 @@ fun FoodCardFav(food: FavoriteFood, onClick: () -> Unit) {
                 text = food.name ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
                 modifier = Modifier.fillMaxWidth(),

@@ -98,11 +98,14 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
     val context = LocalContext.current
     var expanded by remember { mutableStateOf(false) }
     val foodViewModel: FoodListScreenViewModel = koinViewModel()
-    val foods: List<Food> = emptyList()
+    var foods: List<Food> = emptyList()
     val showDialogAddFood = remember { mutableStateOf(false) }
     val showDialogAddCategory = remember { mutableStateOf(false) }
     val isLoadingFood = foodViewModel.isLoading.collectAsState().value
     val isLoadingCategory = categoryViewModel.isLoading.collectAsState().value
+    val foodsByCategory = categoryViewModel.foodsInCategory.collectAsState().value
+    foods =foodsByCategory?: emptyList()
+
     LaunchedEffect(Unit) {
         viewModel.loadOrders()
     }
@@ -177,9 +180,9 @@ fun HomeScreen(navController: NavController,onClickAllOrder: () -> Unit) {
                 ) {
                     items(categories) { category ->
                         CategoryCard(category = category){
-
-                    }
-                }
+                            categoryViewModel.loadFoodsByCategory(categoryId =category.name)
+                        }
+                 }
             }
             //Foods
             Spacer(modifier = Modifier.height(16.dp))
@@ -539,7 +542,7 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                             .fillMaxWidth()
                             .height(120.dp)
                             .clip(RoundedCornerShape(8.dp)),
-                        contentScale = ContentScale.Fit,
+                        contentScale = ContentScale.Crop,
                         placeholder = painterResource(id = R.drawable.food_photo),
                         error = painterResource(id = R.drawable.food_photo)
                     )
@@ -641,7 +644,7 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                 text = food.name ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
                 fontFamily = poppins,
@@ -654,7 +657,7 @@ fun FoodCardMaster(food: Food, onClick: () -> Unit, onClickEdit : () -> Unit
                 text = food.description ?: "",
                 fontSize = 14.sp,
                 minLines = 1,
-                maxLines = 2,
+                maxLines = 1,
                 fontWeight = FontWeight.Bold,
                 color = colorResource(id = R.color._black),
                 fontFamily = poppins,

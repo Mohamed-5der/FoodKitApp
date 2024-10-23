@@ -1,5 +1,6 @@
 package com.example.foodkit.presentation.view.userBottomNavigation
 
+import android.util.Log
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -61,14 +62,13 @@ import com.example.foodkit.components.CategoryCard
 import com.example.foodkit.components.FoodCard
 import com.example.foodkit.components.poppins
 import com.example.foodkit.components.LottieAnimationLoading
-import com.example.foodkit.navigation.Routes
-import com.example.foodkit.presentation.view.ProductDetailsScreen
 import com.example.foodkit.presentation.viewModel.CategoryViewModel
 import com.example.foodkit.presentation.viewModel.FavoriteFoodViewModel
 import com.example.foodkit.presentation.viewModel.FoodListScreenViewModel
 import com.example.foodkit.presentation.viewModel.UserViewModel
 import com.example.foodkit.repository.Category
 import com.example.foodkit.repository.Food
+import com.example.foodkit.utils.getLocationAndAddress
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
 import com.google.firebase.auth.FirebaseAuth
@@ -92,6 +92,9 @@ fun HomeScreenContent(
     val foods = categoryViewModel.foodsInCategory.collectAsState().value
     val isLoadingFood = foodViewModel.isLoading.collectAsState().value
     val isLoadingCategory = categoryViewModel.isLoading.collectAsState().value
+    var city by remember { mutableStateOf<String?>(null) }
+    var country by remember { mutableStateOf<String?>(null) }
+
 
     Surface(
         modifier = Modifier.fillMaxSize(),
@@ -161,6 +164,17 @@ fun HomeScreenContent(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun HomeTopAppBar(name: String) {
+    val context = LocalContext.current
+    val city = remember { mutableStateOf<String?>(null) }
+    val country = remember { mutableStateOf<String?>(null) }
+    LaunchedEffect(Unit) {
+        val result = getLocationAndAddress(context)
+        result?.let { (_, address) ->
+            city.value = address.first
+            country.value = address.second
+            Log.d("LocationViewModel", "City: ${city.value}, Country: ${country.value}")
+        } ?: Log.e("LocationViewModel", "No result from getLocationAndAddress")
+    }
 
     TopAppBar(
         modifier = Modifier.fillMaxWidth(),
@@ -168,13 +182,10 @@ fun HomeTopAppBar(name: String) {
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = colorResource(id = R.color.white),
         ),
-
         title = {
-
             Column {
                 Text(
                     text = stringResource(id = R.string.hi) + " " + name,
-//                  text = "Hi $name",
                     color = Color.Black,
                     fontSize = 20.sp,
                     fontWeight = FontWeight.Medium,
@@ -198,7 +209,7 @@ fun HomeTopAppBar(name: String) {
                     )
                     Spacer(modifier = Modifier.width(4.dp))
                     Text(
-                        text = "Location, Mansoura, Egypt",
+                        text =   "${city.value}, ${country.value}",
                         color = Color.Gray,
                         fontSize = 20.sp,
                         modifier = Modifier.clickable {

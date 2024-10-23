@@ -57,7 +57,6 @@ fun Home(navController: NavController) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-
             BottomNavigation(
                 modifier = Modifier
                     .fillMaxWidth()
