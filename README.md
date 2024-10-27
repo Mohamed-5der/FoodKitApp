@@ -85,7 +85,7 @@ Proud to present *Flavour Haven*! This project is a food ordering app designed w
 ---
   
 ## 📲 Setup Instructions
-1. Clone this repository: (https://github.com/ahmedemad55/FoodKitApp/tree/master)
+1. Clone this repository: (https://github.com/Mohamed-5der/FoodKitApp/tree/master)
 2. Configure Firebase by adding your google-services.json file.
 3. Build and run the app using Android Studio.
 
